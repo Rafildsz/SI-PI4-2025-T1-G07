@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Semear — Ingredientes frescos da fazenda</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- SEO -->
+  <meta name="description" content="Conectamos seu estabelecimento aos melhores produtores rurais da região. Produtos frescos, direto da fazenda.">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="#">
+        <!-- exemplo de logo inline (substitua por assets/logo.svg se quiser) -->
+        <img src="assets/logo.svg" alt="Logotipo Semear" />
+        <span class="brand">Semear</span>
+      </a>
+
+      <nav class="main-nav" id="main-nav">
+        <a href="#">Sobre nós</a>
+        <a href="#">Perguntas frequentes</a>
+        <a href="#">Contato</a>
+      </nav>
+
+      <div class="actions">
+        <a class="btn ghost" href="#">Sou um Produtor</a>
+        <a class="btn primary" href="#">Sou um Restaurante</a>
+
+        <button class="mobile-toggle" id="mobile-toggle" aria-label="Abrir menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero container">
+      <div class="hero-text">
+        <h1>
+          Ingredientes frescos <br/>
+          da <span class="highlight-green">fazenda</span> para o seu estabelecimento
+        </h1>
+        <p class="lead">
+          Conectamos seu estabelecimento aos melhores produtores rurais da região. Tenha acesso a um catálogo variado de produtos frescos, negocie diretamente e simplifique sua logística de compras.
+        </p>
+
+        <div class="cta-group">
+          <a class="btn btn-green" href="#">Sou um Produtor</a>
+          <a class="btn btn-orange" href="#">Sou um Restaurante</a>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img src="assets/hero.jpg" alt="Cesta de vegetais frescos" />
+      </div>
+    </section>
+
+    <!-- Green info band -->
+    <section class="info-band">
+      <div class="container band-grid">
+        <div class="band-left">
+          <h2>Menos distância, <span class="highlight-yellow">mais parceria.</span></h2>
+        </div>
+        <div class="band-right">
+          <p>Para o seu <span class="highlight-yellow">restaurante</span>, a Semear é a ponte até os produtores locais que valorizam a qualidade. Converse diretamente com quem planta, conheça a origem dos seus ingredientes e fortaleça a comunidade.</p>
+          <p>Para você, <span class="highlight-yellow">produtor</span>, é a chance de ir além. Apresente seus produtos para os melhores restaurantes da região e veja seu trabalho ser mais valorizado, sem atravessadores.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Semear — Produtos frescos direto do produtor.</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
