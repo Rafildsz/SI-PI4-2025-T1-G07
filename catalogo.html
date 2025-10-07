@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Catálogo — Semear</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="css/catalogo.css">
+</head>
+<body>
+  <!-- Header fino (estilo dashboard) -->
+  <header class="container dash-header" role="banner">
+    <a class="brand-inline" href="index.html" aria-label="Voltar ao início">
+      <img src="assets/logo.svg" alt="Semear">
+      <strong>Semear</strong>
+    </a>
+
+    <div class="searchbar" role="search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M21 21l-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z" stroke="#777" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <input type="search" placeholder="Buscar por produto, ingrediente ou produtor..." />
+    </div>
+
+    <!-- botão hambúrguer -->
+    <button class="hamb" id="hamb" aria-label="Menu" aria-expanded="true" aria-controls="sidebar">
+         <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <main class="container layout" role="main">
+    <!-- Coluna principal -->
+    <section>
+      <div class="greet" aria-live="polite">
+        <h2>Olá <span id="nomeRest">[Nome do Restaurante]</span>! O que sua cozinha precisa hoje?</h2>
+        <p>Explore os produtos disponíveis perto de você.</p>
+      </div>
+
+      <div class="toolbar">
+        <button class="btn" id="btnFiltros">Filtros</button>
+        <button class="btn" id="btnAdd" title="Adicionar filtro rápido">+</button>
+        <div class="toolbar-right">
+          <label for="ordem" class="sr-only">Ordenar por</label>
+          <select id="ordem" class="select">
+            <option>Ordenar por</option>
+            <option value="recomendados">Recomendados</option>
+            <option value="preco_asc">Preço: menor para maior</option>
+            <option value="preco_desc">Preço: maior para menor</option>
+            <option value="distancia">Mais próximos</option>
+            <option value="avaliacao">Melhor avaliados</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Chips de filtros ativos -->
+      <div id="chips" class="chips"></div>
+
+      <!-- Grid de produtos -->
+      <div class="grid" id="gridProdutos" aria-live="polite"></div>
+    </section>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Menu lateral">
+      <div class="sb-header">
+        <div class="sb-avatar">U</div>
+        <div>
+          <div class="sb-title">Usuário</div>
+          <small style="opacity:.9">Restaurante</small>
+        </div>
+      </div>
+
+      <nav class="sb-nav" role="navigation">
+        <a class="sb-item" href="#"><span>🧾</span> Meus Pedidos</a>
+        <a class="sb-item" href="#"><span>✉️</span> Mensagens</a>
+        <a class="sb-item" href="#"><span>⚙️</span> Configurações</a>
+        <div class="sb-sep"></div>
+        <a class="sb-item sb-logout" href="#"><span>↩️</span> Sair</a>
+      </nav>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Semear — Produtos frescos direto do produtor.</p>
+    </div>
+  </footer>
+
+  <!-- JS simples para demo -->
+  <script>
+    // Ano no rodapé
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Saudação (puxa do localStorage se você salvou no cadastro)
+    try {
+      const cad = JSON.parse(localStorage.getItem('semear_cadastro_demo') || '{}');
+      if (cad && cad.nome) document.getElementById('nomeRest').textContent = cad.nome.split(' ')[0];
+    } catch (e) {}
+
+    // Mock de produtos (trocar por fetch da sua API)
+    const produtos = [
+      { nome:'Batata', preco:4.09, unidade:'kg', img:'assets/batata_catalogo.svg', produtor:'Sítio Bela Vista', rating:4.8, distancia:8 },
+      { nome:'Tomate', preco:5.19, unidade:'kg', img:'assets/tomate_catalogo.svg', produtor:'Sítio Bela Vista', rating:4.8, distancia:8 },
+      { nome:'Cenoura', preco:2.89, unidade:'kg', img:'assets/cenoura_catalogo.svg', produtor:'Sítio Bela Vista', rating:4.8, distancia:8 },
+      { nome:'Alface', preco:1.10, unidade:'kg', img:'assets/alface_catalogo.svg', produtor:'Sítio Bela Vista', rating:4.8, distancia:8 },
+      { nome:'Uva', preco:3.09, unidade:'kg', img:'assets/uva_catalogo.svg', produtor:'Fazenda Feliz', rating:5.0, distancia:5 },
+      { nome:'Maçã', preco:8.75, unidade:'kg', img:'assets/maca_catalogo.svg', produtor:'Fazenda Feliz', rating:5.0, distancia:5 },
+      { nome:'Chuchu', preco:5.90, unidade:'kg', img:'assets/chuchu_catalogo.svg', produtor:'Sítio Vila Rica', rating:4.6, distancia:12 },
+      { nome:'Pimenta', preco:7.74, unidade:'kg', img:'assets/pimenta_catalogo.svg', produtor:'Sítio Vila Rica', rating:4.6, distancia:12 }
+    ];
+
+    const grid = document.getElementById('gridProdutos');
+    function fmtPreco(v){ return v.toLocaleString('pt-BR',{ style:'currency', currency:'BRL' }); }
+    function card(p){
+      return `
+        <article class="card" tabindex="0">
+          <img src="${p.img}" alt="${p.nome}" onerror="this.src='assets/placeholder.jpg'">
+          <div class="card-body">
+            <h3>${p.nome}</h3>
+            <div class="meta">
+              <div class="price">${fmtPreco(p.preco)} <small>/ ${p.unidade}</small></div>
+              <div>Por ${p.produtor} ★ ${p.rating}</div>
+              <div>A ${p.distancia}km de você</div>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+    function render(lista){ grid.innerHTML = lista.map(card).join(''); }
+    render(produtos);
+
+    // Ordenação
+    const ordem = document.getElementById('ordem');
+    ordem.addEventListener('change', () => {
+      const val = ordem.value;
+      const arr = [...produtos];
+      if(val === 'preco_asc') arr.sort((a,b)=>a.preco-b.preco);
+      if(val === 'preco_desc') arr.sort((a,b)=>b.preco-a.preco);
+      if(val === 'distancia') arr.sort((a,b)=>a.distancia-b.distancia);
+      if(val === 'avaliacao') arr.sort((a,b)=>b.rating-a.rating);
+      render(arr);
+    });
+
+    // Chips de filtro (exemplo simples)
+    const chips = document.getElementById('chips');
+    function addChip(text){
+      const node = document.createElement('span');
+      node.className = 'chip';
+      node.innerHTML = text + ' <button aria-label="Remover filtro" class="chip-x">×</button>';
+      node.querySelector('.chip-x').addEventListener('click', (e) => {
+        e.stopPropagation();
+        node.remove();
+      });
+      chips.appendChild(node);
+    }
+    document.getElementById('btnAdd').addEventListener('click', ()=> addChip('Orgânico'));
+    </script>
+    <script>
+  // --- Toggle da sidebar via hambúrguer
+  const hamb = document.getElementById('hamb');
+  const SIDEBAR_KEY = 'semear_sidebar_hidden';
+
+  // restaura preferência
+  if (localStorage.getItem(SIDEBAR_KEY) === '1') {
+    document.body.classList.add('no-sidebar');
+    hamb.setAttribute('aria-expanded', 'false');
+  }
+
+  hamb.addEventListener('click', () => {
+    const hidden = document.body.classList.toggle('no-sidebar');
+    hamb.setAttribute('aria-expanded', hidden ? 'false' : 'true');
+    localStorage.setItem(SIDEBAR_KEY, hidden ? '1' : '0');
+  });
+  </script>
+</body>
+</html>
