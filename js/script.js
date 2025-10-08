@@ -25,20 +25,30 @@ function showStep(n) {
     el.classList.toggle('active', el.classList.contains('step-' + n));
   });
 
-  // 2) atualiza visual do progress (segmentos)
-  const segments = document.querySelectorAll('.progress-segment');
-  segments.forEach(seg => {
-    const s = Number(seg.dataset.step); // certifica-se de ler data-step
-    seg.classList.remove('segment-complete', 'segment-active');
-    if (s < n) seg.classList.add('segment-complete');
-    else if (s === n) seg.classList.add('segment-active');
-    // opcional: atualiza texto do círculo se tiver .step-circle interno
-    const circle = seg.querySelector('.step-circle');
+  // 2) atualiza os círculos (com fallback se não houver data-step)
+  const steps = Array.from(document.querySelectorAll('.progress-step'));
+  steps.forEach((step, i) => {
+    const s = Number(step.dataset.step) || (i + 1);
+    step.dataset.step = String(s); // persiste para não voltar a 0
+
+    step.classList.remove('active', 'completed');
+    if (s < n) step.classList.add('completed');
+    if (s === n) step.classList.add('active');
+
+    const circle = step.querySelector('.circle');
     if (circle) circle.textContent = String(s);
+  });
+
+  // 3) pinta as linhas entre círculos (linha i conecta step i -> i+1)
+  const lines = Array.from(document.querySelectorAll('.line'));
+  lines.forEach((line, idx) => {
+    line.classList.toggle('completed', idx < (n - 1));
   });
 
   console.log('Mostrando step', n);
 }
+
+
 
 // Exemplo: liga botões next/back (ajuste IDs conforme seu HTML)
 document.getElementById('next1')?.addEventListener('click', () => {
