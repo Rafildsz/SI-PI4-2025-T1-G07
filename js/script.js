@@ -48,19 +48,30 @@ function showStep(n) {
   console.log('Mostrando step', n);
 }
 
-
-
-// Exemplo: liga botões next/back (ajuste IDs conforme seu HTML)
+// Passo 1 -> Passo 2
 document.getElementById('next1')?.addEventListener('click', () => {
-  // validações do step1...
+  // TODO: validações do step1 (se quiser manter aqui também)
   showStep(2);
 });
+
+// Voltar para 1
 document.getElementById('back2')?.addEventListener('click', () => showStep(1));
+
+// Passo 2 -> Passo 3
 document.getElementById('next2')?.addEventListener('click', () => {
-  // validações do step2...
+  // TODO: validações do step2
   showStep(3);
 });
+
+// Voltar para 2
 document.getElementById('back3')?.addEventListener('click', () => showStep(2));
 
-// Inicializa mostrando a primeira etapa ao carregar
+// FINAL: enviar/validar e redirecionar
+document.getElementById('finish')?.addEventListener('click', (e) => {
+  e.preventDefault();
+  // TODO: validações do step3
+  window.location.href = 'catalogo.html';
+});
+
+// Inicializa no passo 1
 showStep(1);

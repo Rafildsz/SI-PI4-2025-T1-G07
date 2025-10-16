@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <link rel="icon" href="assets/logo.png" type="image/svg+xml">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login — Semear</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS global + CSS da tela de login -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+  <!-- Header simples reaproveitando o layout -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">
+        <img src="assets/logo.svg" alt="Semear" style="height:44px;">
+        <span class="brand">Semear</span>
+      </a>
+      <nav class="main-nav" id="main-nav">
+        <a href="cadastro.html">Criar conta</a>
+        <a href="login.html" aria-current="page">Entrar</a>
+      </nav>
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Abrir menu" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="auth-wrap">
+    <div class="auth-header">
+      <h2 class="brand">Bem-vindo de volta</h2>
+    </div>
+
+    <section class="auth-card" role="form" aria-labelledby="login-title">
+      <h1 id="login-title">Entrar</h1>
+      <p class="lead">Acesse sua conta para continuar.</p>
+
+      <form id="loginForm" novalidate>
+        <div class="form-row">
+          <div class="field">
+            <input type="email" id="loginEmail" name="email" placeholder="Seu e-mail" autocomplete="email" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <input type="password" id="loginPassword" name="password" placeholder="Sua senha" autocomplete="current-password" minlength="6" required />
+          </div>
+        </div>
+
+        <div class="actions">
+          <label class="remember">
+            <input type="checkbox" id="remember" /> Lembrar-me
+          </label>
+          <a href="#" class="link">Esqueceu a senha?</a>
+        </div>
+
+        <div style="margin-top:14px;">
+          <button class="btn-submit" type="submit">Entrar</button>
+        </div>
+      </form>
+
+      <div class="auth-footer">
+        Ainda não tem conta? <a href="cadastro.html">Crie agora</a>.
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Semear — Produtos frescos direto do produtor.</p>
+    </div>
+  </footer>
+
+  <!-- JS da página -->
+  <script src="js/login.js"></script>
+</body>
+</html>

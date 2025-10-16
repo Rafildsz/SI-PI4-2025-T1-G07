@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
+  <link rel="icon" href="assets/logo.png" type="image/svg+xml">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Catálogo — Semear</title>
@@ -14,9 +15,9 @@
 <body>
   <!-- Header fino (estilo dashboard) -->
   <header class="container dash-header" role="banner">
-    <a class="brand-inline" href="index.html" aria-label="Voltar ao início">
+    <a class="brand-inline" href="index.html">
       <img src="assets/logo.svg" alt="Semear">
-      <strong>Semear</strong>
+      <span class="brand">Semear</span>
     </a>
 
     <div class="searchbar" role="search">
@@ -47,7 +48,6 @@
           <label for="ordem" class="sr-only">Ordenar por</label>
           <select id="ordem" class="select">
             <option>Ordenar por</option>
-            <option value="recomendados">Recomendados</option>
             <option value="preco_asc">Preço: menor para maior</option>
             <option value="preco_desc">Preço: maior para menor</option>
             <option value="distancia">Mais próximos</option>

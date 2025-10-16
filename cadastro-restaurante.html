@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <link rel="icon" href="assets/logo.png" type="image/svg+xml">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cadastro Produtor — Semear</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- estilos específicos do stepper (pode colar dentro do styles.css) -->
+  <style>
+  /* ---------- Stepper / Form styles (adicione ao seu styles.css se preferir) ---------- */
+  .stepper-wrap { max-width: 980px; margin: 28px auto 60px; padding: 0 18px; }
+  .progress-line { display:flex; align-items:center; gap:12px; justify-content:space-between; margin-bottom:34px; }
+  .progress-segment { flex:1; height:2px; background: #d6d6d6; position:relative; }
+  .step-circle {
+    width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background:#fff;border:2px solid #f0a63b;color:#f0a63b;font-weight:700;
+    position:absolute; left:50%; transform:translateX(-50%); top:-22px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+  }
+  .segment-first .step-circle { background:#f0a63b;color:white;border:none; }
+  .segment-complete .step-circle { background:#3aa55a;color:white;border:none; }
+  .segment-active .step-circle { background:#fff;color:#f0a63b;border:2px solid #f0a63b; }
+
+  /* labels abaixo dos círculos */
+  .steps-labels { display:flex; justify-content:space-between; gap:12px; margin-top:8px; color:#666; font-size:14px; }
+  .steps-labels .label { width:44px; text-align:center; transform:translateX(-22px); }
+  .steps-labels .label.center { transform:none; width:auto; flex:1; text-align:center; }
+
+  /* Card do formulário */
+  .card-form {
+    background: #fff; border-radius:12px; padding:28px; border:1px solid #e6e6e6;
+    max-width:700px; margin: 20px auto; box-shadow: 0 6px 22px rgba(15,15,15,0.03);
+  }
+  .card-form h2 { margin-bottom:14px; font-size:20px; color:#222; }
+  .card-form p.lead { margin-bottom:18px; color:#6b6b6b; }
+
+  .form-row { display:flex; gap:12px; margin-bottom:12px; }
+  .form-row .field { flex:1; }
+  input[type="text"], input[type="email"], input[type="password"], input[type="tel"], select, textarea {
+    width:100%; padding:10px 12px; border-radius:8px; border:1px solid #ddd; font-size:14px;
+  }
+  textarea { min-height:110px; resize:vertical; }
+
+  .actions-row { display:flex; gap:12px; justify-content:space-between; align-items:center; margin-top:16px; }
+  .actions-row .right { margin-left:auto; display:flex; gap:10px; }
+
+  .btn-continue {
+    background: #3aa55a; color:white; padding:12px 18px; border-radius:8px; border:none; font-weight:700; cursor:pointer;
+  }
+  .btn-back {
+    background:transparent; color:#666; padding:10px 14px; border-radius:8px; border:1px solid #ddd; cursor:pointer;
+  }
+
+  /* ocultar etapas por vez */
+  .step { display:none; }
+  .step.active { display:block; }
+
+  /* responsivo */
+  @media (max-width:720px){
+    .progress-line { gap:8px; }
+    .steps-labels { font-size:12px; }
+    .card-form { padding:18px; }
+    .steps-labels .label { transform:none; width:auto; flex:1; text-align:center; }
+    .form-row { flex-direction:column; }
+  }
+  </style>
+</head>
+<body>
+  <!-- Header simples reaproveitando o layout -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">
+        <img src="assets/logo.svg" alt="Semear" style="height:44px;">
+        <span class="brand">Semear</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="stepper-wrap">
+    <!-- Progress / Stepper -->
+    
+
+  <div class="progress-container">
+  <div class="progress-step" data-step="1">
+    <div class="circle">1</div>
+    <p>Crie sua conta</p>
+  </div>
+  <div class="line"></div>
+  <div class="progress-step" data-step="2">
+    <div class="circle">2</div>
+    <p>Informações da<br>Propriedade</p>
+  </div>
+  <div class="line"></div>
+  <div class="progress-step" data-step="3">
+    <div class="circle">3</div>
+    <p>Detalhes da sua<br>Produção</p>
+  </div>
+</div>
+
+
+    <!-- Card com formulário (etapas) -->
+    <div class="card-form" role="form" aria-labelledby="form-title">
+      <h2 id="form-title" style="text-align: center;">Bem-vindo ao Semear</h2>
+
+      <!-- STEP 1 -->
+      <form id="cadastroForm">
+        <div class="step step-1 active" data-step="1">
+          <div class="form-row">
+            <div class="field">
+              <input type="text" id="nome" name="nome" placeholder="Nome Completo" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <input type="email" id="email" name="email" placeholder="Melhor E-mail" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <input type="password" id="senha" name="senha" placeholder="Crie uma senha" minlength="6" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <input type="password" id="senha2" name="senha2" placeholder="Confirme sua senha" minlength="6" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <input type="tel" id="telefone" name="telefone" placeholder="Telefone/WhatsApp">
+            </div>
+          </div>
+
+          <div class="actions-row">
+            <div style="color:#999; font-size:13px;">Passo 1 de 3</div>
+            <div class="right">
+              <button type="button" class="btn-continue" id="next1">Continuar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="step step-2" data-step="2">
+          <div class="form-row">
+            <div class="field">
+              <input type="text" id="nomePropriedade" name="nomePropriedade" placeholder="Nome da Propriedade" required>
+            </div>
+            <div class="field">
+              <input type="text" id="cidade" name="cidade" placeholder="Cidade / Região" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <select id="tipoProducao" name="tipoProducao" required>
+                <option value="">Tipo de produção (ex: hortifrúti)</option>
+                <option value="hortifruti">Hortifrúti</option>
+                <option value="laticinio">Laticínio</option>
+                <option value="ovos">Ovos</option>
+                <option value="outro">Outro</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <textarea id="sobrePropriedade" name="sobrePropriedade" placeholder="Fale um pouco sobre a propriedade (área, método, etc.)"></textarea>
+            </div>
+          </div>
+
+          <div class="actions-row">
+            <div style="color:#999; font-size:13px;">Passo 2 de 3</div>
+            <div class="right">
+              <button type="button" class="btn-back" id="back2">Voltar</button>
+              <button type="button" class="btn-continue" id="next2">Continuar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="step step-3" data-step="3">
+          <div class="form-row">
+            <div class="field">
+              <input type="text" id="produtoPrincipal" name="produtoPrincipal" placeholder="Produto principal (ex: cenoura)" required>
+            </div>
+            <div class="field">
+              <input type="text" id="unidade" name="unidade" placeholder="Unidade de venda (ex: kg, cx)" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <input type="number" id="estoque" name="estoque" placeholder="Quantidade disponível (estimada)">
+            </div>
+            <div class="field">
+              <input type="text" id="preco" name="preco" placeholder="Preço sugerido (opcional)">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <textarea id="observacoes" name="observacoes" placeholder="Observações, logística de entrega, mínima de pedido..."></textarea>
+            </div>
+          </div>
+
+          <div class="actions-row">
+            <div style="color:#999; font-size:13px;">Passo 3 de 3</div>
+            <div class="right">
+              <button type="button" class="btn-back" id="back3">Voltar</button>
+              <button type="submit" class="btn-continue" id="finish">Concluir cadastro</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Semear — Produtos frescos direto do produtor.</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+  /* ---------- JS do stepper (se preferir, mova para js/cadastro.js) ---------- */
+  (function(){
+    // Utilitários simples
+    const showStep = (n) => {
+      document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+      const stepEl = document.querySelector('.step-' + n);
+      if (stepEl) stepEl.classList.add('active');
+      // atualizar progress visuals
+      document.querySelectorAll('.progress-segment').forEach(seg=>{
+        const s = Number(seg.dataset.step);
+        seg.classList.remove('segment-complete','segment-active');
+        if (s < n) seg.classList.add('segment-complete');
+        if (s === n) seg.classList.add('segment-active');
+      });
+    };
+
+    // navegação
+    document.getElementById('next1').addEventListener('click', function(){
+      // valida campos do step1
+      const nome = document.getElementById('nome');
+      const email = document.getElementById('email');
+      const senha = document.getElementById('senha');
+      const senha2 = document.getElementById('senha2');
+      if (!nome.value.trim()){ alert('Preencha seu nome.'); nome.focus(); return; }
+      if (!email.checkValidity()){ alert('Insira um email válido.'); email.focus(); return; }
+      if (senha.value.length < 6){ alert('Senha deve ter ao menos 6 caracteres.'); senha.focus(); return; }
+      if (senha.value !== senha2.value){ alert('As senhas não conferem.'); senha2.focus(); return; }
+      showStep(2);
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+
+    document.getElementById('back2').addEventListener('click', function(){ showStep(1); window.scrollTo({top:0, behavior:'smooth'}); });
+    document.getElementById('next2').addEventListener('click', function(){
+      // valida step2
+      const nomeProp = document.getElementById('nomePropriedade');
+      const cidade = document.getElementById('cidade');
+      if (!nomeProp.value.trim()){ alert('Informe o nome da propriedade.'); nomeProp.focus(); return; }
+      if (!cidade.value.trim()){ alert('Informe a cidade/região.'); cidade.focus(); return; }
+      showStep(3);
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+
+    document.getElementById('back3').addEventListener('click', function(){ showStep(2); window.scrollTo({top:0, behavior:'smooth'}); });
+
+    // submit final
+    document.getElementById('cadastroForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      // aqui você pode enviar para backend via fetch ou salvar no localStorage
+      const data = new FormData(e.target);
+      const obj = Object.fromEntries(data.entries());
+      // exemplo: salvar no localStorage (apenas para demo)
+      localStorage.setItem('semear_cadastro_demo', JSON.stringify(obj));
+      alert('Cadastro simulado concluído! Dados salvos localmente (demo).');
+      // redirecionar para painel ou página de confirmação se quiser:
+      // window.location.href = 'produtor-confirmacao.html';
+    });
+
+    // exibir step inicial 1
+    showStep(1);
+
+    // ano rodapé
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+  })();
+  </script>
+</body>
+</html>
