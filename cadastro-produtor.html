@@ -275,17 +275,23 @@
     document.getElementById('back3').addEventListener('click', function(){ showStep(2); window.scrollTo({top:0, behavior:'smooth'}); });
 
     // submit final
-    document.getElementById('cadastroForm').addEventListener('submit', function(e){
-      e.preventDefault();
-      // aqui você pode enviar para backend via fetch ou salvar no localStorage
-      const data = new FormData(e.target);
-      const obj = Object.fromEntries(data.entries());
-      // exemplo: salvar no localStorage (apenas para demo)
-      localStorage.setItem('semear_cadastro_demo', JSON.stringify(obj));
-      alert('Cadastro simulado concluído! Dados salvos localmente (demo).');
-      // redirecionar para painel ou página de confirmação se quiser:
-      // window.location.href = 'produtor-confirmacao.html';
-    });
+document.getElementById('cadastroForm').addEventListener('submit', function(e){
+  e.preventDefault();
+
+  // Pega os dados do formulário
+  const data = new FormData(e.target);
+  const obj = Object.fromEntries(data.entries());
+
+  // Salva o nome do produtor no localStorage
+  localStorage.setItem('nomeProdutor', obj.nome);
+
+  // (Opcional) salva tudo se quiser usar depois
+  localStorage.setItem('semear_cadastro_demo', JSON.stringify(obj));
+
+  // Redireciona para a página de boas-vindas
+  window.location.href = 'bem-vindo-produtor.html';
+});
+
 
     // exibir step inicial 1
     showStep(1);

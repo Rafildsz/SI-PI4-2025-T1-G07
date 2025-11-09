@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <link rel="icon" href="assets/logo.png" type="image/svg+xml">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Minhas Vendas — Semear</title>
+
+  <!-- Fontes -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS principal (mesmo do catálogo) -->
+  <link rel="stylesheet" href="css/catalogo.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="container dash-header" role="banner">
+    <a class="brand-inline" href="index.html">
+      <img src="assets/logo.svg" alt="Semear">
+      <span class="brand">Semear</span>
+    </a>
+
+    <h1 class="page-title">Minhas Vendas</h1>
+
+    <button class="hamb" id="hamb" aria-label="Menu" aria-expanded="true" aria-controls="sidebar">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- Layout principal -->
+  <main class="container layout" role="main">
+    <section>
+      <!-- Tabs superiores -->
+      <div class="toolbar" style="margin-bottom: 24px;">
+        <button class="btn btn-primary">Envios de hoje <span class="chip">20</span></button>
+        <button class="btn">Próximos dias <span class="chip">35</span></button>
+        <button class="btn">A caminho <span class="chip">50</span></button>
+        <button class="btn">Finalizadas <span class="chip">500</span></button>
+      </div>
+
+      <!-- Cards de coletas -->
+      <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
+        <div class="card">
+          <div class="card-body">
+            <h3>Programada</h3>
+            <p><strong>Coleta 1 | 11:00 - 12:00 hs</strong></p>
+            <ul class="meta">
+              <li>Etiquetas para imprimir</li>
+              <li>Atrasadas. Enviar</li>
+              <li>Prontas para enviar</li>
+              <li>Com mensagens não lidas</li>
+            </ul>
+            <p class="price">10 tarefas</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h3>Programada</h3>
+            <p><strong>Coleta 2 | 14:30 - 16:30 hs</strong></p>
+            <ul class="meta">
+              <li>Etiquetas para imprimir</li>
+              <li>Atrasadas. Enviar</li>
+              <li>Prontas para enviar</li>
+              <li>Com mensagens não lidas</li>
+            </ul>
+            <p class="price">10 tarefas</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h3>Programada</h3>
+            <p><strong>Coleta 3 | 17:00 - 18:00 hs</strong></p>
+            <ul class="meta">
+              <li>Etiquetas para imprimir</li>
+              <li>Atrasadas. Enviar</li>
+              <li>Prontas para enviar</li>
+              <li>Com mensagens não lidas</li>
+            </ul>
+            <p class="price">10 tarefas</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra de busca -->
+      <div class="searchbar" style="margin: 26px 0;">
+        <input type="text" placeholder="Buscar pedidos..." />
+      </div>
+
+      <!-- Lista simulada de vendas -->
+      <div class="grid" style="grid-template-columns: 1fr;">
+        <div class="card">
+          <div class="card-body">
+            <h3>Pedido #1284 — Restaurante do Sol</h3>
+            <p class="meta">Coleta: 11:00 - 12:00 | Status: Aguardando envio</p>
+            <p>Itens: Alface, Cenoura, Tomate (total 18kg)</p>
+            <div class="toolbar-right">
+              <button class="btn btn-primary">Ver detalhes</button>
+              <button class="btn">Imprimir etiqueta</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h3>Pedido #1285 — Bistrô da Vila</h3>
+            <p class="meta">Coleta: 14:30 - 16:30 | Status: Pronto para envio</p>
+            <p>Itens: Batata, Uva, Maçã (total 12kg)</p>
+            <div class="toolbar-right">
+              <button class="btn btn-primary">Ver detalhes</button>
+              <button class="btn">Imprimir etiqueta</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Menu lateral">
+      <div class="sb-header">
+        <div class="sb-avatar">U</div>
+        <div>
+          <div class="sb-title">Usuário</div>
+          <small style="opacity:.9">Produtor</small>
+        </div>
+      </div>
+
+      <nav class="sb-nav" role="navigation">
+        <a class="sb-item" href="#"><span>💰</span> Minhas Vendas</a>
+        <a class="sb-item" href="#"><span>✉️</span> Mensagens</a>
+        <div class="sb-sep"></div>
+        <a class="sb-item sb-logout" href="index.html"><span>↩️</span> Sair</a>
+      </nav>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Semear — Produtos frescos direto do produtor.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Atualiza o ano do rodapé
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Toggle da sidebar
+    const hamb = document.getElementById('hamb');
+    hamb.addEventListener('click', () => {
+      document.body.classList.toggle('no-sidebar');
+    });
+  </script>
+</body>
+</html>

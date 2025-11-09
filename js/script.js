@@ -70,7 +70,7 @@ document.getElementById('back3')?.addEventListener('click', () => showStep(2));
 document.getElementById('finish')?.addEventListener('click', (e) => {
   e.preventDefault();
   // TODO: validações do step3
-  window.location.href = 'catalogo.html';
+  window.location.href = 'bem-vindo-produtor.html';
 });
 
 // Inicializa no passo 1

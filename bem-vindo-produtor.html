@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <link rel="icon" href="assets/logo.png" type="image/svg+xml">  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Semear — Boas-vindas</title>
+
+  <!-- Fonte -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS externo -->
+  <link rel="stylesheet" href="css/bem-vindo-produtor.css">
+</head>
+<body>
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="brand">
+    <img src="/assets/logo.svg" alt="Logo Semear" class="logo">
+      <span class="brand-name">Semear</span>
+    </div>
+  </header>
+
+  <!-- Conteúdo -->
+  <main class="hero">
+    <section class="hero-content">
+      <h1 class="title">
+        Seja bem-vindo(a) ao Semear!
+      </h1>
+
+      <p class="lead">
+        Ficamos felizes em ter você na Semear! Sua produção agora faz parte da nossa rede,
+        pronta para ser descoberta pelos melhores restaurantes da região.
+      </p>
+
+      <p class="lead">
+        Para começar a vender, o próximo passo é o mais importante: cadastrar seus produtos.
+        Crie seu catálogo digital para que os restaurantes saibam o que você tem de melhor para oferecer.
+      </p>
+
+      <button class="cta" id="btnProsseguir" type="button">Prosseguir</button>
+    </section>
+  </main>
+
+  <script>
+  // Pega o nome salvo no localStorage
+  const nome = localStorage.getItem('nomeProdutor');
+
+  // Atualiza o texto na tela
+  if (nome) {
+    document.getElementById('nomeProdutor').textContent = nome;
+  }
+
+  // Botão prosseguir → vai para catálogo
+  document.getElementById('btnProsseguir').addEventListener('click', function() {
+    window.location.href = 'catalogo.html';
+  });
+</script>
+</body>
+</html>

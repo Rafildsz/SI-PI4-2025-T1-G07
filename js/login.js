@@ -38,5 +38,5 @@ document.getElementById('loginForm').addEventListener('submit', function(e){
   } catch (err) {}
 
   // fallback (remova em produção; aqui só para navegar)
-  window.location.href = 'catalogo.html';
+  window.location.href = 'minhas-vendas.html';
 });
