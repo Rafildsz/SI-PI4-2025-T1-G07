@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <link rel="icon" href="assets/logo.png" type="image/svg+xml">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Boas-vindas — Restaurante | Semear</title>
+
+  <!-- Fonte -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- CSS principal (mesmo do catálogo) -->
+  <link rel="stylesheet" href="css/catalogo.css">
+</head>
+<body>
+  <!-- Topbar -->
+  <header class="dash-header container">
+    <div class="brand-inline">
+      <img src="assets/logo.svg" alt="Logo Semear">
+      <span class="brand">Semear</span>
+    </div>
+  </header>
+
+  <!-- Conteúdo -->
+  <main class="hero" style="text-align:center; margin-top:80px;">
+    <section class="hero-content">
+      <h1 style="font-size:1.6rem; font-weight:600; margin-bottom:20px;">
+        Seja bem-vindo(a) ao Semear!
+      </h1>
+
+      <p style="max-width:600px; margin:0 auto 28px; color:#444; line-height:1.6;">
+        Sua conta foi criada com sucesso! Estamos felizes em ter sua cozinha conectada aos melhores produtores da região. 
+        Aqui está o que você pode fazer agora:
+      </p>
+
+      <div style="max-width:600px; margin:0 auto; text-align:left; color:#333; font-size:15px; line-height:1.7;">
+        <p><strong>1. Explore a Vitrine:</strong> Use nossos filtros por proximidade para encontrar os ingredientes perfeitos perto de você.</p>
+        <p><strong>2. Fale com o Produtor:</strong> Tire dúvidas e negocie detalhes diretamente pelo nosso chat.</p>
+        <p><strong>3. Faça seus Pedidos:</strong> Receba produtos frescos com a logística simplificada que seu negócio precisa.</p>
+      </div>
+
+      <button id="btnExplorar" class="cta" type="button" 
+        style="margin-top:40px; background:#3aa55a; border:none; color:#fff; padding:14px 34px; border-radius:8px; font-size:15px; cursor:pointer; font-weight:600;">
+        Explorar Ingredientes Frescos
+      </button>
+    </section>
+  </main>
+
+  <script>
+  // Redireciona para o catálogo
+  document.getElementById('btnExplorar').addEventListener('click', function () {
+    window.location.href = 'catalogo.html';
+  });
+</script>
+
+</body>
+</html>
