@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perguntas Frequentes — Semear</title>
+
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+
+      <!-- Logo -->
+      <a href="index.html" class="logo">
+        <img src="assets/logo.svg" alt="Semear">
+        <span class="brand">Semear</span>
+      </a>
+
+      <!-- Nav Desktop -->
+      <nav class="main-nav">
+        <a href="sobre-nos.html">Sobre nós</a>
+        <a href="perguntas-frequentes.html" style="font-weight:700; color:var(--green-dark);">Perguntas frequentes</a>
+        <a href="contato.html">Contato</a>
+      </nav>
+
+      <div class="actions">
+        <a class="btn ghost" href="produtor.html">Sou um Produtor</a>
+        <a class="btn primary" href="cadastro-restaurante.html">Sou um Restaurante</a>
+
+        <button class="mobile-toggle" id="mobile-toggle" aria-label="Abrir menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+      <!-- Menu Mobile -->
+      <button class="mobile-toggle" id="mobileMenuBtn">
+        <span></span><span></span><span></span>
+      </button>
+
+    </div>
+  </header>
+
+  <!-- HERO / TÍTULO -->
+  <section class="container" style="padding:60px 0 30px;">
+    <h1 style="font-size:40px; font-family:'Playfair Display'; color:#111; margin-bottom:14px;">
+      Perguntas Frequentes
+    </h1>
+    <p style="max-width:640px; color:#555; font-size:18px;">
+      Encontre respostas rápidas sobre como a Semear funciona, como conectar-se a produtores, como comprar e muito mais.
+    </p>
+  </section>
+
+  <!-- FAQ -->
+  <section class="container" style="padding-bottom:60px;">
+
+    <!-- ITEM 1 -->
+    <div style="margin-bottom:30px;">
+      <h3 style="font-size:22px; font-weight:600; margin-bottom:6px;">Como a plataforma Semear funciona?</h3>
+      <p style="color:#444; max-width:760px;">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer at lacus id velit viverra
+        vehicula. Curabitur at orci velit. Vivamus tincidunt, mi a placerat egestas, erat elit
+        iaculis nisi, nec feugiat arcu elit non ipsum.
+      </p>
+    </div>
+
+    <!-- ITEM 2 -->
+    <div style="margin-bottom:30px;">
+      <h3 style="font-size:22px; font-weight:600; margin-bottom:6px;">Quem pode se cadastrar?</h3>
+      <p style="color:#444; max-width:760px;">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras consectetur, tortor sit amet
+        ultricies commodo, sem nulla ultricies nisi, ut dictum quam lectus a urna.
+      </p>
+    </div>
+
+    <!-- ITEM 3 -->
+    <div style="margin-bottom:30px;">
+      <h3 style="font-size:22px; font-weight:600; margin-bottom:6px;">Como funciona o envio dos produtos?</h3>
+      <p style="color:#444; max-width:760px;">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse pellentesque sit amet
+        massa ut pulvinar. Vivamus non nisi at magna iaculis suscipit.
+      </p>
+    </div>
+
+    <!-- ITEM 4 -->
+    <div style="margin-bottom:30px;">
+      <h3 style="font-size:22px; font-weight:600; margin-bottom:6px;">É seguro comprar pela Semear?</h3>
+      <p style="color:#444; max-width:760px;">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque dictum arcu nec massa
+        pulvinar, nec tempor mauris interdum.
+      </p>
+    </div>
+
+    <!-- ITEM 5 -->
+    <div style="margin-bottom:30px;">
+      <h3 style="font-size:22px; font-weight:600; margin-bottom:6px;">Posso falar diretamente com o produtor?</h3>
+      <p style="color:#444; max-width:760px;">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In pulvinar ullamcorper ligula vel
+        sollicitudin. Pellentesque blandit magna sed nisi ultricies faucibus.
+      </p>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Semear — Produtos frescos direto do produtor.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile nav script
+    const mobileBtn = document.getElementById("mobileMenuBtn");
+    const nav = document.querySelector(".main-nav");
+
+    mobileBtn.addEventListener("click", () => {
+      if (nav.style.display === "flex") {
+        nav.style.display = "none";
+      } else {
+        nav.style.display = "flex";
+        nav.style.flexDirection = "column";
+        nav.style.position = "absolute";
+        nav.style.top = "84px";
+        nav.style.right = "24px";
+        nav.style.background = "#fff";
+        nav.style.padding = "20px";
+        nav.style.borderRadius = "12px";
+        nav.style.boxShadow = "0 10px 28px rgba(0,0,0,0.12)";
+        nav.style.gap = "14px";
+        nav.style.zIndex = "1000";
+      }
+    });
+  </script>
+
+</body>
+</html>

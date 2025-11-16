@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contato — Semear</title>
+
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- HEADER PADRÃO -->
+  <header class="site-header">
+    <div class="container header-inner">
+
+      <!-- Logo -->
+      <a href="index.html" class="logo">
+        <img src="assets/logo.svg" alt="Semear">
+        <span class="brand">Semear</span>
+      </a>
+
+      <!-- Nav Desktop -->
+      <nav class="main-nav">
+        <a href="sobre-nos.html">Sobre nós</a>
+        <a href="perguntas-frequentes.html">Perguntas frequentes</a>
+        <a href="contato.html" style="font-weight:700; color:var(--green-dark);">Contato</a>
+      </nav>
+
+      <div class="actions">
+        <a class="btn ghost" href="produtor.html">Sou um Produtor</a>
+        <a class="btn primary" href="cadastro-restaurante.html">Sou um Restaurante</a>
+
+      <!-- Menu Mobile -->
+      <button class="mobile-toggle" id="mobileMenuBtn">
+        <span></span><span></span><span></span>
+      </button>
+
+    </div>
+  </header>
+
+  <!-- HERO / TÍTULO -->
+  <section class="container" style="padding:60px 0 30px;">
+    <h1 style="font-size:40px; font-family:'Playfair Display'; color:#111; margin-bottom:14px;">
+      Fale Conosco
+    </h1>
+    <p style="max-width:640px; color:#555; font-size:18px;">
+      Envie uma mensagem para nossa equipe. Ficaremos felizes em ajudar.
+    </p>
+  </section>
+
+  <!-- FORMULÁRIO DE CONTATO -->
+  <section class="container" style="padding-bottom:50px;">
+
+    <div class="form-card">
+
+      <h2>Enviar Mensagem</h2>
+      <p class="lead">Preencha os campos abaixo e retornaremos o mais breve possível.</p>
+
+      <form>
+
+        <div class="form-row">
+          <div class="field">
+            <label>Nome</label>
+            <input type="text" placeholder="Seu nome completo">
+          </div>
+
+          <div class="field">
+            <label>Email</label>
+            <input type="email" placeholder="seuemail@exemplo.com">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label>Assunto</label>
+            <input type="text" placeholder="Assunto da mensagem">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label>Mensagem</label>
+            <textarea placeholder="Digite sua mensagem aqui..."></textarea>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn-green">Enviar Mensagem</button>
+        </div>
+
+      </form>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Semear — Produtos frescos direto do produtor.</p>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile nav script
+    const mobileBtn = document.getElementById("mobileMenuBtn");
+    const nav = document.querySelector(".main-nav");
+
+    mobileBtn.addEventListener("click", () => {
+      if (nav.style.display === "flex") {
+        nav.style.display = "none";
+      } else {
+        nav.style.display = "flex";
+        nav.style.flexDirection = "column";
+        nav.style.position = "absolute";
+        nav.style.top = "84px";
+        nav.style.right = "24px";
+        nav.style.background = "#fff";
+        nav.style.padding = "20px";
+        nav.style.borderRadius = "12px";
+        nav.style.boxShadow = "0 10px 28px rgba(0,0,0,0.12)";
+        nav.style.gap = "14px";
+        nav.style.zIndex = "1000";
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sobre Nós — Semear</title>
+
+  <link rel="icon" href="assets/logo.png" type="image/svg+xml">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Header simples igual ao da home -->
+  <header class="site-header">
+  <div class="container header-inner">
+
+    <!-- LOGO -->
+    <a href="index.html" class="logo">
+      <img src="assets/logo.svg" alt="Semear">
+      <span class="brand">Semear</span>
+    </a>
+
+    <!-- NAV DESKTOP -->
+    <nav class="main-nav">
+      <a href="sobre-nos.html" style="font-weight:700; color:var(--green-dark);">Sobre nós</a>
+      <a href="perguntas-frequentes.html">Perguntas frequentes</a>
+      <a href="contato.html">Contato</a>
+    </nav>
+
+    <div class="actions">
+        <a class="btn ghost" href="produtor.html">Sou um Produtor</a>
+        <a class="btn primary" href="cadastro-restaurante.html">Sou um Restaurante</a>
+
+        <button class="mobile-toggle" id="mobile-toggle" aria-label="Abrir menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+    <!-- BOTÃO MOBILE -->
+    <button class="mobile-toggle" id="mobileMenuBtn">
+      <span></span><span></span><span></span>
+    </button>
+
+  </div>
+</header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main>
+
+    <!-- HERO -->
+    <section class="container" style="padding:60px 0;">
+      <h1 style="font-size:40px; font-weight:700; font-family:'Playfair Display'; margin-bottom:20px;">
+        Sobre a Semear
+      </h1>
+
+      <p style="max-width:760px; font-size:18px; line-height:1.6; color:#444;">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed hendrerit,
+        tortor nec congue tincidunt, est justo suscipit ligula, quis venenatis
+        magna lorem non turpis. Vivamus commodo facilisis orci, eget imperdiet
+        quam consectetur at.
+      </p>
+    </section>
+
+    <!-- BLOCO 1 -->
+    <section style="background:#e7f1e9; padding:60px 0;">
+      <div class="container" style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;">
+
+        <div>
+          <h2 style="font-size:30px; font-family:'Playfair Display'; font-weight:700; margin-bottom:16px;">
+            Nossa missão
+          </h2>
+          <p style="font-size:16px; line-height:1.6; color:#333;">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ante
+            magna, facilisis a turpis sit amet, mattis bibendum tortor. Pellentesque
+            sed aliquam metus. Cras suscipit luctus turpis, vitae faucibus ligula
+            dictum in.
+            <br><br>
+            Vestibulum ut vulputate diam, vitae porta risus. Suspendisse sagittis
+            luctus luctus. Vivamus non dignissim urna.
+          </p>
+        </div>
+
+        <img src="assets/sobre-nos.svg" alt="Produtos agrícolas"
+             style="width:100%; border-radius:16px; object-fit:cover;">
+      </div>
+    </section>
+
+    <!-- BLOCO 2 -->
+    <section class="container" style="padding:60px 0;">
+      <div style="max-width:760px;">
+        <h2 style="font-size:30px; font-family:'Playfair Display'; font-weight:700; margin-bottom:16px;">
+          Conectando produtores e estabelecimentos
+        </h2>
+
+        <p style="font-size:16px; line-height:1.6; color:#333;">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce rhoncus
+          turpis at dolor pellentesque, non aliquet turpis porttitor. Morbi
+          imperdiet libero mauris, a dapibus turpis luctus ac. Maecenas nec eros
+          blandit, sagittis mi id, rhoncus risus.
+          <br><br>
+          Sed suscipit augue vel mi gravida, vitae vehicula massa tristique. Fusce
+          pulvinar urna id risus ultricies, quis pharetra neque luctus.
+        </p>
+      </div>
+    </section>
+
+    <!-- BLOCO 3 -->
+    <section style="background:#f4f4f4; padding:60px 0;">
+      <div class="container" style="max-width:760px;">
+
+        <h2 style="font-size:30px; font-family:'Playfair Display'; font-weight:700; margin-bottom:16px;">
+          Valores que nos movem
+        </h2>
+
+        <ul style="font-size:16px; line-height:1.8; color:#333;">
+          <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+          <li>Integer pulvinar libero augue, non gravida lorem aliquet vitae.</li>
+          <li>Etiam molestie ipsum sed nibh luctus, eget sollicitudin lectus.</li>
+          <li>Vivamus eget libero sit amet erat vehicula facilisis.</li>
+        </ul>
+
+      </div>
+    </section>
+
+    <!-- Espaço final -->
+    <div style="height:60px;"></div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Semear — Produtos frescos direto do produtor.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
