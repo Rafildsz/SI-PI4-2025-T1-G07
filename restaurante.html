@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sou um Restaurante — Semear</title>
+
+  <link rel="icon" href="assets/logo.png" type="image/svg+xml">
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+  <!-- HEADER PADRÃO -->
+  <header class="site-header">
+    <div class="container header-inner">
+
+      <a class="logo" href="index.html">
+        <img src="assets/logo.svg" alt="Semear">
+        <span class="brand">Semear</span>
+      </a>
+
+      <nav class="main-nav">
+        <a href="sobre-nos.html">Sobre nós</a>
+        <a href="perguntas-frequentes.html">Perguntas frequentes</a>
+        <a href="contato.html">Contato</a>
+      </nav>
+
+      <div class="actions">
+        <a class="btn primary" href="produtor.html">Sou um Produtor</a>
+        <a class="btn ghost" href="restaurante.html">Sou um Restaurante</a>
+
+        <button class="mobile-toggle" id="mobile-toggle" aria-label="Abrir menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main>
+
+    <!-- HERO RESTAURANTE -->
+    <section class="hero container">
+      <div class="hero-text">
+        <h1>
+          Compre ingredientes frescos <br>
+          direto de quem produz.
+        </h1>
+
+        <p class="lead">
+          A Semear conecta seu restaurante aos melhores produtores locais, garantindo ingredientes frescos, sazonais e sem atravessadores — direto do campo para a sua cozinha.
+        </p>
+
+        <div class="cta-group">
+          <a class="btn btn-green" href="cadastro-restaurante.html">Quero me Cadastrar</a>
+          <a class="btn btn-orange" href="login-restaurante.html">Já tenho Login</a>
+        </div>
+      </div>
+
+      <div class="hero-image">
+        <img src="assets/banner_restaurante.jpg" 
+             alt="Chef avaliando ingredientes"
+             onerror="this.src='assets/banner_produtor.jpg'">
+      </div>
+    </section>
+
+    <!-- PASSOS -->
+    <section style="background-color:#E1F3E1; padding:40px 20px; color:#373737;">
+
+      <!-- Título -->
+      <h2 style="text-align:center; font-size:28px; margin-bottom:40px; font-family:'Playfair Display';">
+        É simples comprar com a Semear
+      </h2>
+
+      <!-- Grid dos passos -->
+      <div class="steps-grid"
+           style="display:grid; grid-template-columns:repeat(4,1fr); gap:20px; max-width:1000px; margin:0 auto; text-align:center;">
+
+        <div>
+          <img src="assets/icone_pesquisa.svg" alt="Buscar produtos"
+               style="width:40px;height:40px;margin-bottom:10px;">
+          <h4>Passo 1: Busque produtos</h4>
+          <p>Explore produtores próximos a você e encontre ingredientes frescos e selecionados.</p>
+        </div>
+
+        <div>
+          <img src="assets/icone_lista.svg" alt="Escolha os itens"
+               style="width:40px;height:40px;margin-bottom:10px;">
+          <h4>Passo 2: Monte seu pedido</h4>
+          <p>Escolha itens, consulte preços e visualize informações de qualidade e procedência.</p>
+        </div>
+
+        <div>
+          <img src="assets/icone_carrinho.svg" alt="Peça direto do produtor"
+               style="width:40px;height:40px;margin-bottom:10px;">
+          <h4>Passo 3: Faça o pedido</h4>
+          <p>Confirme a compra e converse com o produtor diretamente pela plataforma.</p>
+        </div>
+
+        <div>
+          <img src="assets/icone_entrega.svg" alt="Receba a entrega"
+               style="width:40px;height:40px;margin-bottom:10px;">
+          <h4>Passo 4: Receba sua entrega</h4>
+          <p>Combine a entrega e receba seus ingredientes frescos no dia combinado.</p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Semear — Produtos frescos direto do produtor.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // mobile menu
+    const mobileToggle = document.getElementById("mobile-toggle");
+    const nav = document.querySelector(".main-nav");
+
+    mobileToggle.addEventListener("click", () => {
+      nav.style.display = nav.style.display === "flex" ? "none" : "flex";
+      nav.style.flexDirection = "column";
+      nav.style.position  = "absolute";
+      nav.style.top       = "84px";
+      nav.style.right     = "24px";
+      nav.style.background= "#fff";
+      nav.style.padding   = "20px";
+      nav.style.borderRadius = "12px";
+      nav.style.gap       = "12px";
+      nav.style.boxShadow = "0 10px 30px rgba(0,0,0,0.1)";
+      nav.style.zIndex    = "999";
+    });
+  </script>
+
+</body>
+</html>
