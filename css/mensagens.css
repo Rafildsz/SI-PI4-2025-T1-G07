@@ -1,0 +1,294 @@
+/* =====================
+   RESET
+===================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Inter, sans-serif;
+  background: #fff;
+  color: #333;
+}
+
+:root {
+  --green: #2f7a45;
+  --light-gray: #f8f8f8;
+  --header-height: 84px;
+  --menu-width: 260px;
+}
+
+/* =====================
+   HEADER
+===================== */
+.site-header {
+  height: var(--header-height);
+  background: #fff;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 40px;
+  border-bottom: 1px solid #eee;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo img {
+  height: 48px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--green);
+}
+
+.brand {
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* =====================
+   LAYOUT GERAL
+===================== */
+.page-container {
+  display: flex;
+  width: 100%;
+  position: relative;
+}
+
+/* empurra o conteúdo para a esquerda para não ficar atrás do menu fixo */
+.messages-area {
+  flex: 1;
+  padding: 24px;
+  background: var(--light-gray);
+  min-height: calc(100vh - var(--header-height));
+  margin-right: var(--menu-width); /* IMPORTANTE */
+}
+
+.messages-wrapper {
+  background: #fff;
+  display: flex;
+  height: 80vh;
+  border-radius: 16px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,.1);
+  overflow: hidden;
+}
+
+/* =====================
+   LISTA DE CONVERSAS
+===================== */
+.conversation-list {
+  width: 300px;
+  border-right: 1px solid #e5e5e5;
+  padding: 22px;
+}
+
+.conversation-list h2 {
+  margin-bottom: 12px;
+  font-family: "Playfair Display", serif;
+  font-size: 24px;
+}
+
+.search-box {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.conversation-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+}
+
+.conversation {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.conversation.active,
+.conversation:hover {
+  background: #f3f3f3;
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  background: #ccc;
+  border-radius: 50%;
+}
+
+.info {
+  flex: 1;
+}
+
+.time {
+  color: var(--green);
+  font-size: 13px;
+}
+
+/* =====================
+   CHAT
+===================== */
+.chat-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.chat-title {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 22px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.msg {
+  max-width: 60%;
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.msg-left {
+  background: #ededed;
+  align-self: flex-start;
+}
+
+.msg-right {
+  background: #b7e4a7;
+  align-self: flex-end;
+}
+
+/* =====================
+   INPUT DO CHAT
+===================== */
+.chat-input-box {
+  padding: 16px;
+  border-top: 1px solid #e5e5e5;
+  display: flex;
+  gap: 12px;
+  background: #f2f2f2;
+}
+
+.chat-input-box input {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+.send-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: var(--green);
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* =====================
+   MENU VERDE FIXO
+===================== */
+.right-menu {
+  position: fixed;
+  top: var(--header-height);
+  right: 0;
+  width: var(--menu-width);
+  height: calc(100vh - var(--header-height));
+  background: var(--green);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 20px;
+  z-index: 999999;
+}
+
+/* Esconde botão hambúrguer (não é mais usado) */
+.menu-icon-btn {
+  display: none !important;
+}
+
+/* Ícone do usuário */
+.user-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background: rgba(255,255,255,0.25);
+  margin-bottom: 40px;
+}
+
+/* Links do menu */
+.side-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  opacity: 0.9;
+  transition: 0.2s;
+}
+
+.nav-link:hover {
+  opacity: 1;
+}
+
+.nav-link.active {
+  font-weight: bold;
+}
+
+/* Botão sair */
+.logout-btn {
+  margin-top: auto;
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.logout-btn:hover {
+  opacity: 1;
+}

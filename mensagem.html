@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mensagens — Semear</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/mensagens.css">
+
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="index.html">
+        <img src="assets/logo.svg" alt="Semear">
+        <span class="brand">Semear</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- CONTAINER PRINCIPAL -->
+  <div class="page-container">
+
+    <!-- ÁREA DE MENSAGENS -->
+    <main class="messages-area">
+      <div class="messages-wrapper">
+
+        <!-- LISTA -->
+        <section class="conversation-list">
+          <h2>Mensagens</h2>
+
+          <input type="text" class="search-box" placeholder="Pesquisar">
+
+          <ul id="listaConversas" class="conversation-items">
+            <!-- carregado por JS -->
+          </ul>
+        </section>
+
+        <!-- CHAT -->
+        <section class="chat-area">
+
+          <header class="chat-header">
+            <div class="avatar"></div>
+            <span id="chatNome" class="chat-title">Selecione uma conversa</span>
+          </header>
+
+          <div id="chatMensagens" class="chat-messages">
+            <!-- mensagens por JS -->
+          </div>
+
+          <footer class="chat-input-box">
+            <input id="msgInput" type="text" placeholder="Mensagem">
+            <button id="btnEnviar" class="send-btn">➤</button>
+          </footer>
+
+        </section>
+
+      </div>
+    </main>
+
+    <!-- MENU VERDE SLIDE -->
+    <aside class="right-menu" id="rightMenu">
+
+      <button id="menuToggle" class="menu-icon-btn" type="button">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="user-circle"></div>
+
+      <nav class="side-nav">
+        <a href="meus-pedidos.html" class="nav-link">📦 Meus Pedidos</a>
+        <a href="mensagem.html" class="nav-link active">✉️ Mensagens</a>
+      </nav>
+
+      <a href="login.html" class="logout-btn">⏻ Sair</a>
+
+    </aside>
+
+  </div>
+
+  <!-- JS -->
+  <script src="js/mensagens.js"></script>
+
+</body>
+</html>
