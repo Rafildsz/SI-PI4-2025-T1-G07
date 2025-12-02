@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import java.util.List;
 
-@Data
 @Entity
 @Table(name = "usuarios")
+@Data
 public class Usuario {
 
     @Id
@@ -20,6 +20,6 @@ public class Usuario {
     private String tipo_usuario;
     private String endereco;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Propriedade> propriedades;
 }

@@ -2,10 +2,11 @@ package com.example.backend_spring.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Data
 @Entity
 @Table(name = "produtos")
+@Data
 public class Produto {
 
     @Id
@@ -18,14 +19,14 @@ public class Produto {
 
     private String unidade_medida;
     private Integer estoque;
-
     private String imagem_url;
 
     @ManyToOne
-    @JoinColumn(name = "id_propriedade")
+    @JoinColumn(name = "id_propriedade", referencedColumnName = "id_propriedade")
+    @JsonIgnore
     private Propriedade propriedade;
 
     @ManyToOne
-    @JoinColumn(name = "id_categoria")
+    @JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria")
     private CategoriaProduto categoria;
 }

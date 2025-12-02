@@ -8,8 +8,8 @@ public class loginRequest {
         return email;
     }
 
-    public void setEmail(String emailS) {
-        this.email = email;
+    public void setEmail(String email) {
+        this.email = email;   // ✔ agora está certo
     }
 
     public String getSenha() {
