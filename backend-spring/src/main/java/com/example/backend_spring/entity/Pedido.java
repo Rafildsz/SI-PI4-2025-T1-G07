@@ -2,7 +2,9 @@ package com.example.backend_spring.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -16,19 +18,23 @@ public class Pedido {
 
     @ManyToOne
     @JoinColumn(name = "id_restaurante")
-    private Usuario restaurante;
+    private Usuario restaurante; // pode ser null
 
     @ManyToOne
     @JoinColumn(name = "id_produtor")
-    private Usuario produtor;
+    private Usuario produtor; // pode ser null
 
-    private LocalDateTime data_pedido;
-    private Double valor_total;
-    private String status;
-    private String tipo_entrega;
+    private LocalDateTime data_pedido = LocalDateTime.now();
+
+    private Double valor_total = 0.0;
+
+    // compatível com ENUM do banco
+    private String status = "pendente";
+
+    private String tipo_entrega = "retirada";
+
     private String observacoes;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-    private List<ItemPedido> itens;
+    private List<ItemPedido> itens = new ArrayList<>();
 }
-

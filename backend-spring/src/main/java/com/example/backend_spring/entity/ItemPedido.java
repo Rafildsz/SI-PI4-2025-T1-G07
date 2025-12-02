@@ -21,6 +21,7 @@ public class ItemPedido {
     private Produto produto;
 
     private Integer quantidade;
-    private Double preco_unitario;
-}
 
+    @Column(name = "preco_unitario")
+    private Double precoUnitario; // <-- NOME CORRETO PARA O JAVA
+}
