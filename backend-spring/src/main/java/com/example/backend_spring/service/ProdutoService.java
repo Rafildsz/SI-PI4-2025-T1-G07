@@ -23,6 +23,10 @@ public class ProdutoService {
         return repository.findAll();
     }
 
+    public List<Produto> listarPorPropriedade(Long propriedadeId) {
+        return repository.findByPropriedadeId(propriedadeId);
+    }
+
     public Produto buscar(Long id) {
         return repository.findById(id).orElse(null);
     }

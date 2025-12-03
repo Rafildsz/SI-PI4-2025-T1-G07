@@ -1,5 +1,6 @@
 package com.example.backend_spring.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -17,10 +18,12 @@ public class Pedido {
 
     @ManyToOne
     @JoinColumn(name = "id_restaurante", referencedColumnName = "id_usuario")
+    @JsonIgnoreProperties({"senha", "pedidosComoRestaurante", "pedidosComoProdutor"})
     private Usuario restaurante;
 
     @ManyToOne
     @JoinColumn(name = "id_produtor", referencedColumnName = "id_usuario")
+    @JsonIgnoreProperties({"senha", "pedidosComoRestaurante", "pedidosComoProdutor"})
     private Usuario produtor;
 
     private LocalDateTime data_pedido = LocalDateTime.now();

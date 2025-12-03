@@ -42,8 +42,8 @@
     <section style="margin-bottom:60px;">
 
       <div class="greet">
-        <h2>Meu Carrinho / Meus Pedidos</h2>
-        <p>Veja os itens que estão sendo pedidos neste momento.</p>
+        <h2>Meus Pedidos</h2>
+        <p>Acompanhe o status dos seus pedidos.</p>
       </div>
 
       <!-- aqui vai o carrinho -->
@@ -88,8 +88,7 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    const API_CARRINHO = "http://localhost:8081/carrinho";
-
+    const API_BASE = "http://localhost:8080/api";
     const lista = document.getElementById("listaPedidos");
     const estadoCarrinho = document.getElementById("estadoCarrinho");
 
@@ -98,202 +97,137 @@
       return v.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
     }
 
-    // Renderiza o carrinho na tela
-    function renderCarrinho(pedido) {
-      if (!pedido || !pedido.itens || pedido.itens.length === 0) {
-        lista.innerHTML = "";
-        estadoCarrinho.textContent = "Seu carrinho está vazio.";
+    function fmtData(dataStr) {
+      if (!dataStr) return '';
+      const data = new Date(dataStr);
+      return data.toLocaleDateString('pt-BR', { 
+        day: '2-digit', 
+        month: '2-digit', 
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    // Carrega pedidos do restaurante
+    async function carregarPedidos() {
+      const usuarioId = localStorage.getItem('usuario_id');
+      
+      if (!usuarioId) {
+        window.location.href = 'login-restaurante.html';
         return;
       }
 
-      estadoCarrinho.textContent = `Status do pedido: ${pedido.status || "EM_ANDAMENTO"}`;
+      try {
+        const response = await fetch(`${API_BASE}/pedidos`);
+        if (!response.ok) throw new Error('Erro ao buscar pedidos');
+        
+        const todosPedidos = await response.json();
+        console.log('Todos os pedidos:', todosPedidos); // Debug
+        
+        // Filtra pedidos do restaurante logado
+        const pedidos = todosPedidos.filter(p => {
+          console.log('Pedido:', p.id_pedido, 'Restaurante:', p.restaurante); // Debug
+          return p.restaurante?.id_usuario == usuarioId;
+        });
+        
+        console.log('Pedidos filtrados:', pedidos); // Debug
+        renderizarPedidos(pedidos);
+      } catch (error) {
+        console.error('Erro ao carregar pedidos:', error);
+        estadoCarrinho.textContent = "Erro ao carregar pedidos.";
+        lista.innerHTML = '<p style="text-align: center; padding: 40px;">Erro ao carregar pedidos.</p>';
+      }
+    }
 
-      const linhas = pedido.itens.map(item => {
-        const subtotal = (item.preco_unitario || 0) * (item.quantidade || 0);
-        const nome = item.produto?.nome_produto || "Produto";
-        const unidade = item.produto?.unidade_medida || "";
-        const img = item.produto?.imagem_url || "assets/placeholder.jpg";
+    function renderizarPedidos(pedidos) {
+      if (pedidos.length === 0) {
+        estadoCarrinho.textContent = "Você ainda não fez nenhum pedido.";
+        lista.innerHTML = `
+          <div style="text-align: center; padding: 60px 20px;">
+            <h3>Nenhum pedido realizado</h3>
+            <p style="color: #666; margin: 16px 0;">Visite o catálogo e faça seu primeiro pedido!</p>
+            <a href="catalogo.html" class="btn btn-primary" style="text-decoration: none; display: inline-block; margin-top: 16px;">
+              Ir para o Catálogo
+            </a>
+          </div>
+        `;
+        return;
+      }
+
+      estadoCarrinho.textContent = `Você tem ${pedidos.length} pedido(s) realizado(s).`;
+
+      lista.innerHTML = pedidos.map(pedido => {
+        const statusClass = {
+          'PENDENTE': 'warning',
+          'CONFIRMADO': 'info',
+          'EM_PREPARO': 'info',
+          'ENVIADO': 'primary',
+          'ENTREGUE': 'success',
+          'CANCELADO': 'danger'
+        }[pedido.status] || 'secondary';
 
         return `
-          <tr>
-            <td style="display:flex; align-items:center; gap:8px;">
-              <img src="${img}" alt="${nome}" style="width:40px; height:40px; object-fit:cover; border-radius:8px;">
-              <div>
-                <div><strong>${nome}</strong></div>
-                <small>${unidade}</small>
+          <article class="card">
+            <div class="card-body">
+              <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                <div>
+                  <h3>Pedido #${pedido.id_pedido}</h3>
+                  <p class="meta">${fmtData(pedido.data_pedido)}</p>
+                </div>
+                <span class="chip" style="background: var(--${statusClass}, #6c757d); color: white; padding: 4px 12px; border-radius: 12px;">
+                  ${pedido.status}
+                </span>
               </div>
-            </td>
-            <td>${fmtMoeda(item.preco_unitario || 0)}</td>
-            <td>
-              <input type="number"
-                     min="1"
-                     value="${item.quantidade}"
-                     data-item-id="${item.id_item}"
-                     class="input-quantidade"
-                     style="width:70px; padding:4px;">
-            </td>
-            <td>${fmtMoeda(subtotal)}</td>
-            <td>
-              <button class="btn btn-danger btn-remover"
-                      data-item-id="${item.id_item}"
-                      style="padding:4px 8px; font-size:0.85rem; cursor:pointer;">
-                Remover
-              </button>
-            </td>
-          </tr>
+
+              <div style="margin: 12px 0;">
+                <strong>Produtor:</strong> ${pedido.produtor?.nome || 'N/A'}
+              </div>
+
+              <div style="margin: 12px 0;">
+                <strong>Total:</strong> <span style="font-size: 18px; color: #28a745; font-weight: 700;">${fmtMoeda(pedido.valor_total)}</span>
+              </div>
+
+              ${pedido.observacoes ? `<p style="color: #666; margin: 8px 0;"><strong>Observações:</strong> ${pedido.observacoes}</p>` : ''}
+
+              <div class="toolbar-right" style="margin-top: 16px;">
+                <button class="btn btn-primary" onclick="verDetalhes(${pedido.id_pedido})">Ver Detalhes</button>
+                ${pedido.status === 'PENDENTE' ? `<button class="btn" style="background: #dc3545; color: white;" onclick="cancelarPedido(${pedido.id_pedido})">Cancelar</button>` : ''}
+              </div>
+            </div>
+          </article>
         `;
-      }).join("");
-
-      const total = pedido.valor_total || pedido.itens
-        .map(i => (i.preco_unitario || 0) * (i.quantidade || 0))
-        .reduce((acc, v) => acc + v, 0);
-
-      lista.innerHTML = `
-        <article class="card">
-          <div class="card-body">
-            <h3>Itens do carrinho</h3>
-            <div class="meta" style="margin-bottom:12px;">
-              <div><strong>ID do Pedido:</strong> ${pedido.id_pedido}</div>
-            </div>
-
-            <div style="overflow-x:auto;">
-              <table style="width:100%; border-collapse:collapse; font-size:0.95rem;">
-                <thead>
-                  <tr>
-                    <th style="text-align:left; padding:8px 4px;">Produto</th>
-                    <th style="text-align:left; padding:8px 4px;">Preço unitário</th>
-                    <th style="text-align:left; padding:8px 4px;">Quantidade</th>
-                    <th style="text-align:left; padding:8px 4px;">Subtotal</th>
-                    <th style="text-align:left; padding:8px 4px;">Ações</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${linhas}
-                </tbody>
-              </table>
-            </div>
-
-            <div style="margin-top:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-              <div><strong>Total:</strong> ${fmtMoeda(total)}</div>
-              <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                <button id="btnFinalizar" class="btn btn-primary" style="cursor:pointer;">
-                  Finalizar Pedido
-                </button>
-                <button id="btnLimpar" class="btn" style="cursor:pointer; background:#eee;">
-                  Limpar Carrinho
-                </button>
-              </div>
-            </div>
-          </div>
-        </article>
-      `;
+      }).join('');
     }
 
-    // Carrega o carrinho do backend
-    async function carregarCarrinho() {
+    function verDetalhes(pedidoId) {
+      // TODO: Implementar modal ou página de detalhes
+      alert(`Detalhes do pedido #${pedidoId} em desenvolvimento`);
+    }
+
+    async function cancelarPedido(pedidoId) {
+      if (!confirm('Tem certeza que deseja cancelar este pedido?')) return;
+
       try {
-        const res = await fetch(API_CARRINHO);
-        if (!res.ok) {
-          estadoCarrinho.textContent = "Não foi possível carregar o carrinho.";
-          lista.innerHTML = "";
-          return;
-        }
-        const data = await res.json();
-        if (!data) {
-          renderCarrinho(null);
+        const response = await fetch(`${API_BASE}/pedidos/${pedidoId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ status: 'CANCELADO' })
+        });
+
+        if (response.ok) {
+          alert('Pedido cancelado com sucesso!');
+          carregarPedidos();
         } else {
-          renderCarrinho(data);
+          alert('Erro ao cancelar pedido');
         }
-      } catch (e) {
-        console.error(e);
-        estadoCarrinho.textContent = "Erro ao comunicar com o servidor.";
+      } catch (error) {
+        console.error('Erro ao cancelar pedido:', error);
+        alert('Erro ao cancelar pedido');
       }
     }
-
-    // Remover item
-    async function removerItem(itemId) {
-      try {
-        await fetch(`${API_CARRINHO}/remover/${itemId}`, {
-          method: "DELETE"
-        });
-        await carregarCarrinho();
-      } catch (e) {
-        console.error(e);
-        alert("Erro ao remover item.");
-      }
-    }
-
-    // Atualizar quantidade
-    async function atualizarQuantidade(itemId, quantidade) {
-      if (quantidade <= 0) quantidade = 1;
-      try {
-        await fetch(`${API_CARRINHO}/quantidade?itemId=${itemId}&quantidade=${quantidade}`, {
-          method: "PUT"
-        });
-        await carregarCarrinho();
-      } catch (e) {
-        console.error(e);
-        alert("Erro ao atualizar quantidade.");
-      }
-    }
-
-    // Finalizar pedido
-    async function finalizarPedido() {
-      try {
-        const res = await fetch(`${API_CARRINHO}/finalizar`, {
-          method: "POST"
-        });
-        if (!res.ok) {
-          alert("Erro ao finalizar pedido.");
-          return;
-        }
-        const pedido = await res.json();
-        alert("Pedido finalizado com sucesso! ID: " + pedido.id_pedido);
-        await carregarCarrinho();
-      } catch (e) {
-        console.error(e);
-        alert("Erro ao finalizar pedido.");
-      }
-    }
-
-    // Limpar carrinho
-    async function limparCarrinho() {
-      try {
-        await fetch(`${API_CARRINHO}/limpar`, {
-          method: "POST"
-        });
-        await carregarCarrinho();
-      } catch (e) {
-        console.error(e);
-        alert("Erro ao limpar carrinho.");
-      }
-    }
-
-    // Delegação de eventos para itens do carrinho
-    lista.addEventListener("click", (e) => {
-      if (e.target.classList.contains("btn-remover")) {
-        const id = e.target.dataset.itemId;
-        removerItem(id);
-      }
-    });
-
-    lista.addEventListener("change", (e) => {
-      if (e.target.classList.contains("input-quantidade")) {
-        const id = e.target.dataset.itemId;
-        const qtd = parseInt(e.target.value, 10) || 1;
-        atualizarQuantidade(id, qtd);
-      }
-    });
-
-    // Botões Finalizar e Limpar (usando event delegation simples)
-    document.addEventListener("click", (e) => {
-      if (e.target.id === "btnFinalizar") {
-        finalizarPedido();
-      }
-      if (e.target.id === "btnLimpar") {
-        limparCarrinho();
-      }
-    });
 
     // Sidebar toggle
     const hamb = document.getElementById('hamb');
@@ -310,8 +244,17 @@
       localStorage.setItem(SIDEBAR_KEY, hidden ? '1' : '0');
     });
 
-    // Carregar carrinho ao abrir página
-    carregarCarrinho();
+    // Logout - limpar localStorage
+    document.querySelector('.sb-logout').addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('usuario_id');
+      localStorage.removeItem('usuario_logado');
+      localStorage.removeItem('semear_carrinho');
+      window.location.href = 'index.html';
+    });
+
+    // Carregar pedidos ao abrir página
+    carregarPedidos();
   </script>
 
 </body>

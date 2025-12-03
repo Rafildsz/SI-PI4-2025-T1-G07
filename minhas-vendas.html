@@ -22,9 +22,12 @@
 
     <h1 class="page-title">Minhas Vendas</h1>
 
-    <button class="hamb" id="hamb" aria-label="Menu" aria-expanded="true" aria-controls="sidebar">
-      <span></span><span></span><span></span>
-    </button>
+    <nav style="display: flex; gap: 16px; align-items: center;">
+      <a href="adicionar-produto.html" class="btn btn-primary" style="text-decoration: none; padding: 8px 16px; border-radius: 6px;">+ Adicionar Produto</a>
+      <button class="hamb" id="hamb" aria-label="Menu" aria-expanded="true" aria-controls="sidebar">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
   </header>
 
   <!-- Layout principal -->
@@ -32,86 +35,29 @@
     <section>
       <!-- Tabs superiores -->
       <div class="toolbar" style="margin-bottom: 24px;">
-        <button class="btn btn-primary">Envios de hoje <span class="chip">20</span></button>
-        <button class="btn">Próximos dias <span class="chip">35</span></button>
-        <button class="btn">A caminho <span class="chip">50</span></button>
-        <button class="btn">Finalizadas <span class="chip">500</span></button>
+        <button class="btn btn-primary" data-tab="produtos">Meus Produtos</button>
+        <button class="btn" data-tab="vendas">Vendas/Pedidos</button>
       </div>
 
-      <!-- Cards de coletas -->
-      <div class="grid" style="grid-template-columns: repeat(auto-fit,minmax(260px,1fr));">
-        <div class="card">
-          <div class="card-body">
-            <h3>Programada</h3>
-            <p><strong>Coleta 1 | 11:00 - 12:00 hs</strong></p>
-            <ul class="meta">
-              <li>Etiquetas para imprimir</li>
-              <li>Atrasadas. Enviar</li>
-              <li>Prontas para enviar</li>
-              <li>Com mensagens não lidas</li>
-            </ul>
-            <p class="price">10 tarefas</p>
-          </div>
+      <!-- Tab: Meus Produtos -->
+      <div id="tab-produtos" class="tab-content">
+        <div class="searchbar" style="margin: 26px 0;">
+          <input type="text" id="searchProdutos" placeholder="Buscar produtos..." />
         </div>
 
-        <div class="card">
-          <div class="card-body">
-            <h3>Programada</h3>
-            <p><strong>Coleta 2 | 14:30 - 16:30 hs</strong></p>
-            <ul class="meta">
-              <li>Etiquetas para imprimir</li>
-              <li>Atrasadas. Enviar</li>
-              <li>Prontas para enviar</li>
-              <li>Com mensagens não lidas</li>
-            </ul>
-            <p class="price">10 tarefas</p>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-body">
-            <h3>Programada</h3>
-            <p><strong>Coleta 3 | 17:00 - 18:00 hs</strong></p>
-            <ul class="meta">
-              <li>Etiquetas para imprimir</li>
-              <li>Atrasadas. Enviar</li>
-              <li>Prontas para enviar</li>
-              <li>Com mensagens não lidas</li>
-            </ul>
-            <p class="price">10 tarefas</p>
-          </div>
+        <div id="produtosGrid" class="grid" style="grid-template-columns: repeat(auto-fill,minmax(280px,1fr));">
+          <!-- Produtos serão carregados aqui -->
         </div>
       </div>
 
-      <!-- Barra de busca -->
-      <div class="searchbar" style="margin: 26px 0;">
-        <input type="text" placeholder="Buscar pedidos..." />
-      </div>
-
-      <!-- Lista simulada de vendas -->
-      <div class="grid" style="grid-template-columns: 1fr;">
-        <div class="card">
-          <div class="card-body">
-            <h3>Pedido #1284 — Restaurante do Sol</h3>
-            <p class="meta">Coleta: 11:00 - 12:00 | Status: Aguardando envio</p>
-            <p>Itens: Alface, Cenoura, Tomate (total 18kg)</p>
-            <div class="toolbar-right">
-              <button class="btn btn-primary">Ver detalhes</button>
-              <button class="btn">Imprimir etiqueta</button>
-            </div>
-          </div>
+      <!-- Tab: Vendas/Pedidos -->
+      <div id="tab-vendas" class="tab-content" style="display: none;">
+        <div class="searchbar" style="margin: 26px 0;">
+          <input type="text" id="searchPedidos" placeholder="Buscar pedidos..." />
         </div>
 
-        <div class="card">
-          <div class="card-body">
-            <h3>Pedido #1285 — Bistrô da Vila</h3>
-            <p class="meta">Coleta: 14:30 - 16:30 | Status: Pronto para envio</p>
-            <p>Itens: Batata, Uva, Maçã (total 12kg)</p>
-            <div class="toolbar-right">
-              <button class="btn btn-primary">Ver detalhes</button>
-              <button class="btn">Imprimir etiqueta</button>
-            </div>
-          </div>
+        <div id="pedidosGrid" class="grid" style="grid-template-columns: 1fr;">
+          <!-- Pedidos serão carregados aqui -->
         </div>
       </div>
     </section>
@@ -150,6 +96,291 @@
     hamb.addEventListener('click', () => {
       document.body.classList.toggle('no-sidebar');
     });
+
+    // Logout - limpar localStorage
+    document.querySelector('.sb-logout').addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('usuario_id');
+      localStorage.removeItem('usuario_logado');
+      localStorage.removeItem('semear_carrinho');
+      window.location.href = 'index.html';
+    });
+
+    // Gerenciamento de tabs
+    const tabs = document.querySelectorAll('[data-tab]');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active de todos
+        tabs.forEach(t => t.classList.remove('btn-primary'));
+        tabs.forEach(t => t.classList.add('btn'));
+        
+        // Adiciona active no clicado
+        tab.classList.remove('btn');
+        tab.classList.add('btn-primary');
+        
+        // Mostra conteúdo correspondente
+        document.querySelectorAll('.tab-content').forEach(content => {
+          content.style.display = 'none';
+        });
+        document.getElementById(`tab-${tab.dataset.tab}`).style.display = 'block';
+        
+        // Carrega pedidos quando abrir a tab de vendas
+        if (tab.dataset.tab === 'vendas') {
+          carregarPedidos();
+        }
+      });
+    });
+
+    function fmtPreco(v){
+      return v.toLocaleString('pt-BR',{ style:'currency', currency:'BRL' });
+    }
+
+    function fmtData(dataStr) {
+      if (!dataStr) return '';
+      const data = new Date(dataStr);
+      return data.toLocaleDateString('pt-BR', { 
+        day: '2-digit', 
+        month: '2-digit', 
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    // Carrega pedidos recebidos pelo produtor
+    async function carregarPedidos() {
+      const usuarioId = localStorage.getItem('usuario_id');
+      if (!usuarioId) {
+        window.location.href = 'login-produtor.html';
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:8080/api/pedidos');
+        if (!response.ok) throw new Error('Erro ao buscar pedidos');
+        
+        const todosPedidos = await response.json();
+        console.log('Todos os pedidos:', todosPedidos); // Debug
+        
+        // Filtra pedidos onde o produtor é o usuário logado
+        const pedidos = todosPedidos.filter(p => {
+          console.log('Pedido:', p.id_pedido, 'Produtor:', p.produtor); // Debug
+          return p.produtor?.id_usuario == usuarioId;
+        });
+        
+        console.log('Pedidos filtrados:', pedidos); // Debug
+        renderizarPedidos(pedidos);
+      } catch (error) {
+        console.error('Erro ao carregar pedidos:', error);
+        document.getElementById('pedidosGrid').innerHTML = '<p style="text-align: center; padding: 40px;">Erro ao carregar pedidos.</p>';
+      }
+    }
+
+    function renderizarPedidos(pedidos) {
+      const grid = document.getElementById('pedidosGrid');
+      
+      if (pedidos.length === 0) {
+        grid.innerHTML = '<p style="text-align: center; padding: 40px;">Nenhum pedido recebido ainda.</p>';
+        return;
+      }
+
+      grid.innerHTML = pedidos.map(pedido => {
+        const statusClass = {
+          'PENDENTE': 'warning',
+          'CONFIRMADO': 'info',
+          'EM_PREPARO': 'info',
+          'ENVIADO': 'primary',
+          'ENTREGUE': 'success',
+          'CANCELADO': 'danger'
+        }[pedido.status] || 'secondary';
+
+        return `
+          <div class="card">
+            <div class="card-body">
+              <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 16px;">
+                <div>
+                  <h3>Pedido #${pedido.id_pedido}</h3>
+                  <p class="meta">${fmtData(pedido.data_pedido)}</p>
+                </div>
+                <span class="chip" style="background: ${statusClass === 'success' ? '#28a745' : statusClass === 'danger' ? '#dc3545' : statusClass === 'warning' ? '#ffc107' : '#17a2b8'}; color: white; padding: 4px 12px; border-radius: 12px;">
+                  ${pedido.status}
+                </span>
+              </div>
+
+              <div style="margin: 12px 0;">
+                <strong>Restaurante:</strong> ${pedido.restaurante?.nome || 'N/A'}
+              </div>
+
+              <div style="margin: 12px 0;">
+                <strong>Total:</strong> <span style="font-size: 18px; color: #28a745; font-weight: 700;">${fmtPreco(pedido.valor_total)}</span>
+              </div>
+
+              ${pedido.observacoes ? `<p style="color: #666; margin: 8px 0;"><strong>Observações:</strong> ${pedido.observacoes}</p>` : ''}
+
+              <div class="toolbar-right" style="margin-top: 16px; gap: 8px;">
+                <button class="btn btn-primary" onclick="verDetalhesPedido(${pedido.id_pedido})">Ver Detalhes</button>
+                ${pedido.status === 'PENDENTE' ? `
+                  <button class="btn" style="background: #28a745; color: white;" onclick="confirmarPedido(${pedido.id_pedido})">Confirmar</button>
+                  <button class="btn" style="background: #dc3545; color: white;" onclick="recusarPedido(${pedido.id_pedido})">Recusar</button>
+                ` : ''}
+                ${pedido.status === 'CONFIRMADO' ? `
+                  <button class="btn" style="background: #17a2b8; color: white;" onclick="marcarEnviado(${pedido.id_pedido})">Marcar como Enviado</button>
+                ` : ''}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function verDetalhesPedido(pedidoId) {
+      // TODO: Implementar modal ou página de detalhes
+      alert(`Detalhes do pedido #${pedidoId} em desenvolvimento`);
+    }
+
+    async function confirmarPedido(pedidoId) {
+      if (!confirm('Confirmar este pedido?')) return;
+      await atualizarStatusPedido(pedidoId, 'CONFIRMADO');
+    }
+
+    async function recusarPedido(pedidoId) {
+      if (!confirm('Recusar este pedido?')) return;
+      await atualizarStatusPedido(pedidoId, 'CANCELADO');
+    }
+
+    async function marcarEnviado(pedidoId) {
+      if (!confirm('Marcar pedido como enviado?')) return;
+      await atualizarStatusPedido(pedidoId, 'ENVIADO');
+    }
+
+    async function atualizarStatusPedido(pedidoId, novoStatus) {
+      try {
+        const response = await fetch(`http://localhost:8080/api/pedidos/${pedidoId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ status: novoStatus })
+        });
+
+        if (response.ok) {
+          alert('Status atualizado com sucesso!');
+          carregarPedidos();
+        } else {
+          alert('Erro ao atualizar status');
+        }
+      } catch (error) {
+        console.error('Erro ao atualizar status:', error);
+        alert('Erro ao atualizar status');
+      }
+    }
+
+    // Carrega produtos do produtor
+    async function carregarProdutos() {
+      const usuarioId = localStorage.getItem('usuario_id');
+      if (!usuarioId) {
+        window.location.href = 'login-produtor.html';
+        return;
+      }
+
+      try {
+        // Busca a propriedade do produtor
+        const propResponse = await fetch(`http://localhost:8080/propriedades/usuario/${usuarioId}`);
+        if (!propResponse.ok) throw new Error('Propriedade não encontrada');
+        
+        const propriedades = await propResponse.json();
+        if (propriedades.length === 0) {
+          document.getElementById('produtosGrid').innerHTML = '<p>Você ainda não tem uma propriedade cadastrada.</p>';
+          return;
+        }
+        
+        const propriedadeId = propriedades[0].id_propriedade;
+
+        // Busca os produtos da propriedade
+        const prodResponse = await fetch(`http://localhost:8080/api/produtos/propriedade/${propriedadeId}`);
+        if (!prodResponse.ok) throw new Error('Erro ao buscar produtos');
+        
+        const produtos = await prodResponse.json();
+        renderizarProdutos(produtos);
+      } catch (error) {
+        console.error('Erro ao carregar produtos:', error);
+        document.getElementById('produtosGrid').innerHTML = '<p>Erro ao carregar produtos. Tente novamente.</p>';
+      }
+    }
+
+    function renderizarProdutos(produtos) {
+      const grid = document.getElementById('produtosGrid');
+      
+      if (produtos.length === 0) {
+        grid.innerHTML = '<p>Você ainda não adicionou nenhum produto. Clique em "+ Adicionar Produto" para começar!</p>';
+        return;
+      }
+
+      grid.innerHTML = produtos.map(produto => {
+        const categorias = {
+          1: 'Hortaliças', 2: 'Frutas', 3: 'Legumes', 4: 'Verduras',
+          5: 'Grãos', 6: 'Laticínios', 7: 'Ovos', 8: 'Outros'
+        };
+        
+        return `
+          <div class="card">
+            ${produto.imagem_url ? `<img src="${produto.imagem_url}" alt="${produto.nome_produto}" style="width:100%; height:200px; object-fit:cover;">` : ''}
+            <div class="card-body">
+              <h3>${produto.nome_produto}</h3>
+              <p class="meta">${categorias[produto.categoria?.id_categoria] || 'Categoria'}</p>
+              ${produto.descricao ? `<p style="font-size: 14px; color: #666; margin: 8px 0;">${produto.descricao}</p>` : ''}
+              <p class="price">R$ ${produto.preco.toFixed(2)}/${produto.unidade_medida}</p>
+              <p style="font-size: 14px; color: ${produto.estoque > 0 ? '#28a745' : '#dc3545'};">
+                Estoque: ${produto.estoque} ${produto.unidade_medida}
+              </p>
+              <div class="toolbar-right" style="margin-top: 12px;">
+                <button class="btn btn-primary" onclick="editarProduto(${produto.id_produto})">Editar</button>
+                <button class="btn" style="background: #dc3545; color: white;" onclick="excluirProduto(${produto.id_produto})">Excluir</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function editarProduto(id) {
+      // TODO: Implementar edição
+      alert('Funcionalidade de edição em desenvolvimento');
+    }
+
+    async function excluirProduto(id) {
+      if (!confirm('Tem certeza que deseja excluir este produto?')) return;
+      
+      try {
+        const response = await fetch(`http://localhost:8080/api/produtos/${id}`, {
+          method: 'DELETE'
+        });
+        
+        if (response.ok) {
+          alert('Produto excluído com sucesso!');
+          carregarProdutos(); // Recarrega a lista
+        } else {
+          alert('Erro ao excluir produto');
+        }
+      } catch (error) {
+        console.error('Erro ao excluir:', error);
+        alert('Erro ao excluir produto');
+      }
+    }
+
+    // Busca de produtos
+    document.getElementById('searchProdutos').addEventListener('input', (e) => {
+      const termo = e.target.value.toLowerCase();
+      const cards = document.querySelectorAll('#produtosGrid .card');
+      
+      cards.forEach(card => {
+        const texto = card.textContent.toLowerCase();
+        card.style.display = texto.includes(termo) ? 'block' : 'none';
+      });
+    });
+
+    // Carrega produtos ao iniciar
+    carregarProdutos();
   </script>
 </body>
 </html>

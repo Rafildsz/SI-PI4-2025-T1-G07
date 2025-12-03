@@ -3,6 +3,7 @@ package com.example.backend_spring.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 @Entity
@@ -23,6 +24,7 @@ public class Propriedade {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
+    @JsonIgnoreProperties({"senha", "propriedades"})
     private Usuario usuario;
 
     @JsonIgnore

@@ -52,4 +52,8 @@ public class PropriedadeService {
     public void deletar(Long id) {
         repository.deleteById(id);
     }
+
+    public List<Propriedade> buscarPorUsuario(Long usuarioId) {
+        return repository.findByUsuarioId(usuarioId);
+    }
 }

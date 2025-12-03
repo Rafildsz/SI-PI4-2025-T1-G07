@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <link rel="icon" href="assets/logo.png" type="image/svg+xml">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Adicionar Produto — Semear</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  
+  <style>
+  .produto-wrap { max-width: 700px; margin: 40px auto; padding: 0 18px; }
+  
+  .card-produto {
+    background: #fff; border-radius:12px; padding:32px; border:1px solid #e6e6e6;
+    box-shadow: 0 6px 22px rgba(15,15,15,0.03);
+  }
+  .card-produto h2 { margin-bottom:24px; font-size:24px; color:#222; }
+
+  .form-row { display:flex; gap:12px; margin-bottom:16px; }
+  .form-row .field { flex:1; }
+  
+  label { display:block; margin-bottom:6px; font-weight:600; font-size:14px; color:#333; }
+  
+  input[type="text"], input[type="number"], select, textarea {
+    width:100%; padding:10px 12px; border-radius:8px; border:1px solid #ddd; font-size:14px;
+  }
+  input.error, select.error, textarea.error { border-color: #dc3545; }
+  textarea { min-height:100px; resize:vertical; }
+  
+  .error-message {
+    color: #dc3545; font-size: 12px; margin-top: 4px; display: none;
+  }
+  .error-message.show { display: block; }
+
+  .btn-group { display:flex; gap:12px; margin-top:24px; }
+  .btn-primary {
+    background: #3aa55a; color:white; padding:12px 24px; border-radius:8px; border:none; 
+    font-weight:700; cursor:pointer; flex:1;
+  }
+  .btn-secondary {
+    background:#f5f5f5; color:#666; padding:12px 24px; border-radius:8px; border:none; 
+    font-weight:600; cursor:pointer;
+  }
+  .btn-primary:hover { background: #2e8a47; }
+  .btn-secondary:hover { background: #e0e0e0; }
+  </style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="logo" href="index.html">
+      <img src="assets/logo.svg" alt="Semear" style="height:44px;">
+      <span class="brand">Semear</span>
+    </a>
+    <nav class="main-nav">
+      <a href="minhas-vendas.html">Minhas Vendas</a>
+      <a href="adicionar-produto.html" class="active">Adicionar Produto</a>
+      <a href="index.html" onclick="localStorage.clear()">Sair</a>
+    </nav>
+  </div>
+</header>
+
+<main class="produto-wrap">
+  <div class="card-produto">
+    <h2>Adicionar Novo Produto</h2>
+
+    <form id="produtoForm">
+      
+      <div class="form-row">
+        <div class="field">
+          <label for="nomeProduto">Nome do Produto *</label>
+          <input type="text" id="nomeProduto" name="nomeProduto" placeholder="Ex: Cenoura Orgânica" required>
+          <span class="error-message" id="nomeProduto-error"></span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label for="categoria">Categoria *</label>
+          <select id="categoria" name="categoria" required>
+            <option value="">Selecione uma categoria</option>
+            <option value="1">Hortaliças</option>
+            <option value="2">Frutas</option>
+            <option value="3">Legumes</option>
+            <option value="4">Verduras</option>
+            <option value="5">Grãos</option>
+            <option value="6">Laticínios</option>
+            <option value="7">Ovos</option>
+            <option value="8">Outros</option>
+          </select>
+          <span class="error-message" id="categoria-error"></span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label for="descricao">Descrição</label>
+          <textarea id="descricao" name="descricao" placeholder="Descreva as características do produto, método de cultivo, etc."></textarea>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label for="preco">Preço (R$) *</label>
+          <input type="number" id="preco" name="preco" placeholder="0.00" step="0.01" min="0" required>
+          <span class="error-message" id="preco-error"></span>
+        </div>
+        <div class="field">
+          <label for="unidadeMedida">Unidade de Medida *</label>
+          <select id="unidadeMedida" name="unidadeMedida" required>
+            <option value="">Selecione</option>
+            <option value="kg">Quilograma (kg)</option>
+            <option value="g">Grama (g)</option>
+            <option value="un">Unidade (un)</option>
+            <option value="dz">Dúzia (dz)</option>
+            <option value="cx">Caixa (cx)</option>
+            <option value="maço">Maço</option>
+            <option value="L">Litro (L)</option>
+          </select>
+          <span class="error-message" id="unidadeMedida-error"></span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label for="estoque">Quantidade Disponível *</label>
+          <input type="number" id="estoque" name="estoque" placeholder="0" min="0" required>
+          <span class="error-message" id="estoque-error"></span>
+        </div>
+        <div class="field">
+          <label for="imagemUrl">URL da Imagem (opcional)</label>
+          <input type="text" id="imagemUrl" name="imagemUrl" placeholder="https://...">
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button type="button" class="btn-secondary" onclick="window.location.href='minhas-vendas.html'">Cancelar</button>
+        <button type="submit" class="btn-primary">Adicionar Produto</button>
+      </div>
+
+    </form>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>© <span id="year"></span> Semear — Produtos frescos direto do produtor.</p>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+<script>
+(function(){
+  // Verifica se está logado
+  const usuarioId = localStorage.getItem('usuario_id');
+  if (!usuarioId) {
+    alert('Você precisa estar logado para adicionar produtos.');
+    window.location.href = 'login-produtor.html';
+    return;
+  }
+
+  // Funções de erro
+  function limparErro(campo) {
+    campo.classList.remove('error');
+    const errorMsg = document.getElementById(campo.id + '-error');
+    if (errorMsg) {
+      errorMsg.classList.remove('show');
+      errorMsg.textContent = '';
+    }
+  }
+
+  function mostrarErro(campo, mensagem) {
+    campo.classList.add('error');
+    const errorMsg = document.getElementById(campo.id + '-error');
+    if (errorMsg) {
+      errorMsg.textContent = mensagem;
+      errorMsg.classList.add('show');
+    }
+    campo.focus();
+  }
+
+  // Limpar erro ao digitar
+  document.querySelectorAll('input, select, textarea').forEach(campo => {
+    campo.addEventListener('input', function() {
+      limparErro(this);
+    });
+  });
+
+  // Submit do formulário
+  document.getElementById('produtoForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    
+    const nomeProduto = document.getElementById('nomeProduto');
+    const categoria = document.getElementById('categoria');
+    const descricao = document.getElementById('descricao');
+    const preco = document.getElementById('preco');
+    const unidadeMedida = document.getElementById('unidadeMedida');
+    const estoque = document.getElementById('estoque');
+    const imagemUrl = document.getElementById('imagemUrl');
+
+    // Validações
+    if (!nomeProduto.value.trim()) {
+      mostrarErro(nomeProduto, 'Por favor, informe o nome do produto.');
+      return;
+    }
+
+    if (!categoria.value) {
+      mostrarErro(categoria, 'Por favor, selecione uma categoria.');
+      return;
+    }
+
+    if (!preco.value || parseFloat(preco.value) <= 0) {
+      mostrarErro(preco, 'Por favor, informe um preço válido.');
+      return;
+    }
+
+    if (!unidadeMedida.value) {
+      mostrarErro(unidadeMedida, 'Por favor, selecione a unidade de medida.');
+      return;
+    }
+
+    if (!estoque.value || parseInt(estoque.value) < 0) {
+      mostrarErro(estoque, 'Por favor, informe a quantidade disponível.');
+      return;
+    }
+
+    // Busca id_propriedade do usuário logado
+    fetch(`http://localhost:8080/propriedades/usuario/${usuarioId}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Propriedade não encontrada. Por favor, complete seu cadastro.');
+        }
+        return response.json();
+      })
+      .then(propriedades => {
+        if (!propriedades || propriedades.length === 0) {
+          throw new Error('Você precisa ter uma propriedade cadastrada para adicionar produtos.');
+        }
+
+        const idPropriedade = propriedades[0].id_propriedade;
+
+        // Monta objeto produto
+        const produtoData = {
+          nome_produto: nomeProduto.value.trim(),
+          descricao: descricao.value.trim() || null,
+          preco: parseFloat(preco.value),
+          unidade_medida: unidadeMedida.value,
+          estoque: parseInt(estoque.value),
+          imagem_url: imagemUrl.value.trim() || null,
+          propriedadeId: idPropriedade
+        };
+
+        console.log('Enviando produto:', produtoData);
+
+        // Envia para o backend usando a rota com path variable
+        return fetch(`http://localhost:8080/api/produtos/${idPropriedade}`, {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(produtoData)
+        });
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Erro ao cadastrar produto.');
+        }
+        return response.json();
+      })
+      .then(produtoCriado => {
+        console.log('Produto criado:', produtoCriado);
+        alert('Produto adicionado com sucesso!');
+        window.location.href = 'minhas-vendas.html';
+      })
+      .catch(error => {
+        console.error('Erro ao cadastrar produto:', error);
+        alert(error.message || 'Erro ao adicionar produto. Tente novamente.');
+      });
+  });
+})();
+</script>
+
+</body>
+</html>

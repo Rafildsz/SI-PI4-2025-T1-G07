@@ -1,13 +1,66 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
+  <link rel="icon" href="assets/logo.png" type="image/svg+xml">
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Cadastro Restaurante — Semear</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  
+  <style>
+  /* Estilos do stepper e formulário */
+  .stepper-wrap { max-width: 980px; margin: 28px auto 60px; padding: 0 18px; }
+  
+  .card-form {
+    background: #fff; border-radius:12px; padding:28px; border:1px solid #e6e6e6;
+    max-width:700px; margin: 20px auto; box-shadow: 0 6px 22px rgba(15,15,15,0.03);
+    text-align: left;
+  }
+  .card-form h2 { margin-bottom:14px; font-size:20px; color:#222; text-align: left; }
+  .card-form p { text-align: left; }
+  .card-form label { text-align: left; }
+  .card-form p.lead { margin-bottom:18px; color:#6b6b6b; }
 
+  .form-row { display:flex; gap:12px; margin-bottom:12px; }
+  .form-row .field { flex:1; }
+  
+  input[type="text"], input[type="email"], input[type="password"], input[type="tel"], select, textarea {
+    width:100%; padding:10px 12px; border-radius:8px; border:1px solid #ddd; font-size:14px;
+  }
+  input.error, select.error, textarea.error { border-color: #dc3545; }
+  textarea { min-height:110px; resize:vertical; }
+  
+  .error-message {
+    color: #dc3545; font-size: 12px; margin-top: 4px; display: none;
+  }
+  .error-message.show { display: block; }
+
+  .actions-row { display:flex; gap:12px; justify-content:space-between; align-items:center; margin-top:16px; }
+  .actions-row .right { margin-left:auto; display:flex; gap:10px; }
+
+  .btn-continue {
+    background: #3aa55a; color:white; padding:12px 18px; border-radius:8px; border:none; font-weight:700; cursor:pointer;
+  }
+  .btn-back {
+    background:transparent; color:#666; padding:10px 14px; border-radius:8px; border:1px solid #ddd; cursor:pointer;
+  }
+
+  .step { display:none; }
+  .step.active { display:block; }
+  
+  .checkbox-group { display:flex; flex-wrap:wrap; gap:12px; margin:0; justify-content:flex-start; }
+  .checkbox-group label { display:flex; align-items:center; gap:6px; font-size:14px; }
+  
+  .chip {
+    display:inline-block; background:#e8f5e9; padding:6px 12px; border-radius:16px;
+    font-size:13px; color:#2e7d32;
+  }
+  .chip button {
+    background:none; border:none; color:#2e7d32; cursor:pointer; margin-left:4px; font-weight:bold;
+  }
+  </style>
 </head>
 
 <body>
@@ -15,149 +68,614 @@
 <header class="site-header">
   <div class="container header-inner">
     <a class="logo" href="index.html">
-      <img src="assets/logo.svg">
+      <img src="assets/logo.svg" alt="Semear" style="height:44px;">
       <span class="brand">Semear</span>
     </a>
   </div>
 </header>
 
-<main class="container">
-
-  <!-- STEPPER -->
-  <div class="stepper">
-    <div class="step step1 active">
+<main class="stepper-wrap">
+  
+  <!-- Progress -->
+  <div class="progress-container">
+    <div class="progress-step" data-step="1">
       <div class="circle">1</div>
-      Crie sua conta
+      <p>Crie sua conta</p>
     </div>
-
-    <div class="step-line line1"></div>
-
-    <div class="step step2">
+    <div class="line"></div>
+    <div class="progress-step" data-step="2">
       <div class="circle">2</div>
-      Restaurante
+      <p>Informações do<br>Restaurante</p>
     </div>
-
-    <div class="step-line line2"></div>
-
-    <div class="step step3">
+    <div class="line"></div>
+    <div class="progress-step" data-step="3">
       <div class="circle">3</div>
-      Detalhes
+      <p>Detalhes e<br>Preferências</p>
     </div>
   </div>
 
-  <!-- FORM -->
-  <form id="formRest">
+  <!-- Card com formulário -->
+  <!-- Card com formulário -->
+  <div class="card-form">
+    <h2>Bem-vindo ao Semear</h2>
 
-    <!-- STEP 1 -->
-    <div class="form-card" data-step="1">
-      <h2>Vamos começar!</h2>
-      <p class="lead">Crie sua conta</p>
+    <form id="formRest">
+      
+      <!-- STEP 1 -->
+      <div class="step step-1 active" data-step="1">
+        <div class="form-row">
+          <div class="field">
+            <input type="text" id="nome" name="nome" placeholder="Nome Completo *" required>
+            <span class="error-message" id="nome-error"></span>
+          </div>
+        </div>
 
-      <div class="form-row">
-        <div class="field"><input type="text" name="nome" placeholder="Nome completo" required></div>
+        <div class="form-row">
+          <div class="field">
+            <input type="email" id="email" name="email" placeholder="Melhor E-mail *" required>
+            <span class="error-message" id="email-error"></span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <input type="password" id="senha" name="senha" placeholder="Crie uma senha *" minlength="6" required>
+            <span class="error-message" id="senha-error"></span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <input type="password" id="senha2" name="senha2" placeholder="Confirme sua senha *" minlength="6" required>
+            <span class="error-message" id="senha2-error"></span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <input type="tel" id="telefone" name="telefone" placeholder="Telefone/WhatsApp *" maxlength="15" required>
+            <span class="error-message" id="telefone-error"></span>
+          </div>
+        </div>
+
+        <div class="actions-row">
+          <div style="color:#999; font-size:13px;">Passo 1 de 3</div>
+          <div class="right">
+            <button type="button" class="btn-continue" id="next1">Continuar</button>
+          </div>
+        </div>
       </div>
 
-      <div class="form-row">
-        <div class="field"><input type="email" name="email" placeholder="Seu melhor email" required></div>
+      <!-- STEP 2 -->
+      <div class="step step-2" data-step="2">
+        <div class="form-row">
+          <div class="field">
+            <input type="text" id="nomeRest" name="nomeRest" placeholder="Nome do Restaurante *" required>
+            <span class="error-message" id="nomeRest-error"></span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <input type="text" id="cep" name="cep" placeholder="CEP *" maxlength="9" required>
+            <span class="error-message" id="cep-error"></span>
+          </div>
+          <div class="field" style="display: flex; align-items: center; padding-top: 8px;">
+            <input type="checkbox" id="naoSeiCep" name="naoSeiCep" style="width: auto; margin-right: 6px;">
+            <label for="naoSeiCep" style="margin: 0; font-size: 13px; color: #666; cursor: pointer;">Não sei o CEP</label>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <input type="text" id="endereco" name="endereco" placeholder="Endereço *" required>
+            <span class="error-message" id="endereco-error"></span>
+          </div>
+          <div class="field" style="max-width:120px;">
+            <input type="text" id="numero" name="numero" placeholder="Número *" required>
+            <span class="error-message" id="numero-error"></span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <input type="text" id="complemento" name="complemento" placeholder="Complemento (opcional)">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <input type="text" id="bairro" name="bairro" placeholder="Bairro *" required>
+            <span class="error-message" id="bairro-error"></span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <input type="text" id="cidade" name="cidade" placeholder="Cidade *" required>
+            <span class="error-message" id="cidade-error"></span>
+          </div>
+          <div class="field" style="max-width:100px;">
+            <input type="text" id="uf" name="uf" placeholder="UF *" maxlength="2" required>
+            <span class="error-message" id="uf-error"></span>
+          </div>
+        </div>
+
+        <div class="actions-row">
+          <div style="color:#999; font-size:13px;">Passo 2 de 3</div>
+          <div class="right">
+            <button type="button" class="btn-back" id="back2">Voltar</button>
+            <button type="button" class="btn-continue" id="next2">Continuar</button>
+          </div>
+        </div>
       </div>
 
-      <div class="form-row">
-        <div class="field"><input type="password" name="senha" placeholder="Crie uma senha" required></div>
+      <!-- STEP 3 -->
+      <div class="step step-3" data-step="3">
+        <div style="margin-bottom:20px;">
+          <p style="font-weight:600; margin-bottom:10px; font-size:15px;">Tipo de cozinha:</p>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="coz" value="Italiana"> Italiana</label>
+            <label><input type="checkbox" name="coz" value="Brasileira"> Brasileira</label>
+            <label><input type="checkbox" name="coz" value="Japonesa"> Japonesa</label>
+            <label><input type="checkbox" name="coz" value="Natural"> Natural</label>
+            <label><input type="checkbox" name="coz" value="Hamburgueria"> Hamburgueria</label>
+            <label><input type="checkbox" id="cozOutros" name="coz" value="Outros"> Outros</label>
+          </div>
+          
+          <div class="form-row" id="outrosCozinhaDiv" style="display:none; margin-top:10px;">
+            <div class="field">
+              <input type="text" id="outrosCozinha" name="outrosCozinha" placeholder="Especifique o tipo de cozinha">
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:20px;">
+          <label style="font-weight:600; margin-bottom:8px; display:block; font-size:15px;">Produtos de interesse:</label>
+          <div class="form-row">
+            <div class="field">
+              <input type="text" id="produtoInteresse" placeholder="Digite um produto e aperte Enter (ex: tomate, alface, ovos)">
+              <span style="font-size:12px; color:#999; margin-top:4px; display:block;">Informe quais produtos você gostaria de encontrar na plataforma</span>
+            </div>
+          </div>
+          <div id="chips" style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;"></div>
+        </div>
+
+        <div style="margin-bottom:20px;">
+          <div class="form-row">
+            <div class="field">
+              <textarea id="descricao" name="descricao" placeholder="Conte mais sobre seu estabelecimento"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions-row">
+          <div style="color:#999; font-size:13px;">Passo 3 de 3</div>
+          <div class="right">
+            <button type="button" class="btn-back" id="back3">Voltar</button>
+            <button type="submit" class="btn-continue" id="finish">Concluir cadastro</button>
+          </div>
+        </div>
       </div>
 
-      <div class="form-row">
-        <div class="field"><input type="password" name="senha2" placeholder="Confirme a senha" required></div>
-      </div>
-
-      <div class="actions">
-        <span></span>
-        <button type="button" class="btn-green" onclick="go(2)">Continuar</button>
-      </div>
-    </div>
-
-    <!-- STEP 2 -->
-    <div class="form-card" data-step="2" style="display:none;">
-      <h2>Informações do Restaurante</h2>
-
-      <div class="form-row">
-        <div class="field"><input type="text" name="nomeRest" placeholder="Nome do restaurante" required></div>
-      </div>
-
-      <div class="form-row">
-        <div class="field"><input type="text" name="cidade" placeholder="Cidade / Região" required></div>
-      </div>
-
-      <div class="actions">
-        <button type="button" class="btn-back" onclick="go(1)">Voltar</button>
-        <button type="button" class="btn-green" onclick="go(3)">Continuar</button>
-      </div>
-    </div>
-
-    <!-- STEP 3 -->
-    <div class="form-card" data-step="3" style="display:none;">
-      <h2>Bem-vindo ao Semear</h2>
-      <p class="lead">Estamos quase lá! Complete suas preferências.</p>
-
-      <p>Tipo de cozinha:</p>
-
-      <div class="form-row" style="flex-wrap:wrap;">
-        <label><input type="checkbox" name="coz" value="Italiana"> Italiana</label>
-        <label><input type="checkbox" name="coz" value="Brasileira"> Brasileira</label>
-        <label><input type="checkbox" name="coz" value="Japonesa"> Japonesa</label>
-        <label><input type="checkbox" name="coz" value="Natural"> Natural</label>
-        <label><input type="checkbox" name="coz" value="Hamburgueria"> Hamburgueria</label>
-      </div>
-
-      <p style="margin-top:16px;">Principais ingredientes:</p>
-      <input type="text" id="ingrediente" placeholder="Digite e aperte Enter">
-
-      <div id="chips" style="margin:12px 0; display:flex; gap:8px; flex-wrap:wrap;"></div>
-
-      <textarea name="descricao" placeholder="Descrição do estabelecimento"></textarea>
-
-      <div class="actions">
-        <button type="button" class="btn-back" onclick="go(2)">Voltar</button>
-        <button type="submit" class="btn-green">Finalizar Cadastro</button>
-      </div>
-
-    </div>
-
-  </form>
+    </form>
+  </div>
+  
+  <div style="text-align: center; margin-top: 16px; color: #6b6b6b; font-size: 14px;">
+    Já tem conta? <a href="login-restaurante.html" style="color: #3aa55a; text-decoration: none; font-weight: 600;">Faça login</a>
+  </div>
+  
 </main>
 
+<footer class="site-footer">
+  <div class="container">
+    <p>© <span id="year"></span> Semear — Produtos frescos direto do produtor.</p>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
 <script>
-function go(n){
-  document.querySelectorAll("[data-step]").forEach(s => s.style.display="none");
-  document.querySelector(`[data-step="${n}"]`).style.display="block";
-
-  document.querySelectorAll(".step").forEach(s=>s.classList.remove("active","completed"));
-  document.querySelector(`.step${n}`).classList.add("active");
-
-  if(n>=2){ document.querySelector(".step1").classList.add("completed"); document.querySelector(".line1").classList.add("completed"); }
-  if(n>=3){ document.querySelector(".step2").classList.add("completed"); document.querySelector(".line2").classList.add("completed"); }
-}
-
-/* chips */
-document.getElementById("ingrediente").addEventListener("keypress", e=>{
-  if(e.key==="Enter"){
-    e.preventDefault();
-    const t=e.target.value.trim();
-    if(!t) return;
-    const c=document.createElement("span");
-    c.className="chip";
-    c.innerHTML=t+" <button onclick='this.parentElement.remove()'>x</button>";
-    document.getElementById("chips").appendChild(c);
-    e.target.value="";
+(function(){
+  // Ano no rodapé
+  document.getElementById('year').textContent = new Date().getFullYear();
+  
+  // Formatar telefone
+  function formatarTelefone(valor) {
+    let numeros = valor.replace(/\D/g, '');
+    numeros = numeros.substring(0, 11);
+    
+    if (numeros.length <= 10) {
+      return numeros.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+    } else {
+      return numeros.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+    }
   }
-});
 
-/* final submit */
-document.getElementById("formRest").addEventListener("submit", e=>{
-  e.preventDefault();
-  let nome = document.querySelector("input[name='nomeRest']").value;
-  localStorage.setItem("nomeRestaurante", nome);
-  window.location.href="bem-vindo-restaurante.html";
-});
+  const telefoneInput = document.getElementById('telefone');
+  telefoneInput.addEventListener('input', function(e) {
+    e.target.value = formatarTelefone(e.target.value);
+  });
+
+  // Formatar CEP
+  function formatarCEP(valor) {
+    let numeros = valor.replace(/\D/g, '');
+    numeros = numeros.substring(0, 8);
+    return numeros.replace(/(\d{5})(\d{0,3})/, '$1-$2');
+  }
+
+  const cepInput = document.getElementById('cep');
+  cepInput.addEventListener('input', function(e) {
+    e.target.value = formatarCEP(e.target.value);
+  });
+
+  // Buscar CEP
+  cepInput.addEventListener('blur', function() {
+    const cep = this.value.replace(/\D/g, '');
+    
+    if (cep.length === 8) {
+      // Busca na API ViaCEP
+      fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.erro) {
+            mostrarErro(cepInput, 'CEP não encontrado.');
+            return;
+          }
+          
+          // Preenche os campos automaticamente
+          document.getElementById('endereco').value = data.logradouro || '';
+          document.getElementById('bairro').value = data.bairro || '';
+          document.getElementById('cidade').value = data.localidade || '';
+          document.getElementById('uf').value = data.uf || '';
+          
+          // Foca no número
+          document.getElementById('numero').focus();
+        })
+        .catch(error => {
+          console.error('Erro ao buscar CEP:', error);
+        });
+    }
+  });
+
+  // Checkbox "Não sei o CEP"
+  document.getElementById('naoSeiCep').addEventListener('change', function() {
+    const campos = ['endereco', 'bairro', 'cidade', 'uf'];
+    
+    if (this.checked) {
+      // Remove obrigatoriedade do CEP e habilita campos manuais
+      cepInput.removeAttribute('required');
+      cepInput.disabled = true;
+      cepInput.value = '';
+      limparErro(cepInput);
+      
+      // Habilita edição manual dos outros campos
+      campos.forEach(id => {
+        const campo = document.getElementById(id);
+        campo.removeAttribute('readonly');
+        campo.style.backgroundColor = '';
+      });
+    } else {
+      // Volta obrigatoriedade do CEP
+      cepInput.setAttribute('required', 'required');
+      cepInput.disabled = false;
+      
+      // Desabilita edição manual (espera busca por CEP)
+      campos.forEach(id => {
+        const campo = document.getElementById(id);
+        if (!campo.value) { // Só bloqueia se estiver vazio
+          campo.setAttribute('readonly', 'readonly');
+          campo.style.backgroundColor = '#f5f5f5';
+        }
+      });
+    }
+  });
+
+  // Inicialmente, campos de endereço são readonly (esperam CEP)
+  ['endereco', 'bairro', 'cidade', 'uf'].forEach(id => {
+    const campo = document.getElementById(id);
+    campo.setAttribute('readonly', 'readonly');
+    campo.style.backgroundColor = '#f5f5f5';
+  });
+
+  // Funções de erro
+  function limparErro(campo) {
+    campo.classList.remove('error');
+    const errorMsg = document.getElementById(campo.id + '-error');
+    if (errorMsg) {
+      errorMsg.classList.remove('show');
+      errorMsg.textContent = '';
+    }
+  }
+
+  function mostrarErro(campo, mensagem) {
+    campo.classList.add('error');
+    const errorMsg = document.getElementById(campo.id + '-error');
+    if (errorMsg) {
+      errorMsg.textContent = mensagem;
+      errorMsg.classList.add('show');
+    }
+    campo.focus();
+  }
+
+  // Limpar erro ao digitar
+  document.querySelectorAll('input, select, textarea').forEach(campo => {
+    campo.addEventListener('input', function() {
+      limparErro(this);
+    });
+  });
+
+  // Checkbox "Outros" para tipo de cozinha
+  document.getElementById('cozOutros').addEventListener('change', function() {
+    const outrosDiv = document.getElementById('outrosCozinhaDiv');
+    if (this.checked) {
+      outrosDiv.style.display = 'block';
+    } else {
+      outrosDiv.style.display = 'none';
+      document.getElementById('outrosCozinha').value = '';
+    }
+  });
+
+  // Navegação
+  const showStep = (n) => {
+    document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+    const stepEl = document.querySelector('.step-' + n);
+    if (stepEl) stepEl.classList.add('active');
+    
+    document.querySelectorAll('.progress-step').forEach((step, index) => {
+      const stepNum = index + 1;
+      step.classList.remove('active', 'completed');
+      
+      if (stepNum < n) step.classList.add('completed');
+      else if (stepNum === n) step.classList.add('active');
+    });
+    
+    document.querySelectorAll('.line').forEach((line, index) => {
+      if (index < n - 1) line.classList.add('completed');
+      else line.classList.remove('completed');
+    });
+  };
+
+  // Validação Step 1
+  document.getElementById('next1').addEventListener('click', function(e){
+    e.preventDefault();
+    
+    const nome = document.getElementById('nome');
+    const email = document.getElementById('email');
+    const senha = document.getElementById('senha');
+    const senha2 = document.getElementById('senha2');
+    const telefone = document.getElementById('telefone');
+
+    if (!nome.value.trim()) {
+      mostrarErro(nome, 'Por favor, preencha seu nome completo.');
+      return;
+    }
+
+    if (!email.value.trim()) {
+      mostrarErro(email, 'Por favor, preencha seu e-mail.');
+      return;
+    }
+    
+    if (!email.checkValidity()) {
+      mostrarErro(email, 'Por favor, insira um e-mail válido.');
+      return;
+    }
+
+    if (!senha.value) {
+      mostrarErro(senha, 'Por favor, crie uma senha.');
+      return;
+    }
+    
+    if (senha.value.length < 6) {
+      mostrarErro(senha, 'A senha deve ter no mínimo 6 caracteres.');
+      return;
+    }
+
+    if (!senha2.value) {
+      mostrarErro(senha2, 'Por favor, confirme sua senha.');
+      return;
+    }
+    
+    if (senha.value !== senha2.value) {
+      mostrarErro(senha2, 'As senhas não conferem.');
+      return;
+    }
+
+    if (!telefone.value.trim()) {
+      mostrarErro(telefone, 'Por favor, preencha seu telefone.');
+      return;
+    }
+    
+    const numeros = telefone.value.replace(/\D/g, '');
+    if (numeros.length < 10) {
+      mostrarErro(telefone, 'Telefone incompleto. Digite DDD + número.');
+      return;
+    }
+
+    showStep(2);
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  // Validação Step 2
+  document.getElementById('back2').addEventListener('click', function(){ 
+    showStep(1); 
+    window.scrollTo({top:0, behavior:'smooth'}); 
+  });
+
+  document.getElementById('next2').addEventListener('click', function(e){
+    e.preventDefault();
+    
+    const nomeRest = document.getElementById('nomeRest');
+    const cep = document.getElementById('cep');
+    const endereco = document.getElementById('endereco');
+    const numero = document.getElementById('numero');
+    const bairro = document.getElementById('bairro');
+    const cidade = document.getElementById('cidade');
+    const uf = document.getElementById('uf');
+    const naoSeiCep = document.getElementById('naoSeiCep');
+
+    if (!nomeRest.value.trim()) {
+      mostrarErro(nomeRest, 'Por favor, informe o nome do restaurante.');
+      return;
+    }
+
+    // Valida CEP apenas se não marcou "Não sei o CEP"
+    if (!naoSeiCep.checked) {
+      if (!cep.value.trim()) {
+        mostrarErro(cep, 'Por favor, informe o CEP ou marque "Não sei o CEP".');
+        return;
+      }
+
+      const cepLimpo = cep.value.replace(/\D/g, '');
+      if (cepLimpo.length !== 8) {
+        mostrarErro(cep, 'CEP deve ter 8 dígitos.');
+        return;
+      }
+    }
+
+    if (!endereco.value.trim()) {
+      mostrarErro(endereco, 'Por favor, informe o endereço.');
+      return;
+    }
+
+    if (!numero.value.trim()) {
+      mostrarErro(numero, 'Por favor, informe o número.');
+      return;
+    }
+
+    if (!bairro.value.trim()) {
+      mostrarErro(bairro, 'Por favor, informe o bairro.');
+      return;
+    }
+
+    if (!cidade.value.trim()) {
+      mostrarErro(cidade, 'Por favor, informe a cidade.');
+      return;
+    }
+
+    if (!uf.value.trim()) {
+      mostrarErro(uf, 'Por favor, informe o UF.');
+      return;
+    }
+
+    if (uf.value.trim().length !== 2) {
+      mostrarErro(uf, 'UF deve ter 2 letras.');
+      return;
+    }
+
+    showStep(3);
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  // Validação Step 3
+  document.getElementById('back3').addEventListener('click', function(){ 
+    showStep(2); 
+    window.scrollTo({top:0, behavior:'smooth'}); 
+  });
+
+  // Chips de produtos de interesse
+  document.getElementById('produtoInteresse').addEventListener('keypress', e => {
+    if(e.key === 'Enter'){
+      e.preventDefault();
+      const t = e.target.value.trim();
+      if(!t) return;
+      const c = document.createElement('span');
+      c.className = 'chip';
+      c.innerHTML = t + ' <button onclick="this.parentElement.remove()">×</button>';
+      document.getElementById('chips').appendChild(c);
+      e.target.value = '';
+    }
+  });
+
+  // Submit final
+  document.getElementById('formRest').addEventListener('submit', function(e){
+    e.preventDefault();
+    
+    const data = new FormData(e.target);
+    const obj = Object.fromEntries(data.entries());
+    
+    // Coleta tipos de cozinha selecionados
+    const tiposCozinha = [];
+    document.querySelectorAll('input[name="coz"]:checked').forEach(cb => {
+      if (cb.value === 'Outros' && obj.outrosCozinha) {
+        tiposCozinha.push(obj.outrosCozinha);
+      } else {
+        tiposCozinha.push(cb.value);
+      }
+    });
+    
+    // Coleta produtos de interesse (chips)
+    const produtosInteresse = [];
+    document.querySelectorAll('#chips .chip').forEach(chip => {
+      const texto = chip.textContent.replace('×', '').trim();
+      if (texto) produtosInteresse.push(texto);
+    });
+    
+    // Remove formatação do telefone e CEP
+    const telefoneLimpo = obj.telefone ? obj.telefone.replace(/\D/g, '') : '';
+    const cepLimpo = obj.cep ? obj.cep.replace(/\D/g, '') : '';
+    
+    // Monta endereço completo
+    const enderecoCompleto = `${obj.endereco}, ${obj.numero}${obj.complemento ? ' - ' + obj.complemento : ''} - ${obj.bairro}, ${obj.cidade}/${obj.uf}${cepLimpo ? ' - CEP: ' + obj.cep : ''}`;
+    
+    // Monta objeto usuário
+    const usuarioData = {
+      nome_completo: obj.nome,
+      email: obj.email,
+      senha: obj.senha,
+      telefone: telefoneLimpo,
+      tipo_usuario: 'RESTAURANTE',
+      endereco: enderecoCompleto
+    };
+    
+    console.log('Enviando usuário:', usuarioData);
+    console.log('Nome do restaurante:', obj.nomeRest);
+    console.log('Tipos de cozinha:', tiposCozinha.join(', '));
+    console.log('Produtos de interesse:', produtosInteresse.join(', '));
+    console.log('Descrição:', obj.descricao);
+    
+    // Envia para o backend
+    fetch('http://localhost:8080/api/usuarios', {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(usuarioData)
+    })
+    .then(response => {
+      console.log('Status da resposta:', response.status);
+      if (!response.ok) {
+        return response.text().then(text => {
+          console.error('Erro do servidor:', text);
+          
+          if (text.includes('Duplicate entry') && text.includes('email')) {
+            throw new Error('Este e-mail já está cadastrado. Use outro e-mail ou faça login.');
+          }
+          
+          throw new Error('Erro ao cadastrar. Tente novamente.');
+        });
+      }
+      return response.json();
+    })
+    .then(usuarioCriado => {
+      console.log('Usuário criado:', usuarioCriado);
+      
+      // Salva informações no localStorage
+      localStorage.setItem('nomeRestaurante', obj.nomeRest);
+      localStorage.setItem('usuario_id', usuarioCriado.id_usuario);
+      localStorage.setItem('usuario_logado', obj.nome);
+      
+      // Redireciona para página de boas-vindas
+      window.location.href = 'bem-vindo-restaurante.html';
+    })
+    .catch(error => {
+      console.error('Erro ao cadastrar:', error);
+      alert(error.message || 'Erro ao realizar cadastro. Verifique os dados e tente novamente.');
+    });
+  });
+
+  showStep(1);
+})();
 </script>
 
 </body>

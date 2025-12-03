@@ -28,10 +28,16 @@
       <input type="search" placeholder="Buscar por produto, ingrediente ou produtor..." />
     </div>
 
-    <!-- botão hambúrguer -->
-    <button class="hamb" id="hamb" aria-label="Menu" aria-expanded="true" aria-controls="sidebar">
-      <span></span><span></span><span></span>
-    </button>
+    <nav style="display: flex; gap: 16px; align-items: center;">
+      <a href="carrinho.html" class="btn" style="text-decoration: none; position: relative; padding: 8px 16px;">
+        🛒 Carrinho
+        <span id="carrinho-contador" style="display: none; position: absolute; top: -8px; right: -8px; background: #dc3545; color: white; border-radius: 50%; width: 24px; height: 24px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center;">0</span>
+      </a>
+      <!-- botão hambúrguer -->
+      <button class="hamb" id="hamb" aria-label="Menu" aria-expanded="true" aria-controls="sidebar">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
   </header>
 
   <main class="container layout" role="main">
@@ -86,86 +92,11 @@
     </div>
   </footer>
 
+  <!-- JS do carrinho -->
+  <script src="js/carrinho.js"></script>
+
   <!-- JS do Catálogo -->
-  <script>
-    // Ano rodapé
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Saudação
-    try {
-      const cad = JSON.parse(localStorage.getItem('semear_cadastro_demo') || '{}');
-      if (cad && cad.nome)
-        document.getElementById('nomeRest').textContent = cad.nome.split(' ')[0];
-    } catch (e) {}
-
-    // MOCK de produtos (compatível com backend)
-    const produtos = [
-      { id_produto: 1, nome_produto:'Batata', preco:4.09, unidade_medida:'kg', imagem_url:'assets/batata_catalogo.svg', produtor:'Sítio Bela Vista', rating:4.8, distancia:8 },
-      { id_produto: 2, nome_produto:'Tomate', preco:5.19, unidade_medida:'kg', imagem_url:'assets/tomate_catalogo.svg', produtor:'Sítio Bela Vista', rating:4.8, distancia:8 },
-      { id_produto: 3, nome_produto:'Cenoura', preco:2.89, unidade_medida:'kg', imagem_url:'assets/cenoura_catalogo.svg', produtor:'Sítio Bela Vista', rating:4.8, distancia:8 },
-      { id_produto: 4, nome_produto:'Alface', preco:1.10, unidade_medida:'kg', imagem_url:'assets/alface_catalogo.svg', produtor:'Sítio Bela Vista', rating:4.8, distancia:8 },
-      { id_produto: 5, nome_produto:'Uva', preco:3.09, unidade_medida:'kg', imagem_url:'assets/uva_catalogo.svg', produtor:'Fazenda Feliz', rating:5.0, distancia:5 },
-      { id_produto: 6, nome_produto:'Maçã', preco:8.75, unidade_medida:'kg', imagem_url:'assets/maca_catalogo.svg', produtor:'Fazenda Feliz', rating:5.0, distancia:5 },
-      { id_produto: 7, nome_produto:'Chuchu', preco:5.90, unidade_medida:'kg', imagem_url:'assets/chuchu_catalogo.svg', produtor:'Sítio Vila Rica', rating:4.6, distancia:12 },
-      { id_produto: 8, nome_produto:'Pimenta', preco:7.74, unidade_medida:'kg', imagem_url:'assets/pimenta_catalogo.svg', produtor:'Sítio Vila Rica', rating:4.6, distancia:12 }
-    ];
-
-    const grid = document.getElementById('gridProdutos');
-
-    function fmtPreco(v){
-      return v.toLocaleString('pt-BR',{ style:'currency', currency:'BRL' });
-    }
-
-    // Card do produto (corrigido)
-    function card(p){
-      return `
-        <article class="card">
-          <img src="${p.imagem_url}" alt="${p.nome_produto}">
-          <div class="card-body">
-            <h3>${p.nome_produto}</h3>
-            <div class="meta">
-              <div class="price">${fmtPreco(p.preco)} <small>/ ${p.unidade_medida}</small></div>
-              <div>Por ${p.produtor} ★ ${p.rating}</div>
-              <div>A ${p.distancia} km de você</div>
-            </div>
-
-            <!-- Botão Adicionar ao Carrinho -->
-            <button class="btn-add-carrinho"
-              onclick="adicionarCarrinho(${p.id_produto})"
-              🛒 Adicionar ao Carrinho
-            </button>
-
-          </div>
-        </article>
-      `;
-    }
-
-    function render(lista){
-      grid.innerHTML = lista.map(card).join('');
-    }
-    render(produtos);
-
-    // Ordenação
-    document.getElementById('ordem').addEventListener('change', (e) => {
-      const v = e.target.value;
-      const arr = [...produtos];
-      if (v === 'preco_asc') arr.sort((a,b)=>a.preco-b.preco);
-      if (v === 'preco_desc') arr.sort((a,b)=>b.preco-a.preco);
-      if (v === 'distancia') arr.sort((a,b)=>a.distancia-b.distancia);
-      if (v === 'avaliacao') arr.sort((a,b)=>b.rating-a.rating);
-      render(arr);
-    });
-
-    // Chips
-    const chips = document.getElementById('chips');
-    document.getElementById('btnAdd').addEventListener('click', () => {
-      const c = document.createElement('span');
-      c.className = 'chip';
-      c.innerHTML = 'Orgânico <button class="chip-x">×</button>';
-      c.querySelector('.chip-x').onclick = () => c.remove();
-      chips.appendChild(c);
-    });
-  </script>
+  <script src="js/catalogo.js"></script>
 
   <!-- Toggle sidebar -->
   <script>
@@ -180,10 +111,16 @@
       hamb.setAttribute('aria-expanded', !h);
       localStorage.setItem(KEY, h ? '1':'0');
     };
-  </script>
 
-  <!-- JS do carrinho -->
-  <script src="js/carrinho.js"></script>
+    // Logout - limpar localStorage
+    document.querySelector('.sb-logout').addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('usuario_id');
+      localStorage.removeItem('usuario_logado');
+      localStorage.removeItem('semear_carrinho');
+      window.location.href = 'index.html';
+    });
+  </script>
 
 </body>
 </html>

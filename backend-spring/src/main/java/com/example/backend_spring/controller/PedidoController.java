@@ -1,5 +1,6 @@
 package com.example.backend_spring.controller;
 
+import com.example.backend_spring.dto.PedidoCreateDTO;
 import com.example.backend_spring.entity.Pedido;
 import com.example.backend_spring.service.PedidoService;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/pedidos")
+@RequestMapping("/api/pedidos")
 public class PedidoController {
 
     private final PedidoService service;
@@ -23,6 +24,12 @@ public class PedidoController {
         return service.listar();
     }
 
+    @PostMapping
+    public ResponseEntity<Pedido> criar(@RequestBody PedidoCreateDTO pedidoDTO) {
+        Pedido criado = service.criarComItens(pedidoDTO);
+        return ResponseEntity.created(URI.create("/api/pedidos/" + criado.getId_pedido())).body(criado);
+    }
+
     @PostMapping("/{restauranteId}/{produtorId}")
     public ResponseEntity<Pedido> criar(
             @RequestBody Pedido pedido,
@@ -30,7 +37,7 @@ public class PedidoController {
             @PathVariable Long produtorId) {
 
         Pedido criado = service.criar(pedido, restauranteId, produtorId);
-        return ResponseEntity.created(URI.create("/pedidos/" + criado.getId_pedido())).body(criado);
+        return ResponseEntity.created(URI.create("/api/pedidos/" + criado.getId_pedido())).body(criado);
     }
 
     @GetMapping("/{id}")

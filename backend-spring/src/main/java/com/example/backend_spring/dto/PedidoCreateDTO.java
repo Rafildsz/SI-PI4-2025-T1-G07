@@ -1,15 +1,19 @@
 package com.example.backend_spring.dto;
 
 import lombok.Data;
+import java.util.List;
 
 @Data
 public class PedidoCreateDTO {
 
-    private Double valor_total;
+    private Long usuarioId;
     private String status;
-    private String tipo_entrega;
-    private String observacoes;
+    private List<ItemPedidoDTO> itens;
 
-    private Long restauranteId;
-    private Long produtorId;
+    @Data
+    public static class ItemPedidoDTO {
+        private Long produtoId;
+        private Integer quantidade;
+        private Double preco_unitario;
+    }
 }

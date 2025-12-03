@@ -39,10 +39,24 @@
 
   .form-row { display:flex; gap:12px; margin-bottom:12px; }
   .form-row .field { flex:1; }
-  input[type="text"], input[type="email"], input[type="password"], input[type="tel"], select, textarea {
+  input[type="text"], input[type="email"], input[type="password"], input[type="tel"], input[type="number"], select, textarea {
     width:100%; padding:10px 12px; border-radius:8px; border:1px solid #ddd; font-size:14px;
   }
+  input.error, select.error, textarea.error {
+    border-color: #dc3545;
+  }
   textarea { min-height:110px; resize:vertical; }
+  
+  /* Mensagens de erro */
+  .error-message {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 4px;
+    display: none;
+  }
+  .error-message.show {
+    display: block;
+  }
 
   .actions-row { display:flex; gap:12px; justify-content:space-between; align-items:center; margin-top:16px; }
   .actions-row .right { margin-left:auto; display:flex; gap:10px; }
@@ -110,31 +124,36 @@
         <div class="step step-1 active" data-step="1">
           <div class="form-row">
             <div class="field">
-              <input type="text" id="nome" name="nome" placeholder="Nome Completo" required>
+              <input type="text" id="nome" name="nome" placeholder="Nome Completo *" required>
+              <span class="error-message" id="nome-error"></span>
             </div>
           </div>
 
           <div class="form-row">
             <div class="field">
-              <input type="email" id="email" name="email" placeholder="Melhor E-mail" required>
+              <input type="email" id="email" name="email" placeholder="Melhor E-mail *" required>
+              <span class="error-message" id="email-error"></span>
             </div>
           </div>
 
           <div class="form-row">
             <div class="field">
-              <input type="password" id="senha" name="senha" placeholder="Crie uma senha" minlength="6" required>
+              <input type="password" id="senha" name="senha" placeholder="Crie uma senha *" minlength="6" required>
+              <span class="error-message" id="senha-error"></span>
             </div>
           </div>
 
           <div class="form-row">
             <div class="field">
-              <input type="password" id="senha2" name="senha2" placeholder="Confirme sua senha" minlength="6" required>
+              <input type="password" id="senha2" name="senha2" placeholder="Confirme sua senha *" minlength="6" required>
+              <span class="error-message" id="senha2-error"></span>
             </div>
           </div>
 
           <div class="form-row">
             <div class="field">
-              <input type="tel" id="telefone" name="telefone" placeholder="Telefone/WhatsApp">
+              <input type="tel" id="telefone" name="telefone" placeholder="Telefone/WhatsApp *" maxlength="15" required>
+              <span class="error-message" id="telefone-error"></span>
             </div>
           </div>
 
@@ -150,22 +169,67 @@
         <div class="step step-2" data-step="2">
           <div class="form-row">
             <div class="field">
-              <input type="text" id="nomePropriedade" name="nomePropriedade" placeholder="Nome da Propriedade" required>
-            </div>
-            <div class="field">
-              <input type="text" id="cidade" name="cidade" placeholder="Cidade / Região" required>
+              <input type="text" id="nomePropriedade" name="nomePropriedade" placeholder="Nome da Propriedade *" required>
+              <span class="error-message" id="nomePropriedade-error"></span>
             </div>
           </div>
 
           <div class="form-row">
             <div class="field">
               <select id="tipoProducao" name="tipoProducao" required>
-                <option value="">Tipo de produção (ex: hortifrúti)</option>
+                <option value="">Tipo de produção (ex: hortifrúti) *</option>
                 <option value="hortifruti">Hortifrúti</option>
                 <option value="laticinio">Laticínio</option>
                 <option value="ovos">Ovos</option>
                 <option value="outro">Outro</option>
               </select>
+              <span class="error-message" id="tipoProducao-error"></span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <input type="text" id="cep" name="cep" placeholder="CEP *" maxlength="9" required>
+              <span class="error-message" id="cep-error"></span>
+            </div>
+            <div class="field" style="display: flex; align-items: center; padding-top: 8px;">
+              <input type="checkbox" id="naoSeiCep" name="naoSeiCep" style="width: auto; margin-right: 6px;">
+              <label for="naoSeiCep" style="margin: 0; font-size: 13px; color: #666; cursor: pointer;">Não sei o CEP</label>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <input type="text" id="endereco" name="endereco" placeholder="Endereço *" required readonly style="background-color: #f5f5f5;">
+              <span class="error-message" id="endereco-error"></span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <input type="text" id="numero" name="numero" placeholder="Número *" required>
+              <span class="error-message" id="numero-error"></span>
+            </div>
+            <div class="field">
+              <input type="text" id="complemento" name="complemento" placeholder="Complemento">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <input type="text" id="bairro" name="bairro" placeholder="Bairro *" required readonly style="background-color: #f5f5f5;">
+              <span class="error-message" id="bairro-error"></span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <input type="text" id="cidade" name="cidade" placeholder="Cidade *" required readonly style="background-color: #f5f5f5;">
+              <span class="error-message" id="cidade-error"></span>
+            </div>
+            <div class="field">
+              <input type="text" id="uf" name="uf" placeholder="UF *" maxlength="2" required readonly style="background-color: #f5f5f5;">
+              <span class="error-message" id="uf-error"></span>
             </div>
           </div>
 
@@ -188,16 +252,18 @@
         <div class="step step-3" data-step="3">
           <div class="form-row">
             <div class="field">
-              <input type="text" id="produtoPrincipal" name="produtoPrincipal" placeholder="Produto principal (ex: cenoura)" required>
+              <input type="text" id="produtoPrincipal" name="produtoPrincipal" placeholder="Produto principal (ex: cenoura) *" required>
+              <span class="error-message" id="produtoPrincipal-error"></span>
             </div>
             <div class="field">
-              <input type="text" id="unidade" name="unidade" placeholder="Unidade de venda (ex: kg, cx)" required>
+              <input type="text" id="unidade" name="unidade" placeholder="Unidade de venda (ex: kg, cx) *" required>
+              <span class="error-message" id="unidade-error"></span>
             </div>
           </div>
 
           <div class="form-row">
             <div class="field">
-              <input type="number" id="estoque" name="estoque" placeholder="Quantidade disponível (estimada)">
+              <input type="number" id="estoque" name="estoque" placeholder="Quantidade disponível (estimada)" min="0">
             </div>
             <div class="field">
               <input type="text" id="preco" name="preco" placeholder="Preço sugerido (opcional)">
@@ -220,6 +286,10 @@
         </div>
       </form>
     </div>
+    
+    <div style="text-align: center; margin-top: 16px; color: #6b6b6b; font-size: 14px;">
+      Já tem conta? <a href="login-produtor.html" style="color: #3aa55a; text-decoration: none; font-weight: 600;">Faça login</a>
+    </div>
   </main>
 
   <footer class="site-footer">
@@ -230,73 +300,440 @@
 
   <script src="js/script.js"></script>
   <script>
-  /* ---------- JS do stepper (se preferir, mova para js/cadastro.js) ---------- */
+  /* ---------- JS do stepper com validações aprimoradas ---------- */
   (function(){
-    // Utilitários simples
+    console.log('Script de validação carregado!');
+    
+    // Função para formatar telefone
+    function formatarTelefone(valor) {
+      // Remove tudo que não é número
+      let numeros = valor.replace(/\D/g, '');
+      
+      // Limita a 11 dígitos
+      numeros = numeros.substring(0, 11);
+      
+      // Formata conforme o tamanho
+      if (numeros.length <= 10) {
+        // (00) 0000-0000
+        return numeros.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+      } else {
+        // (00) 00000-0000
+        return numeros.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+      }
+    }
+
+    // Função para formatar CEP
+    function formatarCEP(valor) {
+      let numeros = valor.replace(/\D/g, '');
+      numeros = numeros.substring(0, 8);
+      return numeros.replace(/(\d{5})(\d{0,3})/, '$1-$2');
+    }
+
+    // Aplicar formatação ao campo telefone
+    const telefoneInput = document.getElementById('telefone');
+    telefoneInput.addEventListener('input', function(e) {
+      e.target.value = formatarTelefone(e.target.value);
+    });
+
+    // Aplicar formatação ao campo CEP
+    const cepInput = document.getElementById('cep');
+    cepInput.addEventListener('input', function(e) {
+      e.target.value = formatarCEP(e.target.value);
+    });
+
+    // Buscar endereço por CEP
+    cepInput.addEventListener('blur', function() {
+      const cep = this.value.replace(/\D/g, '');
+      
+      if (cep.length === 8) {
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+          .then(response => response.json())
+          .then(data => {
+            if (!data.erro) {
+              document.getElementById('endereco').value = data.logradouro || '';
+              document.getElementById('bairro').value = data.bairro || '';
+              document.getElementById('cidade').value = data.localidade || '';
+              document.getElementById('uf').value = data.uf || '';
+            } else {
+              mostrarErro(cepInput, 'CEP não encontrado.');
+            }
+          })
+          .catch(error => {
+            console.error('Erro ao buscar CEP:', error);
+            mostrarErro(cepInput, 'Erro ao buscar CEP. Tente novamente.');
+          });
+      }
+    });
+
+    // Checkbox "Não sei o CEP"
+    const naoSeiCep = document.getElementById('naoSeiCep');
+    const enderecoInput = document.getElementById('endereco');
+    const bairroInput = document.getElementById('bairro');
+    const cidadeInput = document.getElementById('cidade');
+    const ufInput = document.getElementById('uf');
+
+    naoSeiCep.addEventListener('change', function() {
+      if (this.checked) {
+        // Desabilita CEP e habilita campos de endereço para entrada manual
+        cepInput.disabled = true;
+        cepInput.removeAttribute('required');
+        cepInput.value = '';
+        
+        enderecoInput.removeAttribute('readonly');
+        enderecoInput.style.backgroundColor = '#fff';
+        
+        bairroInput.removeAttribute('readonly');
+        bairroInput.style.backgroundColor = '#fff';
+        
+        cidadeInput.removeAttribute('readonly');
+        cidadeInput.style.backgroundColor = '#fff';
+        
+        ufInput.removeAttribute('readonly');
+        ufInput.style.backgroundColor = '#fff';
+      } else {
+        // Reabilita CEP e coloca campos de endereço como readonly
+        cepInput.disabled = false;
+        cepInput.setAttribute('required', 'required');
+        
+        enderecoInput.setAttribute('readonly', 'readonly');
+        enderecoInput.style.backgroundColor = '#f5f5f5';
+        enderecoInput.value = '';
+        
+        bairroInput.setAttribute('readonly', 'readonly');
+        bairroInput.style.backgroundColor = '#f5f5f5';
+        bairroInput.value = '';
+        
+        cidadeInput.setAttribute('readonly', 'readonly');
+        cidadeInput.style.backgroundColor = '#f5f5f5';
+        cidadeInput.value = '';
+        
+        ufInput.setAttribute('readonly', 'readonly');
+        ufInput.style.backgroundColor = '#f5f5f5';
+        ufInput.value = '';
+      }
+    });
+
+    // Função para limpar erros
+    function limparErro(campo) {
+      campo.classList.remove('error');
+      const errorMsg = document.getElementById(campo.id + '-error');
+      if (errorMsg) {
+        errorMsg.classList.remove('show');
+        errorMsg.textContent = '';
+      }
+    }
+
+    // Função para mostrar erro
+    function mostrarErro(campo, mensagem) {
+      campo.classList.add('error');
+      const errorMsg = document.getElementById(campo.id + '-error');
+      if (errorMsg) {
+        errorMsg.textContent = mensagem;
+        errorMsg.classList.add('show');
+      }
+      campo.focus();
+    }
+
+    // Limpar erro ao digitar
+    document.querySelectorAll('input, select, textarea').forEach(campo => {
+      campo.addEventListener('input', function() {
+        limparErro(this);
+      });
+    });
+
+    // Utilitário para navegação
     const showStep = (n) => {
+      // Atualiza o conteúdo (step 1, 2, 3)
       document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
       const stepEl = document.querySelector('.step-' + n);
       if (stepEl) stepEl.classList.add('active');
-      // atualizar progress visuals
-      document.querySelectorAll('.progress-segment').forEach(seg=>{
-        const s = Number(seg.dataset.step);
-        seg.classList.remove('segment-complete','segment-active');
-        if (s < n) seg.classList.add('segment-complete');
-        if (s === n) seg.classList.add('segment-active');
+      
+      // Atualiza as bolinhas de progresso
+      document.querySelectorAll('.progress-step').forEach((step, index) => {
+        const stepNum = index + 1;
+        step.classList.remove('active', 'completed');
+        
+        if (stepNum < n) {
+          step.classList.add('completed');
+        } else if (stepNum === n) {
+          step.classList.add('active');
+        }
+      });
+      
+      // Atualiza as linhas entre as bolinhas
+      document.querySelectorAll('.line').forEach((line, index) => {
+        if (index < n - 1) {
+          line.classList.add('completed');
+        } else {
+          line.classList.remove('completed');
+        }
       });
     };
 
-    // navegação
-    document.getElementById('next1').addEventListener('click', function(){
-      // valida campos do step1
+    // Validação Step 1
+    const btnNext1 = document.getElementById('next1');
+    console.log('Botão next1 encontrado:', btnNext1);
+    
+    btnNext1.addEventListener('click', function(e){
+      e.preventDefault();
+      console.log('Validação Step 1 executada');
+      
       const nome = document.getElementById('nome');
       const email = document.getElementById('email');
       const senha = document.getElementById('senha');
       const senha2 = document.getElementById('senha2');
-      if (!nome.value.trim()){ alert('Preencha seu nome.'); nome.focus(); return; }
-      if (!email.checkValidity()){ alert('Insira um email válido.'); email.focus(); return; }
-      if (senha.value.length < 6){ alert('Senha deve ter ao menos 6 caracteres.'); senha.focus(); return; }
-      if (senha.value !== senha2.value){ alert('As senhas não conferem.'); senha2.focus(); return; }
+      const telefone = document.getElementById('telefone');
+
+      if (!nome.value.trim()) {
+        mostrarErro(nome, 'Por favor, preencha seu nome completo.');
+        console.log('Erro no nome - não deve avançar');
+        return;
+      }
+
+      if (!email.value.trim()) {
+        mostrarErro(email, 'Por favor, preencha seu e-mail.');
+        return;
+      }
+      
+      if (!email.checkValidity()) {
+        mostrarErro(email, 'Por favor, insira um e-mail válido.');
+        return;
+      }
+
+      if (!senha.value) {
+        mostrarErro(senha, 'Por favor, crie uma senha.');
+        return;
+      }
+      
+      if (senha.value.length < 6) {
+        mostrarErro(senha, 'A senha deve ter no mínimo 6 caracteres.');
+        return;
+      }
+
+      if (!senha2.value) {
+        mostrarErro(senha2, 'Por favor, confirme sua senha.');
+        return;
+      }
+      
+      if (senha.value !== senha2.value) {
+        mostrarErro(senha2, 'As senhas não conferem.');
+        return;
+      }
+
+      if (!telefone.value.trim()) {
+        mostrarErro(telefone, 'Por favor, preencha seu telefone.');
+        return;
+      }
+      
+      const numeros = telefone.value.replace(/\D/g, '');
+      if (numeros.length < 10) {
+        mostrarErro(telefone, 'Telefone incompleto. Digite DDD + número.');
+        return;
+      }
+
+      // Se chegou aqui, tudo válido
+      console.log('Validação passou - avançando para step 2');
       showStep(2);
       window.scrollTo({top:0, behavior:'smooth'});
     });
 
-    document.getElementById('back2').addEventListener('click', function(){ showStep(1); window.scrollTo({top:0, behavior:'smooth'}); });
-    document.getElementById('next2').addEventListener('click', function(){
-      // valida step2
-      const nomeProp = document.getElementById('nomePropriedade');
+    // Validação Step 2
+    document.getElementById('back2').addEventListener('click', function(){ 
+      showStep(1); 
+      window.scrollTo({top:0, behavior:'smooth'}); 
+    });
+
+    document.getElementById('next2').addEventListener('click', function(e){
+      e.preventDefault();
+      
+      const nomePropriedade = document.getElementById('nomePropriedade');
+      const tipoProducao = document.getElementById('tipoProducao');
+      const cep = document.getElementById('cep');
+      const naoSeiCep = document.getElementById('naoSeiCep');
+      const endereco = document.getElementById('endereco');
+      const numero = document.getElementById('numero');
+      const bairro = document.getElementById('bairro');
       const cidade = document.getElementById('cidade');
-      if (!nomeProp.value.trim()){ alert('Informe o nome da propriedade.'); nomeProp.focus(); return; }
-      if (!cidade.value.trim()){ alert('Informe a cidade/região.'); cidade.focus(); return; }
+      const uf = document.getElementById('uf');
+
+      if (!nomePropriedade.value.trim()) {
+        mostrarErro(nomePropriedade, 'Por favor, informe o nome da propriedade.');
+        return;
+      }
+
+      if (!tipoProducao.value) {
+        mostrarErro(tipoProducao, 'Por favor, selecione o tipo de produção.');
+        return;
+      }
+
+      // Validação do CEP (se não estiver marcado "Não sei o CEP")
+      if (!naoSeiCep.checked) {
+        if (!cep.value.trim()) {
+          mostrarErro(cep, 'Por favor, informe o CEP ou marque "Não sei o CEP".');
+          return;
+        }
+        
+        const cepNumeros = cep.value.replace(/\D/g, '');
+        if (cepNumeros.length !== 8) {
+          mostrarErro(cep, 'CEP incompleto. Digite 8 dígitos.');
+          return;
+        }
+      }
+
+      if (!endereco.value.trim()) {
+        mostrarErro(endereco, 'Por favor, informe o endereço.');
+        return;
+      }
+
+      if (!numero.value.trim()) {
+        mostrarErro(numero, 'Por favor, informe o número.');
+        return;
+      }
+
+      if (!bairro.value.trim()) {
+        mostrarErro(bairro, 'Por favor, informe o bairro.');
+        return;
+      }
+
+      if (!cidade.value.trim()) {
+        mostrarErro(cidade, 'Por favor, informe a cidade.');
+        return;
+      }
+
+      if (!uf.value.trim()) {
+        mostrarErro(uf, 'Por favor, informe o UF.');
+        return;
+      }
+
+      if (uf.value.length !== 2) {
+        mostrarErro(uf, 'UF deve ter 2 letras (ex: SP).');
+        return;
+      }
+
       showStep(3);
       window.scrollTo({top:0, behavior:'smooth'});
     });
 
-    document.getElementById('back3').addEventListener('click', function(){ showStep(2); window.scrollTo({top:0, behavior:'smooth'}); });
+    // Validação Step 3
+    document.getElementById('back3').addEventListener('click', function(){ 
+      showStep(2); 
+      window.scrollTo({top:0, behavior:'smooth'}); 
+    });
 
-    // submit final
-document.getElementById('cadastroForm').addEventListener('submit', function(e){
-  e.preventDefault();
+    // Submit final
+    document.getElementById('cadastroForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      
+      const produtoPrincipal = document.getElementById('produtoPrincipal');
+      const unidade = document.getElementById('unidade');
 
-  // Pega os dados do formulário
-  const data = new FormData(e.target);
-  const obj = Object.fromEntries(data.entries());
+      if (!produtoPrincipal.value.trim()) {
+        mostrarErro(produtoPrincipal, 'Por favor, informe o produto principal.');
+        return;
+      }
 
-  // Salva o nome do produtor no localStorage
-  localStorage.setItem('nomeProdutor', obj.nome);
+      if (!unidade.value.trim()) {
+        mostrarErro(unidade, 'Por favor, informe a unidade de venda.');
+        return;
+      }
 
-  // (Opcional) salva tudo se quiser usar depois
-  localStorage.setItem('semear_cadastro_demo', JSON.stringify(obj));
+      // Pega os dados do formulário
+      const data = new FormData(e.target);
+      const obj = Object.fromEntries(data.entries());
 
-  // Redireciona para a página de boas-vindas
-  window.location.href = 'bem-vindo-produtor.html';
-});
+      // Remove formatação do telefone e CEP antes de salvar
+      const telefoneLimpo = obj.telefone ? obj.telefone.replace(/\D/g, '') : '';
+      const cepLimpo = obj.cep ? obj.cep.replace(/\D/g, '') : '';
+      
+      // Monta endereço completo
+      const enderecoCompleto = `${obj.endereco}, ${obj.numero}${obj.complemento ? ' - ' + obj.complemento : ''} - ${obj.bairro}, ${obj.cidade}/${obj.uf}${cepLimpo ? ' - CEP: ' + obj.cep : ''}`;
 
+      // Monta o objeto para enviar ao backend
+      const usuarioData = {
+        nome_completo: obj.nome,
+        email: obj.email,
+        senha: obj.senha,
+        telefone: telefoneLimpo,
+        tipo_usuario: 'PRODUTOR',
+        endereco: enderecoCompleto
+      };
 
-    // exibir step inicial 1
+      const propriedadeData = {
+        nome_propriedade: obj.nomePropriedade,
+        descricao: obj.sobrePropriedade || '',
+        endereco: enderecoCompleto,
+        cpf_cnpj: '',
+        cep: cepLimpo,
+        selo_certificacao: obj.tipoProducao || ''
+      };
+
+      console.log('Enviando usuário:', usuarioData);
+      console.log('Propriedade a enviar:', propriedadeData);
+
+      // Envia para o backend
+      fetch('http://localhost:8080/api/usuarios', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(usuarioData)
+      })
+      .then(response => {
+        console.log('Status da resposta:', response.status);
+        if (!response.ok) {
+          return response.text().then(text => {
+            console.error('Erro do servidor:', text);
+            
+            // Mensagens amigáveis para erros comuns
+            if (text.includes('Duplicate entry') && text.includes('email')) {
+              throw new Error('Este e-mail já está cadastrado. Use outro e-mail ou faça login.');
+            }
+            if (text.includes('cpf_cnpj')) {
+              throw new Error('CPF/CNPJ inválido ou já cadastrado.');
+            }
+            
+            throw new Error('Erro ao cadastrar. Tente novamente.');
+          });
+        }
+        return response.json();
+      })
+      .then(usuarioCriado => {
+        // Agora cria a propriedade vinculada ao usuário
+        const usuarioId = usuarioCriado.id_usuario;
+        
+        return fetch(`http://localhost:8080/propriedades/${usuarioId}`, {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(propriedadeData)
+        });
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Erro ao cadastrar propriedade');
+        }
+        return response.json();
+      })
+      .then(() => {
+        // Salva no localStorage para usar na página de boas-vindas
+        localStorage.setItem('nomeProdutor', obj.nome);
+        
+        // Redireciona
+        window.location.href = 'bem-vindo-produtor.html';
+      })
+      .catch(error => {
+        console.error('Erro ao cadastrar:', error);
+        alert(error.message || 'Erro ao realizar cadastro. Verifique os dados e tente novamente.');
+      });
+    });
+
+    // Exibir step inicial
     showStep(1);
 
-    // ano rodapé
+    // Ano no rodapé
     const yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
   })();

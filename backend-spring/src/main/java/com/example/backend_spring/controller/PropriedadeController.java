@@ -45,4 +45,10 @@ public class PropriedadeController {
         service.deletar(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<List<Propriedade>> buscarPorUsuario(@PathVariable Long usuarioId) {
+        List<Propriedade> propriedades = service.buscarPorUsuario(usuarioId);
+        return ResponseEntity.ok(propriedades);
+    }
 }

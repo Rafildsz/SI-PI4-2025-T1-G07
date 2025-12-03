@@ -19,24 +19,54 @@ toggle && toggle.addEventListener('click', () => {
   nav.style.boxShadow = '0 8px 30px rgba(0,0,0,0.08)';
 });
 
-// Validação e "login" demo
+// Login com integração backend
 document.getElementById('loginForm').addEventListener('submit', function(e){
   e.preventDefault();
+  
   const email = document.getElementById('loginEmail');
   const pass  = document.getElementById('loginPassword');
 
-  if (!email.checkValidity()) { alert('Informe um e-mail válido.'); email.focus(); return; }
-  if (pass.value.length < 6)  { alert('A senha deve ter ao menos 6 caracteres.'); pass.focus();  return; }
+  // Validação básica
+  if (!email.checkValidity()) { 
+    alert('Informe um e-mail válido.'); 
+    email.focus(); 
+    return; 
+  }
+  if (pass.value.length < 6) { 
+    alert('A senha deve ter ao menos 6 caracteres.'); 
+    pass.focus();  
+    return; 
+  }
 
-  // (Demo) autenticação baseada no cadastro salvo em localStorage (ajuste para sua API real)
-  try {
-    const cad = JSON.parse(localStorage.getItem('semear_cadastro_demo') || '{}');
-    if (cad.email && cad.senha && cad.email === email.value && cad.senha === pass.value) {
-      window.location.href = 'catalogo.html'; // sucesso
-      return;
+  // Envia login para o backend
+  fetch('http://localhost:8080/api/login', {
+    method: 'POST',
+    headers: { 
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({
+      email: email.value,
+      senha: pass.value
+    })
+  })
+  .then(response => {
+    if (!response.ok) {
+      return response.json().then(data => {
+        throw new Error(data.erro || 'Erro ao fazer login');
+      });
     }
-  } catch (err) {}
-
-  // fallback (remova em produção; aqui só para navegar)
-  window.location.href = 'catalogo.html';
+    return response.json();
+  })
+  .then(data => {
+    // Salva informações do usuário logado
+    localStorage.setItem('usuario_id', data.id);
+    localStorage.setItem('usuario_logado', 'true');
+    
+    // Redireciona para área do restaurante
+    window.location.href = 'catalogo.html';
+  })
+  .catch(error => {
+    alert(error.message || 'Erro ao fazer login. Verifique suas credenciais.');
+  });
 });

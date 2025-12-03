@@ -2,7 +2,7 @@ package com.example.backend_spring.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "produtos")
@@ -23,7 +23,6 @@ public class Produto {
 
     @ManyToOne
     @JoinColumn(name = "id_propriedade", referencedColumnName = "id_propriedade")
-    @JsonIgnore
     private Propriedade propriedade;
 
     @ManyToOne
