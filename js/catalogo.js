@@ -66,7 +66,7 @@ function render(lista){
 // Carrega produtos do backend
 async function carregarProdutos() {
   try {
-    const response = await fetch('http://localhost:8080/api/produtos');
+    const response = await fetch('http://localhost:8081/api/produtos');
     if (!response.ok) throw new Error('Erro ao buscar produtos');
     
     produtos = await response.json();

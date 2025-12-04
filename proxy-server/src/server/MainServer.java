@@ -29,7 +29,7 @@ public class MainServer {
 
             // Servir arquivos do front
             server.createContext("/", new StaticFileHandler(
-                    "C:/Users/isabe/OneDrive/Documentos/PI_IV/SI-PI4-2025-T1-G07"
+                    "C:/Users/maysa/Documents/SI-PI4-2025-T1-G07"
             ));
 
             server.setExecutor(null);

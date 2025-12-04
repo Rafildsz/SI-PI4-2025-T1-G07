@@ -156,7 +156,7 @@
       }
 
       try {
-        const response = await fetch('http://localhost:8080/api/pedidos');
+        const response = await fetch('http://localhost:8081/api/pedidos');
         if (!response.ok) throw new Error('Erro ao buscar pedidos');
         
         const todosPedidos = await response.json();
@@ -255,7 +255,7 @@
 
     async function atualizarStatusPedido(pedidoId, novoStatus) {
       try {
-        const response = await fetch(`http://localhost:8080/api/pedidos/${pedidoId}`, {
+        const response = await fetch(`http://localhost:8081/api/pedidos/${pedidoId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
@@ -285,7 +285,7 @@
 
       try {
         // Busca a propriedade do produtor
-        const propResponse = await fetch(`http://localhost:8080/propriedades/usuario/${usuarioId}`);
+        const propResponse = await fetch(`http://localhost:8081/propriedades/usuario/${usuarioId}`);
         if (!propResponse.ok) throw new Error('Propriedade não encontrada');
         
         const propriedades = await propResponse.json();
@@ -297,7 +297,7 @@
         const propriedadeId = propriedades[0].id_propriedade;
 
         // Busca os produtos da propriedade
-        const prodResponse = await fetch(`http://localhost:8080/api/produtos/propriedade/${propriedadeId}`);
+        const prodResponse = await fetch(`http://localhost:8081/api/produtos/propriedade/${propriedadeId}`);
         if (!prodResponse.ok) throw new Error('Erro ao buscar produtos');
         
         const produtos = await prodResponse.json();
@@ -352,7 +352,7 @@
       if (!confirm('Tem certeza que deseja excluir este produto?')) return;
       
       try {
-        const response = await fetch(`http://localhost:8080/api/produtos/${id}`, {
+        const response = await fetch(`http://localhost:8081/api/produtos/${id}`, {
           method: 'DELETE'
         });
         

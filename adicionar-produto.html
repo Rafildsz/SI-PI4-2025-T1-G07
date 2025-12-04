@@ -229,7 +229,7 @@
     }
 
     // Busca id_propriedade do usuário logado
-    fetch(`http://localhost:8080/propriedades/usuario/${usuarioId}`)
+    fetch(`http://localhost:8081/propriedades/usuario/${usuarioId}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Propriedade não encontrada. Por favor, complete seu cadastro.');
@@ -257,7 +257,7 @@
         console.log('Enviando produto:', produtoData);
 
         // Envia para o backend usando a rota com path variable
-        return fetch(`http://localhost:8080/api/produtos/${idPropriedade}`, {
+        return fetch(`http://localhost:8081/api/produtos/${idPropriedade}`, {
           method: 'POST',
           headers: { 
             'Content-Type': 'application/json',

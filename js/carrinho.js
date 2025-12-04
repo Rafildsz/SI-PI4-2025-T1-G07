@@ -1,5 +1,5 @@
 // Backend Spring Boot
-const API_BASE = "http://localhost:8080/api";
+const API_BASE = "http://localhost:8081/api";
 
 // Obtém o carrinho do localStorage (temporário até criar pedido)
 function obterCarrinho() {

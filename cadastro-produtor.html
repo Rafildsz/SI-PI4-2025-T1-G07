@@ -671,7 +671,7 @@
       console.log('Propriedade a enviar:', propriedadeData);
 
       // Envia para o backend
-      fetch('http://localhost:8080/api/usuarios', {
+      fetch('http://localhost:8081/api/usuarios', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -702,7 +702,7 @@
         // Agora cria a propriedade vinculada ao usuário
         const usuarioId = usuarioCriado.id_usuario;
         
-        return fetch(`http://localhost:8080/propriedades/${usuarioId}`, {
+        return fetch(`http://localhost:8081/propriedades/${usuarioId}`, {
           method: 'POST',
           headers: { 
             'Content-Type': 'application/json',

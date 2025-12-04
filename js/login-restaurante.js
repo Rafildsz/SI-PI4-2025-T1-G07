@@ -39,7 +39,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e){
   }
 
   // Envia login para o backend
-  fetch('http://localhost:8080/api/login', {
+  fetch('http://localhost:8081/api/login', {
     method: 'POST',
     headers: { 
       'Content-Type': 'application/json',
