@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <link rel="icon" href="assets/logo.png" type="image/svg+xml">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Meus Produtos — Semear</title>
+
+  <!-- Fontes -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="css/catalogo.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="container dash-header" role="banner">
+    <a class="brand-inline" href="index.html">
+      <img src="assets/logo.svg" alt="Semear">
+      <span class="brand">Semear</span>
+    </a>
+
+    <button class="hamb" id="hamb" aria-label="Menu" aria-expanded="true" aria-controls="sidebar">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- Layout principal -->
+  <div class="container layout">
+    <main role="main">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <h2>Produtos Cadastrados</h2>
+        <a href="adicionar-produto.html" class="btn" style="background: #3aa55a; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">
+          + Adicionar Produto
+        </a>
+      </div>
+      
+      <div class="searchbar" style="margin-bottom: 26px;">
+        <input type="text" id="searchProdutos" placeholder="Buscar produtos..." />
+      </div>
+
+      <div id="produtosGrid" class="grid">
+        <!-- Produtos serão carregados aqui -->
+      </div>
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <!-- Conteúdo carregado por menu-produtor.js -->
+    </aside>
+  </div>
+
+  <!-- Modal de Edição -->
+  <div id="modalEditar" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
+    <div style="background: white; border-radius: 12px; padding: 32px; max-width: 700px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <h2 style="margin: 0;">Editar Produto</h2>
+        <button onclick="fecharModalEditar()" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #999; padding: 0; width: 32px; height: 32px;">&times;</button>
+      </div>
+      
+      <form id="formEditar">
+        <input type="hidden" id="editIdProduto">
+        
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px;">Nome do Produto *</label>
+          <input type="text" id="editNome" required style="width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 14px;">
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px;">Categoria *</label>
+          <select id="editCategoria" required style="width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 14px;">
+            <option value="">Selecione uma categoria</option>
+            <option value="1">Hortaliças</option>
+            <option value="2">Frutas</option>
+            <option value="3">Legumes</option>
+            <option value="4">Verduras</option>
+            <option value="5">Grãos</option>
+            <option value="6">Laticínios</option>
+            <option value="7">Ovos</option>
+            <option value="8">Outros</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px;">Descrição</label>
+          <textarea id="editDescricao" style="width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 14px; min-height: 80px; resize: vertical;"></textarea>
+        </div>
+
+        <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+          <div style="flex: 1;">
+            <label style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px;">Preço (R$) *</label>
+            <input type="number" id="editPreco" step="0.01" min="0" required style="width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 14px;">
+          </div>
+          <div style="flex: 1;">
+            <label style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px;">Unidade *</label>
+            <select id="editUnidade" required style="width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 14px;">
+              <option value="">Selecione</option>
+              <option value="kg">Quilograma (kg)</option>
+              <option value="g">Grama (g)</option>
+              <option value="un">Unidade (un)</option>
+              <option value="dz">Dúzia (dz)</option>
+              <option value="cx">Caixa (cx)</option>
+              <option value="maço">Maço</option>
+              <option value="L">Litro (L)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+          <div style="flex: 1;">
+            <label style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px;">Estoque *</label>
+            <input type="number" id="editEstoque" min="0" required style="width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 14px;">
+          </div>
+          <div style="flex: 1;">
+            <label style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px;">URL da Imagem</label>
+            <input type="text" id="editImagem" style="width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 14px;">
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; margin-top: 24px;">
+          <button type="button" onclick="fecharModalEditar()" style="flex: 1; background: #f5f5f5; color: #666; padding: 12px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">Cancelar</button>
+          <button type="submit" style="flex: 1; background: #3aa55a; color: white; padding: 12px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer;">Salvar Alterações</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Semear — Produtos frescos direto do produtor.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Atualiza o ano do rodapé
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Toggle da sidebar
+    const KEY = 'semear_sidebar_hidden';
+    const hamb = document.getElementById('hamb');
+    if (localStorage.getItem(KEY) === '1'){
+      document.body.classList.add('no-sidebar');
+      hamb.setAttribute('aria-expanded','false');
+    }
+    hamb.onclick = () => {
+      const h = document.body.classList.toggle('no-sidebar');
+      hamb.setAttribute('aria-expanded', !h);
+      localStorage.setItem(KEY, h ? '1':'0');
+    };
+
+    function fmtPreco(v){
+      return v.toLocaleString('pt-BR',{ style:'currency', currency:'BRL' });
+    }
+
+    // Carrega produtos do produtor
+    async function carregarProdutos() {
+      const usuarioId = localStorage.getItem('usuario_id');
+      if (!usuarioId) {
+        window.location.href = 'login-produtor.html';
+        return;
+      }
+
+      try {
+        // Busca a propriedade do produtor
+        const propResponse = await fetch(`http://localhost:8081/propriedades/usuario/${usuarioId}`);
+        if (!propResponse.ok) throw new Error('Propriedade não encontrada');
+        
+        const propriedades = await propResponse.json();
+        if (propriedades.length === 0) {
+          document.getElementById('produtosGrid').innerHTML = '<p style="text-align: center; padding: 40px;">Você ainda não tem uma propriedade cadastrada.</p>';
+          return;
+        }
+        
+        const propriedadeId = propriedades[0].id_propriedade;
+
+        // Busca os produtos da propriedade
+        const prodResponse = await fetch(`http://localhost:8081/api/produtos/propriedade/${propriedadeId}`);
+        if (!prodResponse.ok) throw new Error('Erro ao buscar produtos');
+        
+        const produtos = await prodResponse.json();
+        renderizarProdutos(produtos);
+      } catch (error) {
+        console.error('Erro ao carregar produtos:', error);
+        document.getElementById('produtosGrid').innerHTML = '<p style="text-align: center; padding: 40px;">Erro ao carregar produtos. Tente novamente.</p>';
+      }
+    }
+
+    function renderizarProdutos(produtos) {
+      const grid = document.getElementById('produtosGrid');
+      
+      if (produtos.length === 0) {
+        grid.innerHTML = '<p style="text-align: center; padding: 40px;">Você ainda não adicionou nenhum produto. Clique em "+ Adicionar Produto" para começar!</p>';
+        return;
+      }
+
+      const categorias = {
+        1: 'Hortaliças', 2: 'Frutas', 3: 'Legumes', 4: 'Verduras',
+        5: 'Grãos', 6: 'Laticínios', 7: 'Ovos', 8: 'Outros'
+      };
+
+      grid.innerHTML = produtos.map(produto => {
+        return `
+          <div class="card">
+            ${produto.imagem_url ? `<img src="${produto.imagem_url}" alt="${produto.nome_produto}" style="width:100%; height:200px; object-fit:cover; border-radius: 12px 12px 0 0;">` : ''}
+            <div class="card-body">
+              <h3>${produto.nome_produto}</h3>
+              <p class="meta">${categorias[produto.categoria?.id_categoria] || 'Sem categoria'}</p>
+              ${produto.descricao ? `<p style="font-size: 14px; color: #666; margin: 8px 0;">${produto.descricao}</p>` : ''}
+              <p class="price">${fmtPreco(produto.preco)}/${produto.unidade_medida}</p>
+              <p style="font-size: 14px; color: ${produto.estoque > 0 ? '#28a745' : '#dc3545'}; margin: 8px 0;">
+                <strong>Estoque:</strong> ${produto.estoque} ${produto.unidade_medida}
+              </p>
+              <div class="toolbar-right" style="margin-top: 16px;">
+                <button class="btn btn-primary" onclick="editarProduto(${produto.id_produto})">Editar</button>
+                <button class="btn" style="background: #dc3545; color: white;" onclick="excluirProduto(${produto.id_produto})">Excluir</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function editarProduto(id) {
+      try {
+        const response = await fetch(`http://localhost:8081/api/produtos/${id}`);
+        if (!response.ok) throw new Error('Erro ao buscar produto');
+        
+        const produto = await response.json();
+        
+        // Preenche o formulário
+        document.getElementById('editIdProduto').value = produto.id_produto;
+        document.getElementById('editNome').value = produto.nome_produto;
+        document.getElementById('editCategoria').value = produto.categoria?.id_categoria || '';
+        document.getElementById('editDescricao').value = produto.descricao || '';
+        document.getElementById('editPreco').value = produto.preco;
+        document.getElementById('editUnidade').value = produto.unidade_medida;
+        document.getElementById('editEstoque').value = produto.estoque;
+        document.getElementById('editImagem').value = produto.imagem_url || '';
+        
+        // Abre a modal
+        document.getElementById('modalEditar').style.display = 'flex';
+      } catch (error) {
+        console.error('Erro ao carregar produto:', error);
+        alert('Erro ao carregar dados do produto');
+      }
+    }
+
+    function fecharModalEditar() {
+      document.getElementById('modalEditar').style.display = 'none';
+      document.getElementById('formEditar').reset();
+    }
+
+    // Handler do formulário de edição
+    document.getElementById('formEditar').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const usuarioId = localStorage.getItem('usuario_id');
+      const idProduto = document.getElementById('editIdProduto').value;
+      
+      try {
+        // Busca a propriedade do produtor
+        const propResponse = await fetch(`http://localhost:8081/propriedades/usuario/${usuarioId}`);
+        if (!propResponse.ok) throw new Error('Propriedade não encontrada');
+        
+        const propriedades = await propResponse.json();
+        const propriedadeId = propriedades[0].id_propriedade;
+        
+        const produtoData = {
+          nome_produto: document.getElementById('editNome').value.trim(),
+          descricao: document.getElementById('editDescricao').value.trim() || null,
+          preco: parseFloat(document.getElementById('editPreco').value),
+          unidade_medida: document.getElementById('editUnidade').value,
+          estoque: parseInt(document.getElementById('editEstoque').value),
+          imagem_url: document.getElementById('editImagem').value.trim() || null,
+          propriedadeId: propriedadeId
+        };
+
+        const response = await fetch(`http://localhost:8081/api/produtos/${idProduto}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(produtoData)
+        });
+
+        if (!response.ok) {
+          throw new Error('Erro ao atualizar produto');
+        }
+
+        alert('Produto atualizado com sucesso!');
+        fecharModalEditar();
+        carregarProdutos();
+      } catch (error) {
+        console.error('Erro ao atualizar produto:', error);
+        alert(error.message || 'Erro ao atualizar produto. Tente novamente.');
+      }
+    });
+
+    async function excluirProduto(id) {
+      if (!confirm('Tem certeza que deseja excluir este produto?')) return;
+      
+      try {
+        const response = await fetch(`http://localhost:8081/api/produtos/${id}`, {
+          method: 'DELETE'
+        });
+        
+        if (response.ok) {
+          alert('Produto excluído com sucesso!');
+          carregarProdutos();
+        } else {
+          alert('Erro ao excluir produto');
+        }
+      } catch (error) {
+        console.error('Erro ao excluir:', error);
+        alert('Erro ao excluir produto');
+      }
+    }
+
+    // Busca de produtos
+    document.getElementById('searchProdutos').addEventListener('input', (e) => {
+      const termo = e.target.value.toLowerCase();
+      const cards = document.querySelectorAll('#produtosGrid .card');
+      
+      cards.forEach(card => {
+        const texto = card.textContent.toLowerCase();
+        card.style.display = texto.includes(termo) ? 'block' : 'none';
+      });
+    });
+
+    // Carrega produtos ao iniciar
+    carregarProdutos();
+  </script>
+  <script src="js/menu-produtor.js"></script>
+</body>
+</html>

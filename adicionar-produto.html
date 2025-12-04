@@ -8,9 +8,10 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/catalogo.css">
   
   <style>
-  .produto-wrap { max-width: 700px; margin: 40px auto; padding: 0 18px; }
+  .produto-wrap { max-width: 700px; padding: 40px 0; }
   
   .card-produto {
     background: #fff; border-radius:12px; padding:32px; border:1px solid #e6e6e6;
@@ -50,22 +51,22 @@
 
 <body>
 
-<header class="site-header">
-  <div class="container header-inner">
-    <a class="logo" href="index.html">
-      <img src="assets/logo.svg" alt="Semear" style="height:44px;">
-      <span class="brand">Semear</span>
-    </a>
-    <nav class="main-nav">
-      <a href="minhas-vendas.html">Minhas Vendas</a>
-      <a href="adicionar-produto.html" class="active">Adicionar Produto</a>
-      <a href="index.html" onclick="localStorage.clear()">Sair</a>
-    </nav>
-  </div>
+<header class="container dash-header" role="banner">
+  <a class="brand-inline" href="index.html">
+    <img src="assets/logo.svg" alt="Semear">
+    <span class="brand">Semear</span>
+  </a>
+
+  <h1 class="page-title">Adicionar Produto</h1>
+
+  <button class="hamb" id="hamb" aria-label="Menu" aria-expanded="true" aria-controls="sidebar">
+    <span></span><span></span><span></span>
+  </button>
 </header>
 
-<main class="produto-wrap">
-  <div class="card-produto">
+<div class="container layout">
+  <main class="produto-wrap">
+    <div class="card-produto">
     <h2>Adicionar Novo Produto</h2>
 
     <form id="produtoForm">
@@ -143,8 +144,11 @@
       </div>
 
     </form>
-  </div>
-</main>
+    </div>
+  </main>
+  
+  <aside class="sidebar" id="sidebar"></aside>
+</div>
 
 <footer class="site-footer">
   <div class="container">
@@ -155,6 +159,19 @@
 <script src="js/script.js"></script>
 <script>
 (function(){
+  // Toggle da sidebar
+  const KEY = 'semear_sidebar_hidden';
+  const hamb = document.getElementById('hamb');
+  if (localStorage.getItem(KEY) === '1'){
+    document.body.classList.add('no-sidebar');
+    hamb.setAttribute('aria-expanded','false');
+  }
+  hamb.onclick = () => {
+    const h = document.body.classList.toggle('no-sidebar');
+    hamb.setAttribute('aria-expanded', !h);
+    localStorage.setItem(KEY, h ? '1':'0');
+  };
+
   // Verifica se está logado
   const usuarioId = localStorage.getItem('usuario_id');
   if (!usuarioId) {
@@ -283,6 +300,17 @@
       });
   });
 })();
+</script>
+<script src="js/menu-produtor.js"></script>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>© <span id="year"></span> Semear — Produtos frescos direto do produtor.</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 
 </body>

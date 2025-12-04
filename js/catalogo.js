@@ -46,8 +46,13 @@ function card(p){
         <!-- Botão Adicionar ao Carrinho -->
         <button class="btn-add-carrinho"
           onclick="adicionarCarrinho(${p.id_produto})"
-          ${p.estoque <= 0 ? 'disabled style="opacity: 0.5; cursor: not-allowed;"' : ''}>
-          🛒 ${p.estoque > 0 ? 'Adicionar ao Carrinho' : 'Indisponível'}
+          ${p.estoque <= 0 ? 'disabled' : ''}
+          title="${p.estoque > 0 ? 'Adicionar ao Carrinho' : 'Indisponível'}">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
         </button>
 
       </div>
@@ -104,10 +109,3 @@ searchInput.addEventListener('input', (e) => {
 
 // Chips
 const chips = document.getElementById('chips');
-document.getElementById('btnAdd').addEventListener('click', () => {
-  const c = document.createElement('span');
-  c.className = 'chip';
-  c.innerHTML = 'Orgânico <button class="chip-x">×</button>';
-  c.querySelector('.chip-x').onclick = () => c.remove();
-  chips.appendChild(c);
-});

@@ -46,6 +46,28 @@
         <p>Acompanhe o status dos seus pedidos.</p>
       </div>
 
+      <!-- Tabs de Filtro -->
+      <div style="display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0;">
+        <button class="tab-btn active" data-status="todos" onclick="filtrarPorStatus('todos')">
+          Todos
+        </button>
+        <button class="tab-btn" data-status="pendentes" onclick="filtrarPorStatus('pendentes')">
+          Pendentes
+        </button>
+        <button class="tab-btn" data-status="andamento" onclick="filtrarPorStatus('andamento')">
+          Em Andamento
+        </button>
+        <button class="tab-btn" data-status="enviados" onclick="filtrarPorStatus('enviados')">
+          Enviados
+        </button>
+        <button class="tab-btn" data-status="finalizados" onclick="filtrarPorStatus('finalizados')">
+          Finalizados
+        </button>
+        <button class="tab-btn" data-status="cancelados" onclick="filtrarPorStatus('cancelados')">
+          Cancelados
+        </button>
+      </div>
+
       <!-- aqui vai o carrinho -->
       <div id="estadoCarrinho" style="margin-bottom: 16px; font-size: 0.95rem; color: #555;"></div>
 
@@ -55,24 +77,22 @@
 
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
-      <div class="sb-header">
-        <div class="sb-avatar">U</div>
-        <div>
-          <div class="sb-title">Usuário</div>
-          <small>Restaurante</small>
-        </div>
-      </div>
-
-      <nav class="sb-nav">
-        <a class="sb-item" href="catalogo.html">🌽 Catálogo</a>
-        <a class="sb-item" href="meus-pedidos.html">🧾 Meus Pedidos</a>
-        <a class="sb-item" href="mensagem.html">✉️ Mensagens</a>
-        <div class="sb-sep"></div>
-        <a class="sb-item sb-logout" href="index.html">↩️ Sair</a>
-      </nav>
+      <!-- Conteúdo carregado por menu-restaurante.js -->
     </aside>
 
   </main>
+
+  <!-- Modal de Detalhes do Pedido -->
+  <div id="modalDetalhes" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
+    <div style="background: white; border-radius: 12px; padding: 32px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <h2 style="margin: 0;">Detalhes do Pedido</h2>
+        <button onclick="fecharModalDetalhes()" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #999; padding: 0; width: 32px; height: 32px;">&times;</button>
+      </div>
+      <div id="detalhesContent"></div>
+      <button onclick="fecharModalDetalhes()" class="btn btn-primary" style="width: 100%; margin-top: 24px; padding: 12px;">Fechar</button>
+    </div>
+  </div>
 
   <!-- Espaço para empurrar o rodapé exatamente como no catálogo -->
   <div style="height:120px;"></div>
@@ -91,6 +111,9 @@
     const API_BASE = "http://localhost:8081/api";
     const lista = document.getElementById("listaPedidos");
     const estadoCarrinho = document.getElementById("estadoCarrinho");
+
+    let todosPedidosCache = [];
+    let statusAtual = 'todos';
 
     function fmtMoeda(v){
       if (v == null) return "R$ 0,00";
@@ -116,23 +139,18 @@
       if (!usuarioId) {
         window.location.href = 'login-restaurante.html';
         return;
-      }
-
-      try {
+      }      try {
         const response = await fetch(`${API_BASE}/pedidos`);
         if (!response.ok) throw new Error('Erro ao buscar pedidos');
         
         const todosPedidos = await response.json();
-        console.log('Todos os pedidos:', todosPedidos); // Debug
         
         // Filtra pedidos do restaurante logado
-        const pedidos = todosPedidos.filter(p => {
-          console.log('Pedido:', p.id_pedido, 'Restaurante:', p.restaurante); // Debug
+        todosPedidosCache = todosPedidos.filter(p => {
           return p.restaurante?.id_usuario == usuarioId;
         });
         
-        console.log('Pedidos filtrados:', pedidos); // Debug
-        renderizarPedidos(pedidos);
+        aplicarFiltro();
       } catch (error) {
         console.error('Erro ao carregar pedidos:', error);
         estadoCarrinho.textContent = "Erro ao carregar pedidos.";
@@ -140,13 +158,46 @@
       }
     }
 
+    function filtrarPorStatus(status) {
+      statusAtual = status;
+      
+      // Atualiza botões ativos
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      document.querySelector(`[data-status="${status}"]`).classList.add('active');
+      
+      aplicarFiltro();
+    }
+
+    function aplicarFiltro() {
+      let pedidosFiltrados = [...todosPedidosCache];
+      
+      // Filtra por status
+      if (statusAtual === 'pendentes') {
+        pedidosFiltrados = pedidosFiltrados.filter(p => p.status === 'PENDENTE');
+      } else if (statusAtual === 'andamento') {
+        pedidosFiltrados = pedidosFiltrados.filter(p => 
+          p.status === 'CONFIRMADO' || p.status === 'EM_PREPARO'
+        );
+      } else if (statusAtual === 'enviados') {
+        pedidosFiltrados = pedidosFiltrados.filter(p => p.status === 'ENVIADO');
+      } else if (statusAtual === 'finalizados') {
+        pedidosFiltrados = pedidosFiltrados.filter(p => p.status === 'ENTREGUE');
+      } else if (statusAtual === 'cancelados') {
+        pedidosFiltrados = pedidosFiltrados.filter(p => p.status === 'CANCELADO');
+      }
+      
+      renderizarPedidos(pedidosFiltrados);
+    }
+
     function renderizarPedidos(pedidos) {
       if (pedidos.length === 0) {
-        estadoCarrinho.textContent = "Você ainda não fez nenhum pedido.";
+        estadoCarrinho.textContent = statusAtual === 'todos' ? "Você ainda não fez nenhum pedido." : `Nenhum pedido ${statusAtual === 'pendentes' ? 'pendente' : statusAtual === 'finalizados' ? 'finalizado' : 'nesta categoria'}.`;
         lista.innerHTML = `
           <div style="text-align: center; padding: 60px 20px;">
-            <h3>Nenhum pedido realizado</h3>
-            <p style="color: #666; margin: 16px 0;">Visite o catálogo e faça seu primeiro pedido!</p>
+            <h3>Nenhum pedido ${statusAtual === 'todos' ? 'realizado' : 'encontrado'}</h3>
+            <p style="color: #666; margin: 16px 0;">${statusAtual === 'todos' ? 'Visite o catálogo e faça seu primeiro pedido!' : 'Não há pedidos nesta categoria.'}</p>
             <a href="catalogo.html" class="btn btn-primary" style="text-decoration: none; display: inline-block; margin-top: 16px;">
               Ir para o Catálogo
             </a>
@@ -158,14 +209,14 @@
       estadoCarrinho.textContent = `Você tem ${pedidos.length} pedido(s) realizado(s).`;
 
       lista.innerHTML = pedidos.map(pedido => {
-        const statusClass = {
-          'PENDENTE': 'warning',
-          'CONFIRMADO': 'info',
-          'EM_PREPARO': 'info',
-          'ENVIADO': 'primary',
-          'ENTREGUE': 'success',
-          'CANCELADO': 'danger'
-        }[pedido.status] || 'secondary';
+        const statusColors = {
+          'PENDENTE': '#ffc107',
+          'CONFIRMADO': '#17a2b8',
+          'EM_PREPARO': '#17a2b8',
+          'ENVIADO': '#17a2b8',
+          'ENTREGUE': '#28a745',
+          'CANCELADO': '#dc3545'
+        };
 
         return `
           <article class="card">
@@ -175,7 +226,7 @@
                   <h3>Pedido #${pedido.id_pedido}</h3>
                   <p class="meta">${fmtData(pedido.data_pedido)}</p>
                 </div>
-                <span class="chip" style="background: var(--${statusClass}, #6c757d); color: white; padding: 4px 12px; border-radius: 12px;">
+                <span class="chip" style="background: ${statusColors[pedido.status] || '#6c757d'}; color: white; padding: 4px 12px; border-radius: 12px;">
                   ${pedido.status}
                 </span>
               </div>
@@ -193,6 +244,7 @@
               <div class="toolbar-right" style="margin-top: 16px;">
                 <button class="btn btn-primary" onclick="verDetalhes(${pedido.id_pedido})">Ver Detalhes</button>
                 ${pedido.status === 'PENDENTE' ? `<button class="btn" style="background: #dc3545; color: white;" onclick="cancelarPedido(${pedido.id_pedido})">Cancelar</button>` : ''}
+                ${pedido.status === 'ENVIADO' ? `<button class="btn" style="background: #28a745; color: white;" onclick="marcarEntregue(${pedido.id_pedido})">Marcar como Entregue</button>` : ''}
               </div>
             </div>
           </article>
@@ -201,9 +253,83 @@
     }
 
     function verDetalhes(pedidoId) {
-      // TODO: Implementar modal ou página de detalhes
-      alert(`Detalhes do pedido #${pedidoId} em desenvolvimento`);
+      // Busca o pedido completo com itens
+      fetch(`${API_BASE}/pedidos/${pedidoId}`)
+        .then(res => res.json())
+        .then(pedido => {
+          mostrarModalDetalhes(pedido);
+        })
+        .catch(err => {
+          console.error('Erro ao buscar detalhes:', err);
+          alert('Erro ao carregar detalhes do pedido');
+        });
     }
+
+    function mostrarModalDetalhes(pedido) {
+      const modal = document.getElementById('modalDetalhes');
+      const content = document.getElementById('detalhesContent');
+      
+      const itensHtml = pedido.itens.map(item => `
+        <div style="display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid #eee;">
+          <div style="flex: 1;">
+            <strong>${item.produto?.nome_produto || 'Produto'}</strong>
+            <p style="color: #666; margin: 4px 0; font-size: 14px;">
+              ${item.quantidade} ${item.produto?.unidade_medida || 'un'} × ${fmtMoeda(item.preco_unitario)}
+            </p>
+          </div>
+          <div style="font-weight: 700; font-size: 16px;">
+            ${fmtMoeda(item.quantidade * item.preco_unitario)}
+          </div>
+        </div>
+      `).join('');
+
+      content.innerHTML = `
+        <div style="margin-bottom: 24px;">
+          <h3 style="margin: 0 0 8px 0;">Pedido #${pedido.id_pedido}</h3>
+          <p style="color: #666; margin: 0;">${fmtData(pedido.data_pedido)}</p>
+        </div>
+
+        <div style="background: #f8f9fa; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+          <div style="display: grid; gap: 12px;">
+            <div>
+              <strong>Status:</strong> 
+              <span style="color: ${pedido.status === 'ENTREGUE' ? '#28a745' : '#ffc107'};">${pedido.status}</span>
+            </div>
+            <div>
+              <strong>Produtor:</strong> ${pedido.produtor?.nome || 'N/A'}
+            </div>
+            ${pedido.observacoes ? `<div><strong>Observações:</strong> ${pedido.observacoes}</div>` : ''}
+          </div>
+        </div>
+
+        <h4 style="margin: 0 0 12px 0;">Itens do Pedido</h4>
+        <div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; margin-bottom: 24px;">
+          ${itensHtml}
+        </div>
+
+        <div style="background: #f8f9fa; padding: 16px; border-radius: 8px;">
+          <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: 700;">
+            <span>Total:</span>
+            <span style="color: #28a745;">${fmtMoeda(pedido.valor_total)}</span>
+          </div>
+        </div>
+      `;
+
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function fecharModalDetalhes() {
+      document.getElementById('modalDetalhes').style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    // Fecha modal ao clicar fora
+    document.getElementById('modalDetalhes')?.addEventListener('click', function(e) {
+      if (e.target === this) {
+        fecharModalDetalhes();
+      }
+    });
 
     async function cancelarPedido(pedidoId) {
       if (!confirm('Tem certeza que deseja cancelar este pedido?')) return;
@@ -229,6 +355,30 @@
       }
     }
 
+    async function marcarEntregue(pedidoId) {
+      if (!confirm('Confirmar que o pedido foi entregue?')) return;
+
+      try {
+        const response = await fetch(`${API_BASE}/pedidos/${pedidoId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ status: 'ENTREGUE' })
+        });
+
+        if (response.ok) {
+          alert('Pedido marcado como entregue!');
+          carregarPedidos();
+        } else {
+          alert('Erro ao atualizar pedido');
+        }
+      } catch (error) {
+        console.error('Erro ao atualizar pedido:', error);
+        alert('Erro ao atualizar pedido');
+      }
+    }
+
     // Sidebar toggle
     const hamb = document.getElementById('hamb');
     const SIDEBAR_KEY = 'semear_sidebar_hidden';
@@ -244,18 +394,12 @@
       localStorage.setItem(SIDEBAR_KEY, hidden ? '1' : '0');
     });
 
-    // Logout - limpar localStorage
-    document.querySelector('.sb-logout').addEventListener('click', (e) => {
-      e.preventDefault();
-      localStorage.removeItem('usuario_id');
-      localStorage.removeItem('usuario_logado');
-      localStorage.removeItem('semear_carrinho');
-      window.location.href = 'index.html';
-    });
-
     // Carregar pedidos ao abrir página
     carregarPedidos();
   </script>
+
+  <!-- JS do Menu -->
+  <script src="js/menu-restaurante.js"></script>
 
 </body>
 </html>

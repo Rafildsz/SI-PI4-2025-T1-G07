@@ -11,6 +11,28 @@
 
   <!-- CSS principal (mesmo do catálogo) -->
   <link rel="stylesheet" href="css/catalogo.css">
+  
+  <style>
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #666;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s ease;
+    }
+    .tab-btn:hover {
+      color: #3aa55a;
+      background: #f5f5f5;
+    }
+    .tab-btn.active {
+      color: #3aa55a;
+      border-bottom-color: #3aa55a;
+    }
+  </style>
 </head>
 <body>
   <!-- Header -->
@@ -20,66 +42,64 @@
       <span class="brand">Semear</span>
     </a>
 
-    <h1 class="page-title">Minhas Vendas</h1>
-
-    <nav style="display: flex; gap: 16px; align-items: center;">
-      <a href="adicionar-produto.html" class="btn btn-primary" style="text-decoration: none; padding: 8px 16px; border-radius: 6px;">+ Adicionar Produto</a>
-      <button class="hamb" id="hamb" aria-label="Menu" aria-expanded="true" aria-controls="sidebar">
-        <span></span><span></span><span></span>
-      </button>
-    </nav>
+    <button class="hamb" id="hamb" aria-label="Menu" aria-expanded="true" aria-controls="sidebar">
+      <span></span><span></span><span></span>
+    </button>
   </header>
 
   <!-- Layout principal -->
-  <main class="container layout" role="main">
-    <section>
-      <!-- Tabs superiores -->
-      <div class="toolbar" style="margin-bottom: 24px;">
-        <button class="btn btn-primary" data-tab="produtos">Meus Produtos</button>
-        <button class="btn" data-tab="vendas">Vendas/Pedidos</button>
+  <div class="container layout">
+    <main role="main">
+      <h2 style="margin-bottom: 24px;">Vendas e Pedidos</h2>
+      
+      <!-- Tabs de Filtro -->
+      <div style="display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0;">
+        <button class="tab-btn active" data-status="todos" onclick="filtrarPorStatus('todos')">
+          Todos
+        </button>
+        <button class="tab-btn" data-status="pendentes" onclick="filtrarPorStatus('pendentes')">
+          Pendentes
+        </button>
+        <button class="tab-btn" data-status="andamento" onclick="filtrarPorStatus('andamento')">
+          Em Andamento
+        </button>
+        <button class="tab-btn" data-status="enviados" onclick="filtrarPorStatus('enviados')">
+          Enviados
+        </button>
+        <button class="tab-btn" data-status="finalizados" onclick="filtrarPorStatus('finalizados')">
+          Finalizados
+        </button>
+        <button class="tab-btn" data-status="cancelados" onclick="filtrarPorStatus('cancelados')">
+          Cancelados
+        </button>
       </div>
 
-      <!-- Tab: Meus Produtos -->
-      <div id="tab-produtos" class="tab-content">
-        <div class="searchbar" style="margin: 26px 0;">
-          <input type="text" id="searchProdutos" placeholder="Buscar produtos..." />
-        </div>
-
-        <div id="produtosGrid" class="grid" style="grid-template-columns: repeat(auto-fill,minmax(280px,1fr));">
-          <!-- Produtos serão carregados aqui -->
-        </div>
+      <div class="searchbar" style="margin-bottom: 26px;">
+        <input type="text" id="searchPedidos" placeholder="Buscar pedidos..." />
       </div>
 
-      <!-- Tab: Vendas/Pedidos -->
-      <div id="tab-vendas" class="tab-content" style="display: none;">
-        <div class="searchbar" style="margin: 26px 0;">
-          <input type="text" id="searchPedidos" placeholder="Buscar pedidos..." />
-        </div>
-
-        <div id="pedidosGrid" class="grid" style="grid-template-columns: 1fr;">
-          <!-- Pedidos serão carregados aqui -->
-        </div>
+      <div id="pedidosGrid" class="grid" style="grid-template-columns: 1fr;">
+        <!-- Pedidos serão carregados aqui -->
       </div>
-    </section>
+    </main>
 
     <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar" aria-label="Menu lateral">
-      <div class="sb-header">
-        <div class="sb-avatar">U</div>
-        <div>
-          <div class="sb-title">Usuário</div>
-          <small style="opacity:.9">Produtor</small>
-        </div>
-      </div>
-
-      <nav class="sb-nav" role="navigation">
-        <a class="sb-item" href="minhas-vendas.html"><span>💰</span> Minhas Vendas</a>
-        <a class="sb-item" href="mensagem.html"><span>✉️</span> Mensagens</a>
-        <div class="sb-sep"></div>
-        <a class="sb-item sb-logout" href="index.html"><span>↩️</span> Sair</a>
-      </nav>
+    <aside class="sidebar" id="sidebar">
+      <!-- Conteúdo carregado por menu-produtor.js -->
     </aside>
-  </main>
+  </div>
+
+  <!-- Modal de Detalhes do Pedido -->
+  <div id="modalDetalhes" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center;">
+    <div style="background: white; border-radius: 12px; padding: 32px; max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <h2 style="margin: 0;">Detalhes do Pedido</h2>
+        <button onclick="fecharModalDetalhes()" style="background: none; border: none; font-size: 28px; cursor: pointer; color: #999; padding: 0; width: 32px; height: 32px;">&times;</button>
+      </div>
+      <div id="detalhesContent"></div>
+      <button onclick="fecharModalDetalhes()" class="btn btn-primary" style="width: 100%; margin-top: 24px; padding: 12px;">Fechar</button>
+    </div>
+  </div>
 
   <footer class="site-footer">
     <div class="container">
@@ -92,44 +112,17 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // Toggle da sidebar
+    const KEY = 'semear_sidebar_hidden';
     const hamb = document.getElementById('hamb');
-    hamb.addEventListener('click', () => {
-      document.body.classList.toggle('no-sidebar');
-    });
-
-    // Logout - limpar localStorage
-    document.querySelector('.sb-logout').addEventListener('click', (e) => {
-      e.preventDefault();
-      localStorage.removeItem('usuario_id');
-      localStorage.removeItem('usuario_logado');
-      localStorage.removeItem('semear_carrinho');
-      window.location.href = 'index.html';
-    });
-
-    // Gerenciamento de tabs
-    const tabs = document.querySelectorAll('[data-tab]');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        // Remove active de todos
-        tabs.forEach(t => t.classList.remove('btn-primary'));
-        tabs.forEach(t => t.classList.add('btn'));
-        
-        // Adiciona active no clicado
-        tab.classList.remove('btn');
-        tab.classList.add('btn-primary');
-        
-        // Mostra conteúdo correspondente
-        document.querySelectorAll('.tab-content').forEach(content => {
-          content.style.display = 'none';
-        });
-        document.getElementById(`tab-${tab.dataset.tab}`).style.display = 'block';
-        
-        // Carrega pedidos quando abrir a tab de vendas
-        if (tab.dataset.tab === 'vendas') {
-          carregarPedidos();
-        }
-      });
-    });
+    if (localStorage.getItem(KEY) === '1'){
+      document.body.classList.add('no-sidebar');
+      hamb.setAttribute('aria-expanded','false');
+    }
+    hamb.onclick = () => {
+      const h = document.body.classList.toggle('no-sidebar');
+      hamb.setAttribute('aria-expanded', !h);
+      localStorage.setItem(KEY, h ? '1':'0');
+    };
 
     function fmtPreco(v){
       return v.toLocaleString('pt-BR',{ style:'currency', currency:'BRL' });
@@ -147,6 +140,9 @@
       });
     }
 
+    let todosPedidosCache = [];
+    let statusAtual = 'todos';
+
     // Carrega pedidos recebidos pelo produtor
     async function carregarPedidos() {
       const usuarioId = localStorage.getItem('usuario_id');
@@ -160,20 +156,50 @@
         if (!response.ok) throw new Error('Erro ao buscar pedidos');
         
         const todosPedidos = await response.json();
-        console.log('Todos os pedidos:', todosPedidos); // Debug
         
         // Filtra pedidos onde o produtor é o usuário logado
-        const pedidos = todosPedidos.filter(p => {
-          console.log('Pedido:', p.id_pedido, 'Produtor:', p.produtor); // Debug
+        todosPedidosCache = todosPedidos.filter(p => {
           return p.produtor?.id_usuario == usuarioId;
         });
         
-        console.log('Pedidos filtrados:', pedidos); // Debug
-        renderizarPedidos(pedidos);
+        aplicarFiltro();
       } catch (error) {
         console.error('Erro ao carregar pedidos:', error);
         document.getElementById('pedidosGrid').innerHTML = '<p style="text-align: center; padding: 40px;">Erro ao carregar pedidos.</p>';
       }
+    }
+
+    function filtrarPorStatus(status) {
+      statusAtual = status;
+      
+      // Atualiza botões ativos
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      document.querySelector(`[data-status="${status}"]`).classList.add('active');
+      
+      aplicarFiltro();
+    }
+
+    function aplicarFiltro() {
+      let pedidosFiltrados = [...todosPedidosCache];
+      
+      // Filtra por status
+      if (statusAtual === 'pendentes') {
+        pedidosFiltrados = pedidosFiltrados.filter(p => p.status === 'PENDENTE');
+      } else if (statusAtual === 'andamento') {
+        pedidosFiltrados = pedidosFiltrados.filter(p => 
+          p.status === 'CONFIRMADO' || p.status === 'EM_PREPARO'
+        );
+      } else if (statusAtual === 'enviados') {
+        pedidosFiltrados = pedidosFiltrados.filter(p => p.status === 'ENVIADO');
+      } else if (statusAtual === 'finalizados') {
+        pedidosFiltrados = pedidosFiltrados.filter(p => p.status === 'ENTREGUE');
+      } else if (statusAtual === 'cancelados') {
+        pedidosFiltrados = pedidosFiltrados.filter(p => p.status === 'CANCELADO');
+      }
+      
+      renderizarPedidos(pedidosFiltrados);
     }
 
     function renderizarPedidos(pedidos) {
@@ -233,9 +259,92 @@
       }).join('');
     }
 
-    function verDetalhesPedido(pedidoId) {
-      // TODO: Implementar modal ou página de detalhes
-      alert(`Detalhes do pedido #${pedidoId} em desenvolvimento`);
+    async function verDetalhesPedido(pedidoId) {
+      try {
+        const response = await fetch(`http://localhost:8081/api/pedidos/${pedidoId}`);
+        if (!response.ok) throw new Error('Erro ao buscar detalhes do pedido');
+        
+        const pedido = await response.json();
+        mostrarModalDetalhes(pedido);
+      } catch (error) {
+        console.error('Erro ao carregar detalhes:', error);
+        alert('Erro ao carregar detalhes do pedido');
+      }
+    }
+
+    function mostrarModalDetalhes(pedido) {
+      const content = document.getElementById('detalhesContent');
+      
+      const statusColors = {
+        'PENDENTE': '#ffc107',
+        'CONFIRMADO': '#17a2b8',
+        'EM_PREPARO': '#17a2b8',
+        'ENVIADO': '#17a2b8',
+        'ENTREGUE': '#28a745',
+        'CANCELADO': '#dc3545'
+      };
+
+      let html = `
+        <div style="background: #f8f9fa; padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <strong style="font-size: 18px;">Pedido #${pedido.id_pedido}</strong>
+            <span style="background: ${statusColors[pedido.status] || '#6c757d'}; color: white; padding: 4px 12px; border-radius: 12px; font-size: 14px;">
+              ${pedido.status}
+            </span>
+          </div>
+          <p style="margin: 4px 0; color: #666;">Data: ${fmtData(pedido.data_pedido)}</p>
+          <p style="margin: 4px 0;"><strong>Restaurante:</strong> ${pedido.restaurante?.nome || 'N/A'}</p>
+        </div>
+
+        <h3 style="margin: 20px 0 12px; font-size: 16px;">Itens do Pedido</h3>
+        <div style="border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
+      `;
+
+      if (pedido.itens && pedido.itens.length > 0) {
+        pedido.itens.forEach((item, index) => {
+          const subtotal = item.quantidade * item.preco_unitario;
+          html += `
+            <div style="padding: 12px; border-bottom: ${index < pedido.itens.length - 1 ? '1px solid #e0e0e0' : 'none'};">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                <strong>${item.nome_produto || 'Produto'}</strong>
+                <strong>${fmtPreco(subtotal)}</strong>
+              </div>
+              <div style="color: #666; font-size: 14px;">
+                ${item.quantidade} x ${fmtPreco(item.preco_unitario)}
+              </div>
+            </div>
+          `;
+        });
+      } else {
+        html += '<div style="padding: 12px; text-align: center; color: #999;">Nenhum item encontrado</div>';
+      }
+
+      html += `
+        </div>
+
+        <div style="background: #f8f9fa; padding: 16px; border-radius: 8px; margin-top: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong style="font-size: 18px;">Total do Pedido</strong>
+            <strong style="font-size: 24px; color: #28a745;">${fmtPreco(pedido.valor_total)}</strong>
+          </div>
+        </div>
+      `;
+
+      if (pedido.observacoes) {
+        html += `
+          <div style="margin-top: 20px; padding: 12px; background: #fff3cd; border-radius: 8px; border-left: 4px solid #ffc107;">
+            <strong>Observações:</strong><br>
+            <span style="color: #666;">${pedido.observacoes}</span>
+          </div>
+        `;
+      }
+
+      content.innerHTML = html;
+      document.getElementById('modalDetalhes').style.display = 'flex';
+    }
+
+    function fecharModalDetalhes() {
+      document.getElementById('modalDetalhes').style.display = 'none';
     }
 
     async function confirmarPedido(pedidoId) {
@@ -275,103 +384,10 @@
       }
     }
 
-    // Carrega produtos do produtor
-    async function carregarProdutos() {
-      const usuarioId = localStorage.getItem('usuario_id');
-      if (!usuarioId) {
-        window.location.href = 'login-produtor.html';
-        return;
-      }
-
-      try {
-        // Busca a propriedade do produtor
-        const propResponse = await fetch(`http://localhost:8081/propriedades/usuario/${usuarioId}`);
-        if (!propResponse.ok) throw new Error('Propriedade não encontrada');
-        
-        const propriedades = await propResponse.json();
-        if (propriedades.length === 0) {
-          document.getElementById('produtosGrid').innerHTML = '<p>Você ainda não tem uma propriedade cadastrada.</p>';
-          return;
-        }
-        
-        const propriedadeId = propriedades[0].id_propriedade;
-
-        // Busca os produtos da propriedade
-        const prodResponse = await fetch(`http://localhost:8081/api/produtos/propriedade/${propriedadeId}`);
-        if (!prodResponse.ok) throw new Error('Erro ao buscar produtos');
-        
-        const produtos = await prodResponse.json();
-        renderizarProdutos(produtos);
-      } catch (error) {
-        console.error('Erro ao carregar produtos:', error);
-        document.getElementById('produtosGrid').innerHTML = '<p>Erro ao carregar produtos. Tente novamente.</p>';
-      }
-    }
-
-    function renderizarProdutos(produtos) {
-      const grid = document.getElementById('produtosGrid');
-      
-      if (produtos.length === 0) {
-        grid.innerHTML = '<p>Você ainda não adicionou nenhum produto. Clique em "+ Adicionar Produto" para começar!</p>';
-        return;
-      }
-
-      grid.innerHTML = produtos.map(produto => {
-        const categorias = {
-          1: 'Hortaliças', 2: 'Frutas', 3: 'Legumes', 4: 'Verduras',
-          5: 'Grãos', 6: 'Laticínios', 7: 'Ovos', 8: 'Outros'
-        };
-        
-        return `
-          <div class="card">
-            ${produto.imagem_url ? `<img src="${produto.imagem_url}" alt="${produto.nome_produto}" style="width:100%; height:200px; object-fit:cover;">` : ''}
-            <div class="card-body">
-              <h3>${produto.nome_produto}</h3>
-              <p class="meta">${categorias[produto.categoria?.id_categoria] || 'Categoria'}</p>
-              ${produto.descricao ? `<p style="font-size: 14px; color: #666; margin: 8px 0;">${produto.descricao}</p>` : ''}
-              <p class="price">R$ ${produto.preco.toFixed(2)}/${produto.unidade_medida}</p>
-              <p style="font-size: 14px; color: ${produto.estoque > 0 ? '#28a745' : '#dc3545'};">
-                Estoque: ${produto.estoque} ${produto.unidade_medida}
-              </p>
-              <div class="toolbar-right" style="margin-top: 12px;">
-                <button class="btn btn-primary" onclick="editarProduto(${produto.id_produto})">Editar</button>
-                <button class="btn" style="background: #dc3545; color: white;" onclick="excluirProduto(${produto.id_produto})">Excluir</button>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function editarProduto(id) {
-      // TODO: Implementar edição
-      alert('Funcionalidade de edição em desenvolvimento');
-    }
-
-    async function excluirProduto(id) {
-      if (!confirm('Tem certeza que deseja excluir este produto?')) return;
-      
-      try {
-        const response = await fetch(`http://localhost:8081/api/produtos/${id}`, {
-          method: 'DELETE'
-        });
-        
-        if (response.ok) {
-          alert('Produto excluído com sucesso!');
-          carregarProdutos(); // Recarrega a lista
-        } else {
-          alert('Erro ao excluir produto');
-        }
-      } catch (error) {
-        console.error('Erro ao excluir:', error);
-        alert('Erro ao excluir produto');
-      }
-    }
-
-    // Busca de produtos
-    document.getElementById('searchProdutos').addEventListener('input', (e) => {
+    // Busca de pedidos
+    document.getElementById('searchPedidos').addEventListener('input', (e) => {
       const termo = e.target.value.toLowerCase();
-      const cards = document.querySelectorAll('#produtosGrid .card');
+      const cards = document.querySelectorAll('#pedidosGrid .card');
       
       cards.forEach(card => {
         const texto = card.textContent.toLowerCase();
@@ -379,8 +395,9 @@
       });
     });
 
-    // Carrega produtos ao iniciar
-    carregarProdutos();
+    // Carrega pedidos ao iniciar
+    carregarPedidos();
   </script>
+  <script src="js/menu-produtor.js"></script>
 </body>
 </html>

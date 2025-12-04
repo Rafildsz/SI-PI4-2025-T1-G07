@@ -1,62 +1,31 @@
-// Sistema de mensagens
-let conversas = {};
+// Sistema de mensagens - PRODUTOR
+const conversas = {
+  "1": {
+    nome: "Restaurante Sabor da Terra",
+    mensagens: [
+      { texto: "Olá! Vi que você tem tomates frescos.", enviadoPor: "restaurante" },
+      { texto: "Sim! Temos bastante disponível.", enviadoPor: "produtor" },
+      { texto: "Gostaria de fazer um pedido de 50kg.", enviadoPor: "restaurante" }
+    ]
+  },
+  "2": {
+    nome: "Bistrô Verde",
+    mensagens: [
+      { texto: "Bom dia! As alfaces estão em promoção?", enviadoPor: "restaurante" },
+      { texto: "Bom dia! Sim, R$ 2,50/kg esta semana.", enviadoPor: "produtor" }
+    ]
+  },
+  "3": {
+    nome: "Cantina Italiana",
+    mensagens: [
+      { texto: "Oi! Podemos agendar uma entrega?", enviadoPor: "restaurante" }
+    ]
+  }
+};
+
 let conversaAtual = null;
-let tipoUsuario = null;
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Verifica tipo de usuário logado
-  tipoUsuario = localStorage.getItem('tipo_usuario');
-  
-  // Define conversas de acordo com o tipo de usuário
-  if (tipoUsuario === 'PRODUTOR') {
-    conversas = {
-      "1": {
-        nome: "Restaurante Sabor da Terra",
-        mensagens: [
-          { texto: "Olá! Vi que você tem tomates frescos.", enviadoPor: "restaurante" },
-          { texto: "Sim! Temos bastante disponível.", enviadoPor: "produtor" },
-          { texto: "Gostaria de fazer um pedido de 50kg.", enviadoPor: "restaurante" }
-        ]
-      },
-      "2": {
-        nome: "Bistrô Verde",
-        mensagens: [
-          { texto: "Bom dia! As alfaces estão em promoção?", enviadoPor: "restaurante" },
-          { texto: "Bom dia! Sim, R$ 2,50/kg esta semana.", enviadoPor: "produtor" }
-        ]
-      },
-      "3": {
-        nome: "Cantina Italiana",
-        mensagens: [
-          { texto: "Oi! Podemos agendar uma entrega?", enviadoPor: "restaurante" }
-        ]
-      }
-    };
-  } else {
-    conversas = {
-      "1": {
-        nome: "Fazenda Boa Vista",
-        mensagens: [
-          { texto: "Olá! Vi que você tem tomates frescos.", enviadoPor: "restaurante" },
-          { texto: "Sim! Temos bastante disponível.", enviadoPor: "produtor" },
-          { texto: "Gostaria de fazer um pedido de 50kg.", enviadoPor: "restaurante" }
-        ]
-      },
-      "2": {
-        nome: "Sítio Verde Vale",
-        mensagens: [
-          { texto: "Bom dia! As alfaces estão em promoção?", enviadoPor: "restaurante" },
-          { texto: "Bom dia! Sim, R$ 2,50/kg esta semana.", enviadoPor: "produtor" }
-        ]
-      },
-      "3": {
-        nome: "Chácara Sol Nascente",
-        mensagens: [
-          { texto: "Oi! Podemos agendar uma entrega?", enviadoPor: "restaurante" }
-        ]
-      }
-    };
-  }
 
   /* ===================================================
      MENU SLIDE LATERAL
@@ -69,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ABRIR/FECHAR MENU
   if (rightMenu && menuToggle) {
     menuToggle.addEventListener("click", (e) => {
-      e.stopPropagation();  // impede clique de fechar
+      e.stopPropagation();
       rightMenu.classList.toggle("open");
     });
   }
@@ -131,12 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
     conversas[id].mensagens.forEach(msg => {
       const div = document.createElement("div");
       div.classList.add("msg");
-      
-      // Define alinhamento baseado em quem enviou e quem está logado
-      const ehMinha = (tipoUsuario === 'PRODUTOR' && msg.enviadoPor === 'produtor') ||
-                      (tipoUsuario === 'RESTAURANTE' && msg.enviadoPor === 'restaurante');
-      div.classList.add(ehMinha ? "msg-right" : "msg-left");
-      
+      div.classList.add(msg.enviadoPor === "produtor" ? "msg-right" : "msg-left");
       div.textContent = msg.texto;
       chatMensagens.appendChild(div);
     });
@@ -165,11 +129,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const texto = input.value.trim();
     if (!texto || !conversaAtual) return;
 
-    const enviadoPor = tipoUsuario === 'PRODUTOR' ? 'produtor' : 'restaurante';
-
     conversas[conversaAtual].mensagens.push({
       texto,
-      enviadoPor: enviadoPor
+      enviadoPor: "produtor"
     });
 
     input.value = "";

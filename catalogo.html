@@ -29,10 +29,6 @@
     </div>
 
     <nav style="display: flex; gap: 16px; align-items: center;">
-      <a href="carrinho.html" class="btn" style="text-decoration: none; position: relative; padding: 8px 16px;">
-        🛒 Carrinho
-        <span id="carrinho-contador" style="display: none; position: absolute; top: -8px; right: -8px; background: #dc3545; color: white; border-radius: 50%; width: 24px; height: 24px; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center;">0</span>
-      </a>
       <!-- botão hambúrguer -->
       <button class="hamb" id="hamb" aria-label="Menu" aria-expanded="true" aria-controls="sidebar">
         <span></span><span></span><span></span>
@@ -48,8 +44,6 @@
       </div>
 
       <div class="toolbar">
-        <button class="btn" id="btnFiltros">Filtros</button>
-        <button class="btn" id="btnAdd">+</button>
         <div class="toolbar-right">
           <select id="ordem" class="select">
             <option>Ordenar por</option>
@@ -69,20 +63,7 @@
 
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
-      <div class="sb-header">
-        <div class="sb-avatar">U</div>
-        <div>
-          <div class="sb-title">Usuário</div>
-          <small>Restaurante</small>
-        </div>
-      </div>
-
-      <nav class="sb-nav">
-        <a class="sb-item" href="meus-pedidos.html">🧾 Meus Pedidos</a>
-        <a class="sb-item" href="mensagem.html">✉️ Mensagens</a>
-        <div class="sb-sep"></div>
-        <a class="sb-item sb-logout" href="index.html">↩️ Sair</a>
-      </nav>
+      <!-- Conteúdo carregado por menu-restaurante.js -->
     </aside>
   </main>
 
@@ -94,6 +75,9 @@
 
   <!-- JS do carrinho -->
   <script src="js/carrinho.js"></script>
+
+  <!-- JS do Menu -->
+  <script src="js/menu-restaurante.js"></script>
 
   <!-- JS do Catálogo -->
   <script src="js/catalogo.js"></script>
@@ -111,15 +95,6 @@
       hamb.setAttribute('aria-expanded', !h);
       localStorage.setItem(KEY, h ? '1':'0');
     };
-
-    // Logout - limpar localStorage
-    document.querySelector('.sb-logout').addEventListener('click', (e) => {
-      e.preventDefault();
-      localStorage.removeItem('usuario_id');
-      localStorage.removeItem('usuario_logado');
-      localStorage.removeItem('semear_carrinho');
-      window.location.href = 'index.html';
-    });
   </script>
 
 </body>

@@ -11,6 +11,236 @@
 
   <!-- CSS principal -->
   <link rel="stylesheet" href="css/catalogo.css">
+  
+  <style>
+    /* Modal de Pagamento */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #eee;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: #999;
+      padding: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      color: #333;
+    }
+
+    .payment-methods {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .payment-option {
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .payment-option:hover {
+      border-color: #28a745;
+      background: #f8fff9;
+    }
+
+    .payment-option.selected {
+      border-color: #28a745;
+      background: #f0fff4;
+    }
+
+    .payment-option input[type="radio"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .payment-icon {
+      font-size: 24px;
+      width: 40px;
+      text-align: center;
+    }
+
+    .payment-info {
+      flex: 1;
+    }
+
+    .payment-info h4 {
+      margin: 0 0 4px 0;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .payment-info p {
+      margin: 0;
+      font-size: 13px;
+      color: #666;
+    }
+
+    .payment-form {
+      display: none;
+      margin-top: 16px;
+      padding: 16px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    .payment-form.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #28a745;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .order-summary {
+      background: #f8f9fa;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    .summary-total {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 12px;
+      margin-top: 12px;
+      border-top: 2px solid #ddd;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .summary-total .value {
+      color: #28a745;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .modal-actions button {
+      flex: 1;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-cancel {
+      background: #f1f3f5;
+      color: #333;
+    }
+
+    .btn-cancel:hover {
+      background: #e9ecef;
+    }
+
+    .btn-confirm {
+      background: #28a745;
+      color: white;
+    }
+
+    .btn-confirm:hover {
+      background: #218838;
+    }
+
+    .btn-confirm:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
 <body>
   <!-- Header -->
@@ -19,8 +249,6 @@
       <img src="assets/logo.svg" alt="Semear">
       <span class="brand">Semear</span>
     </a>
-
-    <h1 class="page-title">Meu Carrinho</h1>
 
     <button class="hamb" id="hamb" aria-label="Menu" aria-expanded="true" aria-controls="sidebar">
       <span></span><span></span><span></span>
@@ -69,23 +297,150 @@
 
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
-      <div class="sb-header">
-        <div class="sb-avatar">U</div>
-        <div>
-          <div class="sb-title">Usuário</div>
-          <small>Restaurante</small>
+      <!-- Conteúdo carregado por menu-restaurante.js -->
+    </aside>
+  </main>
+
+  <!-- Modal de Pagamento -->
+  <div id="modalPagamento" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Finalizar Pagamento</h2>
+        <button class="modal-close" onclick="fecharModal()">&times;</button>
+      </div>
+
+      <div class="order-summary">
+        <h3 style="margin: 0 0 12px 0; font-size: 16px;">Resumo do Pedido</h3>
+        <div class="summary-row">
+          <span>Subtotal:</span>
+          <span id="modalSubtotal">R$ 0,00</span>
+        </div>
+        <div class="summary-row">
+          <span>Taxa de entrega:</span>
+          <span style="color: #28a745;">Grátis</span>
+        </div>
+        <div class="summary-total">
+          <span>Total:</span>
+          <span class="value" id="modalTotal">R$ 0,00</span>
         </div>
       </div>
 
-      <nav class="sb-nav">
-        <a class="sb-item" href="catalogo.html">🏠 Catálogo</a>
-        <a class="sb-item" href="meus-pedidos.html">🧾 Meus Pedidos</a>
-        <a class="sb-item" href="mensagem.html">✉️ Mensagens</a>
-        <div class="sb-sep"></div>
-        <a class="sb-item sb-logout" href="index.html">↩️ Sair</a>
-      </nav>
-    </aside>
-  </main>
+      <h3 style="margin: 0 0 16px 0; font-size: 18px;">Forma de Pagamento</h3>
+      
+      <div class="payment-methods">
+        <label class="payment-option" onclick="selecionarPagamento('pix')">
+          <input type="radio" name="payment" value="pix">
+          <div class="payment-icon">📱</div>
+          <div class="payment-info">
+            <h4>PIX</h4>
+            <p>Aprovação instantânea</p>
+          </div>
+        </label>
+
+        <label class="payment-option" onclick="selecionarPagamento('credito')">
+          <input type="radio" name="payment" value="credito">
+          <div class="payment-icon">💳</div>
+          <div class="payment-info">
+            <h4>Cartão de Crédito</h4>
+            <p>Parcelamento em até 3x sem juros</p>
+          </div>
+        </label>
+
+        <label class="payment-option" onclick="selecionarPagamento('debito')">
+          <input type="radio" name="payment" value="debito">
+          <div class="payment-icon">💳</div>
+          <div class="payment-info">
+            <h4>Cartão de Débito</h4>
+            <p>Aprovação imediata</p>
+          </div>
+        </label>
+
+        <label class="payment-option" onclick="selecionarPagamento('dinheiro')">
+          <input type="radio" name="payment" value="dinheiro">
+          <div class="payment-icon">💵</div>
+          <div class="payment-info">
+            <h4>Dinheiro</h4>
+            <p>Pagamento na entrega</p>
+          </div>
+        </label>
+      </div>
+
+      <!-- Formulário PIX -->
+      <div id="formPix" class="payment-form">
+        <p style="text-align: center; color: #666; margin-bottom: 16px;">
+          Um QR Code será gerado após a confirmação do pedido
+        </p>
+      </div>
+
+      <!-- Formulário Cartão de Crédito -->
+      <div id="formCredito" class="payment-form">
+        <div class="form-group">
+          <label>Número do Cartão</label>
+          <input type="text" placeholder="0000 0000 0000 0000" maxlength="19" id="numeroCartaoCredito">
+        </div>
+        <div class="form-group">
+          <label>Nome no Cartão</label>
+          <input type="text" placeholder="NOME COMPLETO" id="nomeCartaoCredito">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Validade</label>
+            <input type="text" placeholder="MM/AA" maxlength="5" id="validadeCredito">
+          </div>
+          <div class="form-group">
+            <label>CVV</label>
+            <input type="text" placeholder="123" maxlength="3" id="cvvCredito">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Parcelas</label>
+          <select id="parcelasCredito" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px;">
+            <option value="1">1x sem juros</option>
+            <option value="2">2x sem juros</option>
+            <option value="3">3x sem juros</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Formulário Cartão de Débito -->
+      <div id="formDebito" class="payment-form">
+        <div class="form-group">
+          <label>Número do Cartão</label>
+          <input type="text" placeholder="0000 0000 0000 0000" maxlength="19" id="numeroCartaoDebito">
+        </div>
+        <div class="form-group">
+          <label>Nome no Cartão</label>
+          <input type="text" placeholder="NOME COMPLETO" id="nomeCartaoDebito">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Validade</label>
+            <input type="text" placeholder="MM/AA" maxlength="5" id="validadeDebito">
+          </div>
+          <div class="form-group">
+            <label>CVV</label>
+            <input type="text" placeholder="123" maxlength="3" id="cvvDebito">
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulário Dinheiro -->
+      <div id="formDinheiro" class="payment-form">
+        <div class="form-group">
+          <label>Troco para quanto?</label>
+          <input type="text" placeholder="R$ 0,00" id="troco">
+        </div>
+        <p style="color: #666; font-size: 13px; margin-top: 8px;">
+          Deixe em branco se não precisar de troco
+        </p>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="fecharModal()">Cancelar</button>
+        <button class="btn-confirm" id="btnConfirmarPagamento" disabled>Confirmar Pedido</button>
+      </div>
+    </div>
+  </div>
 
   <footer class="site-footer">
     <div class="container">
@@ -118,6 +473,9 @@
       window.location.href = 'index.html';
     });
   </script>
+
+  <!-- JS do Menu -->
+  <script src="js/menu-restaurante.js"></script>
 
   <!-- JS do carrinho -->
   <script>
@@ -235,7 +593,7 @@
       renderizarCarrinho();
     }
 
-    // Finalizar pedido
+    // Finalizar pedido - abre modal de pagamento
     document.getElementById('btnFinalizar').addEventListener('click', async () => {
       const usuarioId = localStorage.getItem('usuario_id');
       
@@ -251,6 +609,67 @@
         return;
       }
 
+      // Abre o modal de pagamento
+      abrirModalPagamento();
+    });
+
+    // Controle do modal de pagamento
+    let metodoPagamentoSelecionado = null;
+
+    function abrirModalPagamento() {
+      const carrinho = obterCarrinho();
+      const total = carrinho.reduce((sum, item) => sum + (item.produto.preco * item.quantidade), 0);
+      
+      document.getElementById('modalSubtotal').textContent = fmtPreco(total);
+      document.getElementById('modalTotal').textContent = fmtPreco(total);
+      
+      document.getElementById('modalPagamento').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function fecharModal() {
+      document.getElementById('modalPagamento').classList.remove('active');
+      document.body.style.overflow = 'auto';
+      
+      // Limpa seleção
+      metodoPagamentoSelecionado = null;
+      document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
+      document.querySelectorAll('.payment-form').forEach(form => form.classList.remove('active'));
+      document.querySelectorAll('input[name="payment"]').forEach(radio => radio.checked = false);
+      document.getElementById('btnConfirmarPagamento').disabled = true;
+    }
+
+    function selecionarPagamento(metodo) {
+      metodoPagamentoSelecionado = metodo;
+      
+      // Atualiza visual
+      document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
+      document.querySelectorAll('.payment-form').forEach(form => form.classList.remove('active'));
+      
+      const option = document.querySelector(`input[value="${metodo}"]`).closest('.payment-option');
+      option.classList.add('selected');
+      
+      // Mostra formulário específico
+      const formId = `form${metodo.charAt(0).toUpperCase() + metodo.slice(1)}`;
+      const form = document.getElementById(formId);
+      if (form) {
+        form.classList.add('active');
+      }
+      
+      // Habilita botão de confirmar
+      document.getElementById('btnConfirmarPagamento').disabled = false;
+    }
+
+    // Confirmar pagamento e criar pedido
+    document.getElementById('btnConfirmarPagamento').addEventListener('click', async () => {
+      if (!metodoPagamentoSelecionado) {
+        alert('Selecione uma forma de pagamento!');
+        return;
+      }
+
+      const usuarioId = localStorage.getItem('usuario_id');
+      const carrinho = obterCarrinho();
+
       // Cria o pedido
       const pedidoData = {
         usuarioId: parseInt(usuarioId),
@@ -262,7 +681,8 @@
         }))
       };
 
-      console.log('Enviando pedido:', pedidoData); // Debug
+      console.log('Enviando pedido:', pedidoData);
+      console.log('Forma de pagamento:', metodoPagamentoSelecionado);
 
       try {
         const response = await fetch(`${API_BASE}/pedidos`, {
@@ -284,11 +704,62 @@
         // Limpa carrinho
         localStorage.removeItem('semear_carrinho');
         
-        alert('Pedido realizado com sucesso!');
+        // Fecha modal
+        fecharModal();
+        
+        // Mensagem de sucesso baseada no método
+        let mensagem = 'Pedido realizado com sucesso!';
+        if (metodoPagamentoSelecionado === 'pix') {
+          mensagem += '\n\nO QR Code do PIX foi enviado para seu email.';
+        } else if (metodoPagamentoSelecionado === 'credito' || metodoPagamentoSelecionado === 'debito') {
+          mensagem += '\n\nPagamento aprovado!';
+        } else if (metodoPagamentoSelecionado === 'dinheiro') {
+          mensagem += '\n\nPrepare o dinheiro para a entrega.';
+        }
+        
+        alert(mensagem);
         window.location.href = 'meus-pedidos.html';
       } catch (error) {
         console.error('Erro ao finalizar pedido:', error);
         alert('Erro ao finalizar pedido. Tente novamente.');
+      }
+    });
+
+    // Formatação automática de campos
+    document.getElementById('numeroCartaoCredito')?.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\s/g, '');
+      let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+      e.target.value = formattedValue;
+    });
+
+    document.getElementById('numeroCartaoDebito')?.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\s/g, '');
+      let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+      e.target.value = formattedValue;
+    });
+
+    document.getElementById('validadeCredito')?.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length >= 2) {
+        e.target.value = value.slice(0, 2) + '/' + value.slice(2, 4);
+      } else {
+        e.target.value = value;
+      }
+    });
+
+    document.getElementById('validadeDebito')?.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/\D/g, '');
+      if (value.length >= 2) {
+        e.target.value = value.slice(0, 2) + '/' + value.slice(2, 4);
+      } else {
+        e.target.value = value;
+      }
+    });
+
+    // Fechar modal ao clicar fora
+    document.getElementById('modalPagamento').addEventListener('click', function(e) {
+      if (e.target === this) {
+        fecharModal();
       }
     });
 

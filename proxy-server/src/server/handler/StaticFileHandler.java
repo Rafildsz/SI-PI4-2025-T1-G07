@@ -35,8 +35,25 @@ public class StaticFileHandler implements HttpHandler {
 
         byte[] fileBytes = Files.readAllBytes(resolvedPath);
 
+        // Define o Content-Type baseado na extensão do arquivo
+        String contentType = getContentType(filePath);
+        exchange.getResponseHeaders().set("Content-Type", contentType);
+
         exchange.sendResponseHeaders(200, fileBytes.length);
         exchange.getResponseBody().write(fileBytes);
         exchange.close();
+    }
+
+    private String getContentType(String filePath) {
+        if (filePath.endsWith(".html")) return "text/html";
+        if (filePath.endsWith(".css")) return "text/css";
+        if (filePath.endsWith(".js")) return "application/javascript";
+        if (filePath.endsWith(".png")) return "image/png";
+        if (filePath.endsWith(".jpg") || filePath.endsWith(".jpeg")) return "image/jpeg";
+        if (filePath.endsWith(".gif")) return "image/gif";
+        if (filePath.endsWith(".svg")) return "image/svg+xml";
+        if (filePath.endsWith(".ico")) return "image/x-icon";
+        if (filePath.endsWith(".json")) return "application/json";
+        return "application/octet-stream";
     }
 }

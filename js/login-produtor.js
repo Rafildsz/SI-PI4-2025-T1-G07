@@ -47,7 +47,8 @@ document.getElementById('loginForm').addEventListener('submit', function(e){
     },
     body: JSON.stringify({
       email: email.value,
-      senha: pass.value
+      senha: pass.value,
+      tipoUsuario: 'PRODUTOR'
     })
   })
   .then(response => {
@@ -61,7 +62,8 @@ document.getElementById('loginForm').addEventListener('submit', function(e){
   .then(data => {
     // Salva informações do usuário logado
     localStorage.setItem('usuario_id', data.id);
-    localStorage.setItem('usuario_logado', 'true');
+    localStorage.setItem('usuario_logado', data.nome || 'Usuário');
+    localStorage.setItem('tipo_usuario', 'PRODUTOR');
     
     // Redireciona para área do produtor
     window.location.href = 'minhas-vendas.html';

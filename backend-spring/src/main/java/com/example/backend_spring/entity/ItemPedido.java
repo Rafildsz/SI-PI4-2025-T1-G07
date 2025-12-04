@@ -3,6 +3,7 @@ package com.example.backend_spring.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "itens_pedido")
@@ -25,5 +26,6 @@ public class ItemPedido {
     private Integer quantidade;
 
     @Column(name = "preco_unitario")
+    @JsonProperty("preco_unitario")
     private Double precoUnitario;
 }

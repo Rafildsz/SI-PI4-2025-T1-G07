@@ -93,17 +93,10 @@
       hamb.setAttribute('aria-expanded', !h);
       localStorage.setItem(KEY, h ? '1':'0');
     };
-    
-    // Detecta tipo de usuário e carrega menu apropriado
-    const tipoUsuario = localStorage.getItem('tipo_usuario');
-    const menuScript = document.createElement('script');
-    menuScript.src = tipoUsuario === 'PRODUTOR' ? 'js/menu-produtor.js' : 'js/menu-restaurante.js';
-    document.head.appendChild(menuScript);
   </script>
 
-  <!-- JS -->
-  <script src="js/mensagens.js"></script>
+  <script src="js/menu-restaurante.js"></script>
+  <script src="js/mensagens-restaurante.js"></script>
 
 </body>
-</html>
 </html>
