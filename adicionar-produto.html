@@ -159,9 +159,10 @@
 <script src="js/script.js"></script>
 <script>
 (function(){
-  // Toggle da sidebar
+  // Controle de Exibição da sidebar do produtor
   const KEY = 'semear_sidebar_hidden';
   const hamb = document.getElementById('hamb');
+  //Se a preferência do usuário estiver salva, aplica
   if (localStorage.getItem(KEY) === '1'){
     document.body.classList.add('no-sidebar');
     hamb.setAttribute('aria-expanded','false');
@@ -172,7 +173,7 @@
     localStorage.setItem(KEY, h ? '1':'0');
   };
 
-  // Verifica se está logado
+  // Verifica se o usuário está logado no sistema
   const usuarioId = localStorage.getItem('usuario_id');
   if (!usuarioId) {
     alert('Você precisa estar logado para adicionar produtos.');
@@ -180,7 +181,7 @@
     return;
   }
 
-  // Funções de erro
+  // Funções de exibição e limpeza de erro
   function limparErro(campo) {
     campo.classList.remove('error');
     const errorMsg = document.getElementById(campo.id + '-error');
@@ -190,6 +191,7 @@
     }
   }
 
+  //exibe mensagem de erro personalizada e destaca campo
   function mostrarErro(campo, mensagem) {
     campo.classList.add('error');
     const errorMsg = document.getElementById(campo.id + '-error');
@@ -207,7 +209,7 @@
     });
   });
 
-  // Submit do formulário
+  // envia o formulário de cadastro de produtos
   document.getElementById('produtoForm').addEventListener('submit', function(e){
     e.preventDefault();
     
@@ -219,7 +221,7 @@
     const estoque = document.getElementById('estoque');
     const imagemUrl = document.getElementById('imagemUrl');
 
-    // Validações
+    // Validações básicas do formulario
     if (!nomeProduto.value.trim()) {
       mostrarErro(nomeProduto, 'Por favor, informe o nome do produto.');
       return;
@@ -260,7 +262,7 @@
 
         const idPropriedade = propriedades[0].id_propriedade;
 
-        // Monta objeto produto
+        // Monta objeto produto que será enviado ao backend
         const produtoData = {
           nome_produto: nomeProduto.value.trim(),
           descricao: descricao.value.trim() || null,
