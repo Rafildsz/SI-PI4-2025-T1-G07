@@ -1,3 +1,23 @@
+/**
+ * ========================================
+ * SEMEAR - Menu Dashboard (Restaurante)
+ * ========================================
+ * 
+ * Descrição: Componente de menu/navegação específico para o dashboard
+ * do restaurante com acesso a catálogo, carrinho, pedidos e mensagens.
+ * 
+ * Funcionalidades:
+ * - Renderização de menu sidebar lateral
+ * - Exibição de perfil do usuário logado
+ * - Navegação entre seções do restaurante
+ * - Contador de itens do carrinho
+ * - Gestão de logout e limpeza de sessão
+ * - Atualização dinâmica do carrinho
+ * 
+ * Dependências: localStorage (dados do usuário e carrinho)
+ * ========================================
+ */
+
 // Componente de Menu para páginas do Restaurante
 function carregarMenuRestaurante() {
   const sidebar = document.getElementById('sidebar');

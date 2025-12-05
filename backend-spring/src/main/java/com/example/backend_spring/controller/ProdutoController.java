@@ -1,3 +1,22 @@
+/**
+ * ========================================
+ * SEMEAR - Controlador de Produtos
+ * ========================================
+ * 
+ * Descrição: Controlador REST para gerenciar produtos cadastrados por produtores.
+ * Implementa operações CRUD de produtos vinculados às propriedades/produtores.
+ * 
+ * Responsabilidades:
+ * - Endpoint GET /api/produtos: listar todos os produtos
+ * - Endpoint POST /api/produtos: criar novo produto
+ * - Endpoint GET /api/produtos/{id}: buscar produto específico
+ * - Endpoint PUT /api/produtos/{id}: atualizar informações do produto
+ * - Endpoint DELETE /api/produtos/{id}: remover produto
+ * - Validar propriedade do produto
+ * 
+ * Dependências: ProdutoService
+ * ========================================
+ */
 package com.example.backend_spring.controller;
 
 import com.example.backend_spring.dto.ProdutoCreateDTO;

@@ -1,3 +1,22 @@
+/**
+ * ========================================
+ * SEMEAR - Controlador de Pedidos
+ * ========================================
+ * 
+ * Descrição: Controlador REST para gerenciar operações CRUD de pedidos.
+ * Coordena a criação, atualização e recuperação de pedidos entre restaurantes e produtores.
+ * 
+ * Responsabilidades:
+ * - Endpoint GET /api/pedidos: listar todos os pedidos
+ * - Endpoint POST /api/pedidos: criar novo pedido com itens
+ * - Endpoint GET /api/pedidos/{id}: buscar pedido específico
+ * - Endpoint PUT /api/pedidos/{id}: atualizar status/dados de pedido
+ * - Endpoint DELETE /api/pedidos/{id}: cancelar pedido
+ * - Gerenciar associação restaurante-produtor
+ * 
+ * Dependências: PedidoService
+ * ========================================
+ */
 package com.example.backend_spring.controller;
 
 import com.example.backend_spring.dto.PedidoCreateDTO;

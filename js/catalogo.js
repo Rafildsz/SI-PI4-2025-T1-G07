@@ -1,3 +1,23 @@
+/**
+ * ========================================
+ * SEMEAR - Catálogo de Produtos
+ * ========================================
+ * 
+ * Descrição: Exibe, filtra e permite busca de produtos do catálogo
+ * com informações de preço, estoque e produtor.
+ * 
+ * Funcionalidades:
+ * - Exibição de produtos em grid responsivo
+ * - Filtros por categoria de produtos
+ * - Busca de produtos por nome/descrição
+ * - Formatação de preços em BRL
+ * - Indicação de disponibilidade de estoque
+ * - Integração com carrinho de compras
+ * 
+ * Dependências: Backend Spring Boot (API /api/produtos), localStorage
+ * ========================================
+ */
+
 // Ano rodapé
 document.getElementById('year').textContent = new Date().getFullYear();
 

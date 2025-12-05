@@ -1,3 +1,20 @@
+/**
+ * ========================================
+ * SEMEAR - Controlador de Itens de Pedido
+ * ========================================
+ * 
+ * Descrição: Controlador REST para gerenciar itens individuais dentro de um pedido.
+ * Cada item representa um produto específico com quantidade e preço unitário.
+ * 
+ * Responsabilidades:
+ * - Endpoint POST /itens-pedido/{pedidoId}/{produtoId}: criar novo item de pedido
+ * - Associar item a um pedido específico
+ * - Associar item a um produto específico
+ * - Registrar quantidade e preço unitário
+ * 
+ * Dependências: ItemPedidoService
+ * ========================================
+ */
 package com.example.backend_spring.controller;
 
 import com.example.backend_spring.entity.ItemPedido;

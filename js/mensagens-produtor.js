@@ -1,3 +1,22 @@
+/**
+ * ========================================
+ * SEMEAR - Sistema de Mensagens (Produtor)
+ * ========================================
+ * 
+ * Descrição: Gerencia sistema de mensagens diretas entre produtores
+ * e restaurantes, com interface de chat em tempo real.
+ * 
+ * Funcionalidades:
+ * - Lista de conversas com restaurantes
+ * - Envio e recebimento de mensagens
+ * - Menu lateral com histórico de conversas
+ * - Notificações de novas mensagens
+ * - Armazenamento de histórico de chat
+ * 
+ * Dependências: localStorage, API backend para persistência de mensagens
+ * ========================================
+ */
+
 // Sistema de mensagens - PRODUTOR
 const conversas = {
   "1": {

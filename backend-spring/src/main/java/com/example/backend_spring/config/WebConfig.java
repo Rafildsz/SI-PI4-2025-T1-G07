@@ -1,3 +1,19 @@
+/**
+ * ========================================
+ * SEMEAR - Configuração Web
+ * ========================================
+ * 
+ * Descrição: Classe de configuração que define beans e configurações gerais da aplicação web.
+ * Responsável por providenciar componentes reutilizáveis em toda a aplicação.
+ * 
+ * Responsabilidades:
+ * - Configurar encoder de senhas usando BCrypt
+ * - Providenciar bean PasswordEncoder para uso em serviços de autenticação
+ * - Garantir segurança de senhas com algoritmo de hash bcrypt
+ * 
+ * Dependências: Spring Security, BCryptPasswordEncoder
+ * ========================================
+ */
 package com.example.backend_spring.config;
 
 import org.springframework.context.annotation.Bean;

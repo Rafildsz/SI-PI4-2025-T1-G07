@@ -1,3 +1,22 @@
+/**
+ * ========================================
+ * SEMEAR - Carrinho de Compras
+ * ========================================
+ * 
+ * Descrição: Gerencia a lógica do carrinho de compras de produtos agrícolas,
+ * incluindo adição/remoção de itens e processamento de pagamento.
+ * 
+ * Funcionalidades:
+ * - Adição e remoção de produtos ao carrinho
+ * - Verificação de estoque disponível
+ * - Armazenamento de carrinho no localStorage
+ * - Processamento de pedidos no backend
+ * - Cálculo de totais e aplicação de descontos
+ * 
+ * Dependências: Backend Spring Boot (API REST em http://localhost:8081/api)
+ * ========================================
+ */
+
 // Backend Spring Boot
 const API_BASE = "http://localhost:8081/api";
 

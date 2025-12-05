@@ -1,3 +1,23 @@
+/**
+ * ========================================
+ * SEMEAR - Autenticação de Produtores
+ * ========================================
+ * 
+ * Descrição: Gerencia autenticação, validação de credenciais e login
+ * de produtores rurais no sistema.
+ * 
+ * Funcionalidades:
+ * - Validação de email e senha
+ * - Autenticação com backend
+ * - Armazenamento de sessão do usuário
+ * - Menu mobile responsivo
+ * - Redirecionamento pós-login
+ * - Tratamento de erros de autenticação
+ * 
+ * Dependências: Backend Spring Boot (API /api/login), localStorage
+ * ========================================
+ */
+
 // Ano no rodapé
 document.getElementById('year').textContent = new Date().getFullYear();
 

@@ -1,3 +1,22 @@
+/**
+ * ========================================
+ * SEMEAR - Menu Dashboard (Produtor)
+ * ========================================
+ * 
+ * Descrição: Componente de menu/navegação específico para o dashboard
+ * do produtor com acesso a vendas, produtos e mensagens.
+ * 
+ * Funcionalidades:
+ * - Renderização de menu sidebar lateral
+ * - Exibição de perfil do usuário logado
+ * - Navegação entre seções do produtor
+ * - Gestão de logout e limpeza de sessão
+ * - Carregamento automático ao abrir página
+ * 
+ * Dependências: localStorage (dados do usuário logado)
+ * ========================================
+ */
+
 // Componente de Menu para páginas do Produtor
 function carregarMenuProdutor() {
   const sidebar = document.getElementById('sidebar');

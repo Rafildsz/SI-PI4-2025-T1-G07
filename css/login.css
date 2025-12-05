@@ -1,3 +1,24 @@
+/**
+ * ========================================
+ * SEMEAR - Estilos da Tela de Login
+ * ========================================
+ * 
+ * Descrição: Arquivo CSS específico para as páginas de login (produtor e restaurante).
+ *            Define estilos para formulários de autenticação, cards de login,
+ *            campos de entrada e botões de ação.
+ * 
+ * Conteúdo:
+ * - Wrapper de autenticação
+ * - Estilos do header de login
+ * - Card do formulário
+ * - Inputs de email e senha
+ * - Botões e links de ação
+ * - Estilos responsivos
+ * 
+ * Dependências: styles.css (estilos globais)
+ * ========================================
+ */
+
 /* Tela de Login — mantém a identidade visual do projeto */
 
 .auth-wrap { 

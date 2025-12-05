@@ -1,3 +1,22 @@
+/**
+ * ========================================
+ * SEMEAR - Controlador de Usuários
+ * ========================================
+ * 
+ * Descrição: Controlador REST para gerenciar usuários da plataforma SEMEAR.
+ * Implementa operações CRUD de usuários (restaurantes e produtores).
+ * 
+ * Responsabilidades:
+ * - Endpoint GET /api/usuarios: listar todos os usuários
+ * - Endpoint GET /api/usuarios/{id}: buscar usuário específico
+ * - Endpoint POST /api/usuarios: criar novo usuário
+ * - Endpoint PUT /api/usuarios/{id}: atualizar informações do usuário
+ * - Endpoint DELETE /api/usuarios/{id}: deletar usuário
+ * - Gerenciar dados de produtores e restaurantes
+ * 
+ * Dependências: UsuarioService
+ * ========================================
+ */
 package com.example.backend_spring.controller;
 
 import com.example.backend_spring.entity.Usuario;

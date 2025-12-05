@@ -1,3 +1,23 @@
+/**
+ * ========================================
+ * SEMEAR - Autenticação de Restaurantes
+ * ========================================
+ * 
+ * Descrição: Gerencia autenticação, validação de credenciais e login
+ * de restaurantes no sistema.
+ * 
+ * Funcionalidades:
+ * - Validação de email e senha
+ * - Autenticação com backend
+ * - Armazenamento de sessão do usuário
+ * - Menu mobile responsivo
+ * - Redirecionamento pós-login
+ * - Tratamento de erros de autenticação
+ * 
+ * Dependências: Backend Spring Boot (API /api/login), localStorage
+ * ========================================
+ */
+
 // Ano no rodapé
 document.getElementById('year').textContent = new Date().getFullYear();
 

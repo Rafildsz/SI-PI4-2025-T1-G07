@@ -1,3 +1,25 @@
+/**
+ * ========================================
+ * SEMEAR - Estilos do Catálogo e Dashboard
+ * ========================================
+ * 
+ * Descrição: Arquivo CSS para as páginas de catálogo, dashboards (produtor/restaurante)
+ *            e páginas conectadas. Define layout com sidebar, grid de produtos,
+ *            cards de itens, e componentes de interface específicos do painel.
+ * 
+ * Conteúdo:
+ * - Variáveis de cor (verdes, cinzas)
+ * - Layout principal com sidebar
+ * - Header do dashboard
+ * - Cards de produtos/itens
+ * - Sidebar com navegação
+ * - Estilos de busca e filtros
+ * - Media queries para responsividade
+ * 
+ * Dependências: styles.css (estilos globais)
+ * ========================================
+ */
+
 :root{
   --green-600:#3aa55a;
   --green-700:#2f8a4a;

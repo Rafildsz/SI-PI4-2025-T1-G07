@@ -1,3 +1,20 @@
+/**
+ * ========================================
+ * SEMEAR - Script Global
+ * ========================================
+ * 
+ * Descrição: Arquivo JavaScript global que contém funcionalidades reutilizáveis
+ *            em toda a plataforma.
+ * 
+ * Funcionalidades:
+ * - Gerenciamento do menu mobile (toggle)
+ * - Atualização dinâmica do ano do footer
+ * - Interatividades gerais
+ * 
+ * Dependências: Nenhuma
+ * ========================================
+ */
+
 // Menu mobile simples e ano do rodapé
 document.getElementById('year').textContent = new Date().getFullYear();
 

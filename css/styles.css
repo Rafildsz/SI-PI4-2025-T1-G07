@@ -1,3 +1,25 @@
+/**
+ * ========================================
+ * SEMEAR - Estilos Globais
+ * ========================================
+ * 
+ * Descrição: Arquivo CSS principal que contém os estilos globais da plataforma SEMEAR.
+ *            Define variáveis de cor, layout base, componentes reutilizáveis e temas
+ *            responsivos para toda a aplicação.
+ * 
+ * Conteúdo:
+ * - Reset de estilos e normalize de elementos
+ * - Variáveis CSS (cores, dimensões, espaçamentos)
+ * - Header e navegação
+ * - Sistema de layout com containers
+ * - Componentes de botões e formulários
+ * - Estilos de footer
+ * - Media queries para responsividade
+ * 
+ * Dependências: Nenhuma
+ * ========================================
+ */
+
 /* Reset simples */
 * {
   box-sizing: border-box;

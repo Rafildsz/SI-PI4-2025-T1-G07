@@ -1,3 +1,21 @@
+/**
+ * ========================================
+ * SEMEAR - Controlador de Autenticação
+ * ========================================
+ * 
+ * Descrição: Controlador REST responsável por gerenciar autenticação de usuários.
+ * Implementa validação de credenciais (email e senha) com verificação de tipo de usuário.
+ * 
+ * Responsabilidades:
+ * - Endpoint POST /api/login: autenticar usuários
+ * - Validar email do usuário no banco de dados
+ * - Verificar senha com hash bcrypt
+ * - Validar tipo de usuário (Produtor/Restaurante)
+ * - Retornar token/informações de login ou mensagem de erro
+ * 
+ * Dependências: UsuarioRepository, PasswordEncoder
+ * ========================================
+ */
 package com.example.backend_spring.controller;
 
 import com.example.backend_spring.dto.loginRequest;

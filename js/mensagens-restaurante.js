@@ -1,3 +1,22 @@
+/**
+ * ========================================
+ * SEMEAR - Sistema de Mensagens (Restaurante)
+ * ========================================
+ * 
+ * Descrição: Gerencia sistema de mensagens diretas entre restaurantes
+ * e produtores, com interface de chat em tempo real.
+ * 
+ * Funcionalidades:
+ * - Lista de conversas com produtores
+ * - Envio e recebimento de mensagens
+ * - Menu lateral com histórico de conversas
+ * - Notificações de novas mensagens
+ * - Armazenamento de histórico de chat
+ * 
+ * Dependências: localStorage, API backend para persistência de mensagens
+ * ========================================
+ */
+
 // Sistema de mensagens - RESTAURANTE
 const conversas = {
   "1": {

@@ -1,3 +1,21 @@
+/**
+ * ========================================
+ * SEMEAR - Controlador de Carrinho
+ * ========================================
+ * 
+ * Descrição: Controlador REST para gerenciar carrinho de compras da aplicação.
+ * Permite adicionar/remover produtos ao carrinho e gerenciar pedidos pendentes.
+ * 
+ * Responsabilidades:
+ * - Endpoint GET /carrinho: recuperar carrinho atual (pedido pendente)
+ * - Endpoint POST /carrinho/adicionar: adicionar produto ao carrinho
+ * - Endpoint DELETE /carrinho/{itemId}: remover item do carrinho
+ * - Gerenciar quantidade de produtos
+ * - Validar disponibilidade de estoque
+ * 
+ * Dependências: PedidoRepository, ProdutoRepository, ItemPedidoRepository
+ * ========================================
+ */
 package com.example.backend_spring.controller;
 
 import com.example.backend_spring.entity.ItemPedido;

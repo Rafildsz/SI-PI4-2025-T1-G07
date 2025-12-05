@@ -1,3 +1,23 @@
+/**
+ * ========================================
+ * SEMEAR - Estilos do Dashboard Produtor
+ * ========================================
+ * 
+ * Descrição: Arquivo CSS para a página de boas-vindas e dashboard do produtor.
+ *            Define estilos específicos para a interface de produtor, incluindo
+ *            estatísticas de vendas, gerenciamento de produtos e pedidos.
+ * 
+ * Conteúdo:
+ * - Variáveis de cor e layout
+ * - Cards de estatísticas
+ * - Seções de produtos e pedidos
+ * - Gráficos e indicadores
+ * - Estilos responsivos
+ * 
+ * Dependências: styles.css (estilos globais)
+ * ========================================
+ */
+
 :root {
   --fg: #1f2937;
   --muted: #6b7280;

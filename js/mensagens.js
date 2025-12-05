@@ -1,3 +1,23 @@
+/**
+ * ========================================
+ * SEMEAR - Sistema de Chat/Mensagens
+ * ========================================
+ * 
+ * Descrição: Funcionalidades gerais de chat e sistema de mensagens
+ * com suporte para diferentes tipos de usuários (produtor/restaurante).
+ * 
+ * Funcionalidades:
+ * - Interface de chat responsiva
+ * - Detecção automática de tipo de usuário
+ * - Carregamento de conversas por tipo de usuário
+ * - Envio e recebimento de mensagens
+ * - Gerenciamento de conversas ativas
+ * - Formatação de timestamps de mensagens
+ * 
+ * Dependências: localStorage, classes CSS de chat/mensagens
+ * ========================================
+ */
+
 // Sistema de mensagens
 let conversas = {};
 let conversaAtual = null;

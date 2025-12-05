@@ -1,3 +1,22 @@
+/**
+ * ========================================
+ * SEMEAR - Controlador de Propriedades
+ * ========================================
+ * 
+ * Descrição: Controlador REST para gerenciar propriedades/fazendas dos produtores.
+ * Permite registro e gerenciamento de informações da propriedade agrícola.
+ * 
+ * Responsabilidades:
+ * - Endpoint GET /propriedades: listar todas as propriedades
+ * - Endpoint POST /propriedades/{usuarioId}: registrar nova propriedade para usuário
+ * - Endpoint GET /propriedades/{id}: buscar propriedade específica
+ * - Endpoint PUT /propriedades/{id}: atualizar dados da propriedade
+ * - Endpoint DELETE /propriedades/{id}: deletar propriedade
+ * - Endpoint GET /propriedades/usuario/{usuarioId}: listar propriedades do usuário
+ * 
+ * Dependências: PropriedadeService
+ * ========================================
+ */
 package com.example.backend_spring.controller;
 
 import com.example.backend_spring.entity.Propriedade;

@@ -1,3 +1,25 @@
+/**
+ * ========================================
+ * SEMEAR - Estilos de Mensagens/Chat
+ * ========================================
+ * 
+ * Descrição: Arquivo CSS para as páginas de mensagens e chat (produtor e restaurante).
+ *            Define estilos para a interface de conversação, lista de mensagens,
+ *            thread de conversa e input de mensagens.
+ * 
+ * Conteúdo:
+ * - Reset de estilos
+ * - Layout de chat/mensagens
+ * - Estilos de bubbles de mensagem
+ * - Header de conversa
+ * - Input de mensagem
+ * - Timestamp e status de mensagens
+ * - Estilos responsivos
+ * 
+ * Dependências: styles.css (estilos globais)
+ * ========================================
+ */
+
 /* =====================
    RESET
 ===================== */

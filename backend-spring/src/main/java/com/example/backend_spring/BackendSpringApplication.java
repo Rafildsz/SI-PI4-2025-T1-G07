@@ -1,3 +1,21 @@
+/**
+ * ========================================
+ * SEMEAR - Aplicação Principal Backend Spring
+ * ========================================
+ * 
+ * Descrição: Classe principal de inicialização da aplicação Spring Boot SEMEAR.
+ * Responsável por configurar e iniciar o servidor backend da plataforma de
+ * integração entre produtores e restaurantes.
+ * 
+ * Responsabilidades:
+ * - Inicializar a aplicação Spring Boot
+ * - Configurar scanning de componentes da aplicação
+ * - Ativar repositórios JPA
+ * - Escanear entidades JPA
+ * 
+ * Dependências: Spring Boot Framework, JPA, Component Scanning
+ * ========================================
+ */
 package com.example.backend_spring;
 
 import org.springframework.boot.SpringApplication;
