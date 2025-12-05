@@ -1,3 +1,17 @@
+/**
+ * ========================================
+ * SEMEAR - Repositório de Produto
+ * ========================================
+ *
+ * Descrição: interface que estende JpaRepository, fornecendo métodos CRUD e
+ * buscas customizadas para a entidade Produto no banco de dados.
+ *
+ * Métodos customizados:
+ * - findByPropriedadeId(): busca produtos de uma propriedade específica
+ *
+ * Dependências: Spring Data JPA, Produto
+ * ========================================
+ */
 package com.example.backend_spring.repository;
 
 import com.example.backend_spring.entity.Produto;

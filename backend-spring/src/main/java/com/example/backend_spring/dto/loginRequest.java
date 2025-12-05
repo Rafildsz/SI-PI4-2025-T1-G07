@@ -1,3 +1,20 @@
+/**
+ * ========================================
+ * SEMEAR - DTO de Requisição de Login
+ * ========================================
+ *
+ * Descrição: objeto de transferência de dados usado para receber
+ * os dados de login (email, senha e tipo de usuário) nas requisições
+ * de autenticação.
+ *
+ * Campos principais:
+ * - email: identificador do usuário
+ * - senha: senha em texto recebido do cliente (será verificada pelo backend)
+ * - tipoUsuario: opcional, indica se o login é para produtor ou restaurante
+ *
+ * Dependências: usado pelo controlador de autenticação (`authController`).
+ * ========================================
+ */
 package com.example.backend_spring.dto;
 
 public class loginRequest {

@@ -1,3 +1,22 @@
+/**
+ * ========================================
+ * SEMEAR - Serviço de Propriedade
+ * ========================================
+ *
+ * Descrição: classe de serviço que implementa lógica de negócio de propriedades.
+ * Gerencia operações CRUD de propriedades associadas a usuários produtores.
+ *
+ * Responsabilidades:
+ * - Listar todas as propriedades
+ * - Buscar propriedade por ID
+ * - Criar propriedade vinculada a um usuário
+ * - Atualizar dados da propriedade
+ * - Deletar propriedade
+ * - Buscar propriedades de um usuário específico
+ *
+ * Dependências: PropriedadeRepository, UsuarioRepository, Spring Framework
+ * ========================================
+ */
 package com.example.backend_spring.service;
 
 import com.example.backend_spring.entity.Propriedade;

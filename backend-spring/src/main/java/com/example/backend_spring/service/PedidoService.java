@@ -1,3 +1,23 @@
+/**
+ * ========================================
+ * SEMEAR - Serviço de Pedido
+ * ========================================
+ *
+ * Descrição: classe de serviço que implementa lógica de negócio de pedidos.
+ * Gerencia criação, atualização e consulta de pedidos com seus itens associados.
+ *
+ * Responsabilidades:
+ * - Listar todos os pedidos
+ * - Buscar pedido por ID
+ * - Criar pedido com múltiplos itens (criarComItens)
+ * - Criar pedido simples (criar)
+ * - Atualizar dados do pedido
+ * - Deletar pedido
+ * - Gerenciar estoque de produtos conforme pedidos são criados
+ *
+ * Dependências: PedidoRepository, UsuarioRepository, ProdutoRepository, ItemPedidoRepository
+ * ========================================
+ */
 package com.example.backend_spring.service;
 
 import com.example.backend_spring.dto.PedidoCreateDTO;

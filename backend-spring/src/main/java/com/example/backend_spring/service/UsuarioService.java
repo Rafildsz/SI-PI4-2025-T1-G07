@@ -1,3 +1,21 @@
+/**
+ * ========================================
+ * SEMEAR - Serviço de Usuário
+ * ========================================
+ *
+ * Descrição: classe de serviço que implementa lógica de negócio relacionada a usuários.
+ * Gerencia operações CRUD com tratamento de senha (hash com bcrypt) e transações.
+ *
+ * Responsabilidades:
+ * - Listar todos os usuários
+ * - Buscar usuário por ID
+ * - Criar novo usuário com senha criptografada
+ * - Atualizar dados do usuário
+ * - Deletar usuário
+ *
+ * Dependências: UsuarioRepository, PasswordEncoder, Spring Framework
+ * ========================================
+ */
 package com.example.backend_spring.service;
 
 import com.example.backend_spring.entity.Usuario;

@@ -16,6 +16,17 @@
  * Dependências: Lombok @Data
  * ========================================
  */
+/**
+ * ========================================
+ * SEMEAR - DTO de Resposta de Item de Pedido
+ * ========================================
+ *
+ * Descrição: DTO com detalhes de um item no pedido (produto, quantidade, preço unitário, total).
+ * Retornado ao cliente para exibição em listagens de pedidos.
+ *
+ * Dependências: produzido por `ItemPedidoService` e retornado por controladores.
+ * ========================================
+ */
 package com.example.backend_spring.dto;
 
 import lombok.Data;

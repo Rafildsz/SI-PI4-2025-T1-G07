@@ -15,6 +15,17 @@
  * Dependências: Lombok @Data
  * ========================================
  */
+/**
+ * ========================================
+ * SEMEAR - DTO de Criação de Item de Pedido
+ * ========================================
+ *
+ * Descrição: dados enviados para adicionar um item (produto) a um pedido.
+ * Contém quantidade, id do produto e possíveis customizações.
+ *
+ * Dependências: consumido por `ItemPedidoController` e `ItemPedidoService`.
+ * ========================================
+ */
 package com.example.backend_spring.dto;
 
 import lombok.Data;

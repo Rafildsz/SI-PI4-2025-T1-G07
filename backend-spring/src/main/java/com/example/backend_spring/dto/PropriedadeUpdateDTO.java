@@ -1,3 +1,13 @@
+/**
+ * ========================================
+ * SEMEAR - DTO de Atualização de Propriedade
+ * ========================================
+ *
+ * Descrição: campos que podem ser atualizados em uma propriedade (contato, endereço, etc.).
+ *
+ * Dependências: usado por `PropriedadeController` para operações de atualização.
+ * ========================================
+ */
 package com.example.backend_spring.dto;
 
 import lombok.Data;

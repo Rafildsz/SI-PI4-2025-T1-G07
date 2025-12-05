@@ -1,3 +1,20 @@
+/**
+ * ========================================
+ * SEMEAR - DTO de Resposta de Login
+ * ========================================
+ *
+ * Descrição: DTO usado para enviar informações de resultado do processo
+ * de autenticação ao cliente (id, nome, mensagem ou erro).
+ *
+ * Campos principais:
+ * - id: identificador do usuário autenticado
+ * - nome: nome completo do usuário
+ * - message: mensagem de sucesso
+ * - erro: mensagem de erro quando houver falha na autenticação
+ *
+ * Dependências: retornado pelo `authController` após validação.
+ * ========================================
+ */
 package com.example.backend_spring.dto;
 
 public class loginResponse {

@@ -1,3 +1,17 @@
+/**
+ * ========================================
+ * SEMEAR - Serviço de Item de Pedido
+ * ========================================
+ *
+ * Descrição: classe de serviço que implementa lógica de itens individuais dentro de pedidos.
+ * Gerencia vinculação de produtos aos pedidos com quantidades e preços.
+ *
+ * Responsabilidades:
+ * - Criar novo item de pedido vinculando produto e pedido
+ *
+ * Dependências: ItemPedidoRepository, PedidoRepository, ProdutoRepository
+ * ========================================
+ */
 package com.example.backend_spring.service;
 
 import com.example.backend_spring.entity.ItemPedido;

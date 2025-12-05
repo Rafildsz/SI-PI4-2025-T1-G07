@@ -1,3 +1,22 @@
+/**
+ * ========================================
+ * SEMEAR - Serviço de Produto
+ * ========================================
+ *
+ * Descrição: classe de serviço que implementa lógica de negócio de produtos.
+ * Gerencia operações CRUD de produtos associados a propriedades.
+ *
+ * Responsabilidades:
+ * - Listar todos os produtos
+ * - Listar produtos de uma propriedade específica
+ * - Buscar produto por ID
+ * - Criar novo produto vinculado a uma propriedade
+ * - Atualizar dados do produto
+ * - Deletar produto
+ *
+ * Dependências: ProdutoRepository, PropriedadeRepository, Spring Framework
+ * ========================================
+ */
 package com.example.backend_spring.service;
 
 import com.example.backend_spring.entity.Produto;

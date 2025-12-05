@@ -1,3 +1,17 @@
+/**
+ * ========================================
+ * SEMEAR - Repositório de Propriedade
+ * ========================================
+ *
+ * Descrição: interface que estende JpaRepository, fornecendo acesso aos dados
+ * de propriedades no banco de dados, com buscas customizadas.
+ *
+ * Métodos customizados:
+ * - findByUsuarioId(): busca propriedades de um produtor/usuário específico
+ *
+ * Dependências: Spring Data JPA, Propriedade
+ * ========================================
+ */
 package com.example.backend_spring.repository;
 
 import com.example.backend_spring.entity.Propriedade;

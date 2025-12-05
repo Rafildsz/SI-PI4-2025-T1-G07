@@ -1,3 +1,21 @@
+/**
+ * ========================================
+ * SEMEAR - Entidade de Item de Pedido
+ * ========================================
+ *
+ * Descrição: entidade JPA que mapeia a tabela "itens_pedido" no banco de dados.
+ * Representa um item (linha) dentro de um pedido, ligando um produto a uma quantidade.
+ *
+ * Campos principais:
+ * - id_item: identificador único
+ * - pedido: referência ao pedido pai (ManyToOne)
+ * - produto: referência ao produto específico (ManyToOne)
+ * - quantidade: quantos itens deste produto
+ * - precoUnitario: preço do produto no momento do pedido
+ *
+ * Dependências: JPA, Lombok, Jackson, Pedido, Produto
+ * ========================================
+ */
 package com.example.backend_spring.entity;
 
 import jakarta.persistence.*;

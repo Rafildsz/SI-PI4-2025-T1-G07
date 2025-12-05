@@ -1,3 +1,25 @@
+/**
+ * ========================================
+ * SEMEAR - Entidade de Pedido
+ * ========================================
+ *
+ * Descrição: entidade JPA que mapeia a tabela "pedidos" no banco de dados.
+ * Representa um pedido de compra realizado por um restaurante a um produtor.
+ *
+ * Campos principais:
+ * - id_pedido: identificador único
+ * - restaurante: usuário restaurante que fez o pedido (ManyToOne)
+ * - produtor: usuário produtor que receberá o pedido (ManyToOne)
+ * - data_pedido: data/hora de criação
+ * - valor_total: soma dos valores dos itens
+ * - status: estado do pedido (pendente, confirmado, entregue, etc.)
+ * - tipo_entrega: retirada ou entrega
+ * - observacoes: notas especiais
+ * - itens: lista de produtos/quantidades no pedido (OneToMany)
+ *
+ * Dependências: JPA, Lombok, Jackson, Usuario, ItemPedido
+ * ========================================
+ */
 package com.example.backend_spring.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

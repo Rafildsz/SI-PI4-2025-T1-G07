@@ -1,3 +1,21 @@
+/**
+ * ========================================
+ * SEMEAR - Entidade de Usuário
+ * ========================================
+ *
+ * Descrição: entidade JPA que mapeia a tabela "usuarios" no banco de dados.
+ * Representa um usuário da plataforma (produtor ou restaurante).
+ *
+ * Campos principais:
+ * - id_usuario: identificador único
+ * - nome_completo, email, telefone: dados pessoais
+ * - tipo_usuario: produtor ou restaurante
+ * - endereco: localização do usuário
+ * - propriedades: relação 1:N com propriedades (apenas para produtores)
+ *
+ * Dependências: JPA, Lombok, Jackson
+ * ========================================
+ */
 package com.example.backend_spring.entity;
 
 import jakarta.persistence.*;

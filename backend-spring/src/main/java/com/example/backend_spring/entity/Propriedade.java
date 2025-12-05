@@ -1,3 +1,24 @@
+/**
+ * ========================================
+ * SEMEAR - Entidade de Propriedade
+ * ========================================
+ *
+ * Descrição: entidade JPA que mapeia a tabela "propriedades" no banco de dados.
+ * Representa uma propriedade/fazenda pertencente a um produtor.
+ *
+ * Campos principais:
+ * - id_propriedade: identificador único
+ * - nome_propriedade: nome da propriedade
+ * - cpf_cnpj: documento fiscal da propriedade
+ * - endereco, cep: localização
+ * - descricao: descrição detalhada
+ * - selo_certificacao: certificações agropecuárias
+ * - usuario: referência ao produtor proprietário (ManyToOne)
+ * - produtos: lista de produtos produzidos (OneToMany)
+ *
+ * Dependências: JPA, Lombok, Jackson, Usuario, Produto
+ * ========================================
+ */
 package com.example.backend_spring.entity;
 
 import jakarta.persistence.*;

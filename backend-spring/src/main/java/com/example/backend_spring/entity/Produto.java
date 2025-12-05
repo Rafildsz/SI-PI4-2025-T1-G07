@@ -1,3 +1,22 @@
+/**
+ * ========================================
+ * SEMEAR - Entidade de Produto
+ * ========================================
+ *
+ * Descrição: entidade JPA que mapeia a tabela "produtos" no banco de dados.
+ * Representa um produto agrícola/alimentício ofertado por um produtor.
+ *
+ * Campos principais:
+ * - id_produto: identificador único
+ * - nome_produto, descricao: informações do produto
+ * - preco, unidade_medida, estoque: dados comerciais
+ * - imagem_url: URL da imagem para exibição
+ * - propriedade: referência ao produtor/propriedade (ManyToOne)
+ * - categoria: referência à categoria do produto (ManyToOne)
+ *
+ * Dependências: JPA, Lombok, Jackson, Propriedade, CategoriaProduto
+ * ========================================
+ */
 package com.example.backend_spring.entity;
 
 import jakarta.persistence.*;

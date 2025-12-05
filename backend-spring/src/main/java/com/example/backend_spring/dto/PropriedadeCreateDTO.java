@@ -1,3 +1,13 @@
+/**
+ * ========================================
+ * SEMEAR - DTO de Criação de Propriedade
+ * ========================================
+ *
+ * Descrição: dados necessários para cadastrar uma propriedade vinculada a um produtor.
+ *
+ * Dependências: usado por `PropriedadeController` e `PropriedadeService`.
+ * ========================================
+ */
 package com.example.backend_spring.dto;
 
 import lombok.Data;
