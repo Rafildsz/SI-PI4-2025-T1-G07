@@ -1,3 +1,4 @@
+<!-- Autor: Eduardo Almeida-->
 -- Tabela: usuarios
 CREATE TABLE usuarios (
     id_usuario BIGINT AUTO_INCREMENT PRIMARY KEY,
