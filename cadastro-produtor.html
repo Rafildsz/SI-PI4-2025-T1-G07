@@ -722,6 +722,12 @@
         // Agora cria a propriedade vinculada ao usuário
         const usuarioId = usuarioCriado.id_usuario;
         
+        // Salva dados do usuário no localStorage
+        localStorage.setItem('usuario_id', usuarioId);
+        localStorage.setItem('usuario_logado', obj.nome);
+        localStorage.setItem('tipo_usuario', 'PRODUTOR');
+
+        
         return fetch(`http://localhost:8081/propriedades/${usuarioId}`, {
           method: 'POST',
           headers: { 
@@ -738,9 +744,6 @@
         return response.json();
       })
       .then(() => {
-        // Salva no localStorage para usar na página de boas-vindas
-        localStorage.setItem('nomeProdutor', obj.nome);
-        
         // Redireciona
         window.location.href = 'bem-vindo-produtor.html';
       })
