@@ -1,3 +1,4 @@
+//Autor: Guilherme Alves
 /**
  * ========================================
  * SEMEAR - Carrinho de Compras

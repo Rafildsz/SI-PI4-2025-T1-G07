@@ -1,3 +1,4 @@
+//Autor: Maysa Melo
 /**
  * ========================================
  * SEMEAR - Script Global

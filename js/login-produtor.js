@@ -1,3 +1,4 @@
+//Autor: Júlia Lupi
 /**
  * ========================================
  * SEMEAR - Autenticação de Produtores

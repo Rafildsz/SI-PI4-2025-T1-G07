@@ -1,3 +1,4 @@
+//Autor: Isabelly Horschutz
 /**
  * ========================================
  * SEMEAR - Sistema de Chat/Mensagens

@@ -1,3 +1,4 @@
+//Autor: Eduardo Almeida
 /**
  * ========================================
  * SEMEAR - Catálogo de Produtos
